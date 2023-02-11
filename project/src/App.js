@@ -1,8 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-// import logo from './logo.svg';
-import './App.css';
-import Home from './components/Home';
+import Login from './components/Login';
+import NotFound from './components/NotFound';
+import Join from './components/Join';
+
+import Start from './pages/Start';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   // axios 기본 url 설정
@@ -12,9 +15,14 @@ function App() {
   axios.defaults.withCredentials = true;
 
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Start />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
