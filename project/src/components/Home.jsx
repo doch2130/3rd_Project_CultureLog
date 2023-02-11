@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import Chatbot from './Chatbot';
 import './Home.css';
 import HomeCalendar from './HomeCalendar';
 
@@ -55,6 +56,7 @@ export default function Home() {
           </Row>
         </Col>
       </Row>
+      <Chatbot />
     </Container>
   );
 }
