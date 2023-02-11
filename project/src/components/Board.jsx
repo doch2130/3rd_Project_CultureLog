@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function board() {
-  return <div>board</div>;
+export default function Board() {
+  return <div>Board</div>;
 }
