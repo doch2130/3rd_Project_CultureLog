@@ -3,7 +3,6 @@ import axios from 'axios';
 import Login from './components/Login';
 import NotFound from './components/NotFound';
 import Join from './components/Join';
-
 import Start from './pages/Start';
 import { Routes, Route } from 'react-router-dom';
 

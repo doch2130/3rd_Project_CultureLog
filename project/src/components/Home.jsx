@@ -3,8 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './Home.css';
 import HomeCalendar from './HomeCalendar';
 
-// 메인 페이지
-
+// Main Page
 export default function Home() {
   return (
     <Container fluid>
