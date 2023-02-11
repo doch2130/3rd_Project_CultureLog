@@ -1,0 +1,29 @@
+.NewAlertBtn {
+  cursor: pointer;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0px;
+}
+
+.channel_logo {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 4px;
+    left: 7px;
+}
+
+.NewAlertSpan {
+  position: absolute;
+  background-color: red;
+  border: 1px solid white;
+  border-radius: 50px;
+  width: 15px;
+  height: 15px;
+  top: 0px;
+  right: 0px;
+}
