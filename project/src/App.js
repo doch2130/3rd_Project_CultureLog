@@ -5,6 +5,8 @@ import NotFound from './components/NotFound';
 import Join from './components/Join';
 import Start from './pages/Start';
 import { Routes, Route } from 'react-router-dom';
+import Threejs from './components/Threejs';
+import Book from './components/Book';
 
 function App() {
   // axios 기본 url 설정
@@ -19,6 +21,7 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/Book" element={<Book />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

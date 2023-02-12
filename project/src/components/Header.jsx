@@ -34,9 +34,9 @@ export default function Header() {
             <Link to="/login">로그인</Link>
           </ul>
 
-          <ul>
-            <Link to="/join">회원가입</Link>
-          </ul>
+          {/* <ul>
+            <Link to="/Book">책(임시)</Link>
+          </ul> */}
         </ul>
       </Nav>
     </>
