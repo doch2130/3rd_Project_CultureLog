@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import HomeCalendar from './HomeCalendar';
 import Chatbot from './Chatbot';
 import './Home.css';
-import HomeCalendar from './HomeCalendar';
 
 // Main Page
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
             <Col xs={12} md={6}>
               <HomeCalendar />
               <Col xs={12} style={{ padding: '6px 12px' }}>
-                <p className="CalendarFooter">
+                <p className="calendarFooter">
                   날짜를 클릭하여 오늘의 문화를 기록하세요
                 </p>
               </Col>
@@ -29,23 +29,23 @@ export default function Home() {
                   />
                 </Col>
                 <Col xs={12} style={{ height: '50%', paddingTop: '10px' }}>
-                  <div className="RecordYear">
-                    <div className="RecordYearTitle">올해의 기록</div>
-                    <div className="RecordYearSubTitle">
+                  <div className="recordYear">
+                    <div className="recordYearTitle">올해의 기록</div>
+                    <div className="recordYearSubTitle">
                       올해 나는 얼마나 채웠을까?
                     </div>
                   </div>
-                  <div className="RecordYear">
+                  <div className="recordYear">
                     <span>책</span>
                     <span>0000000</span>
                   </div>
                   <hr />
-                  <div className="RecordYear">
+                  <div className="recordYear">
                     <span>공연</span>
                     <span>0000000</span>
                   </div>
                   <hr />
-                  <div className="RecordYear">
+                  <div className="recordYear">
                     <span>영화</span>
                     <span>0000000</span>
                   </div>

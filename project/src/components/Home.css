@@ -12,30 +12,30 @@ div.row {
 }
 
 /* 달력 Footer */
-.CalendarFooter {
+.calendarFooter {
   font-size: 0.8rem;
   text-align: left;
 }
 
 /* 올해의 기록 */
-.RecordYear {
+.recordYear {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }
 
-.RecordYearTitle {
+.recordYearTitle {
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-.RecordYearSubTitle {
+.recordYearSubTitle {
   font-size: 1.2rem;
   font-weight: 550;
 }
 
-.RecordYear:nth-child(2) {
+.recordYear:nth-child(2) {
   margin-top: 30px;
 }
 
@@ -46,12 +46,12 @@ hr {
 }
 
 @media (max-width: 860px) {
-  .RecordYearTitle {
+  .recordYearTitle {
     font-size: 1.3rem;
     font-weight: 700;
   }
   
-  .RecordYearSubTitle {
+  .recordYearSubTitle {
     font-size: 1rem;
     font-weight: 550;
   }
