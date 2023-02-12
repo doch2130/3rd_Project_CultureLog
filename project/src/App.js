@@ -5,7 +5,6 @@ import NotFound from './components/NotFound';
 import Join from './components/Join';
 import Start from './pages/Start';
 import { Routes, Route } from 'react-router-dom';
-import Threejs from './components/Threejs';
 import Book from './components/Book';
 
 function App() {
