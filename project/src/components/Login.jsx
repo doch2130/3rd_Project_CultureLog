@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Header';
 
@@ -24,14 +25,20 @@ const Div1 = styled.div`
     font-size: 40px;
     color: #d2b6a9;
   }
+`;
+
+const Div2 = styled.div`
+  text-align: center;
+  margin-top: -250px;
+  width: 100%;
+  align-items: center;
   button {
     background-color: #d2b6a9;
     color: #f3e9e9;
     border-radius: 4px;
-    margin-top: 20px;
-    width: 60px;
     box-shadow: 0 2px 8px rgba(230, 115, 53, 0.25);
-    font-size: 17px;
+    display: inline-block;
+    margin-right: 10px;
   }
 `;
 
@@ -50,6 +57,10 @@ export default function Login() {
     setPw(event.currentTarget.value);
   };
 
+  const navigate = useNavigate();
+  const navigateToJoin = () => {
+    navigate('/Join');
+  };
   return (
     <>
       <Header />
@@ -71,10 +82,13 @@ export default function Login() {
           onChange={pwHandler}
         />
         <br />
+      </Div1>
+      <Div2>
         <button type="submit" onClick={BtnLogin}>
           로그인
         </button>
-      </Div1>
+        <button onClick={navigateToJoin}>회원가입</button>
+      </Div2>
     </>
   );
 }

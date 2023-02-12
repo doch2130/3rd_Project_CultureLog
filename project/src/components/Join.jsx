@@ -47,7 +47,7 @@ export default function Join() {
         <br />
         <input id="pw" name="userpw" type="text" value="비밀번호" />
         <br />
-        <input id="pw2" name="userpw" type="text" value="비밀번호 한번 더" />
+        <input id="pw2" name="userpw" type="text" value="비밀번호 확인" />
         <button type="submit" onClick={BtnJoin}>
           회원가입
         </button>
