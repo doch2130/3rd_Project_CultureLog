@@ -6,6 +6,8 @@ import Join from './components/Join';
 import Start from './pages/Start';
 import { Routes, Route } from 'react-router-dom';
 import Book from './components/Book';
+import Movie from './components/Movie';
+import Performance from './components/Performance';
 
 function App() {
   // axios 기본 url 설정
@@ -21,6 +23,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/Book" element={<Book />} />
+        <Route path="/Movie" element={<Movie />} />
+        <Route path="/Performance" element={<Performance />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
