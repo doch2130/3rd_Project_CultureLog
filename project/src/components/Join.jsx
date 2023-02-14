@@ -29,7 +29,7 @@ const Div2 = styled.div`
     color: #f3e9e9;
     border-radius: 4px;
     margin-top: 20px;
-    width: 80px;
+    width: 101px;
     box-shadow: 0 2px 8px rgba(230, 115, 53, 0.25);
     font-size: 17px;
   }

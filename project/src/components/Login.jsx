@@ -43,48 +43,27 @@ const Div2 = styled.div`
 `;
 
 export default function Login() {
-  const BtnLogin = () => {
+  const BtnLogin = (event) => {
     console.log('click login');
-  };
-
-  let [id, setId] = useState('');
-  let [pw, setPw] = useState('');
-
-  const idHandler = (event) => {
-    setId(event.currentTarget.value);
-  };
-  const pwHandler = (event) => {
-    setPw(event.currentTarget.value);
   };
 
   const navigate = useNavigate();
   const navigateToJoin = () => {
     navigate('/Join');
   };
+
   return (
     <>
       <Header />
       <Div1>
         <h1>LOGIN</h1>
-        <input
-          id="id"
-          name="userid"
-          type="text"
-          value="아이디"
-          onChange={idHandler}
-        />
+        <input id="id" name="userid" type="text" placeholder="아이디" />
         <br />
-        <input
-          id="pw"
-          name="userpw"
-          type="text"
-          value="비밀번호"
-          onChange={pwHandler}
-        />
+        <input id="pw" name="userpw" type="text" placeholder="비밀번호" />
         <br />
       </Div1>
       <Div2>
-        <button type="submit" onClick={BtnLogin}>
+        <button formAction="" type="submit" onClick={BtnLogin}>
           로그인
         </button>
         <button onClick={navigateToJoin}>회원가입</button>
