@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import musicalImg from '../musical.jpeg';
@@ -7,6 +7,7 @@ export default function Movie() {
   const submit = () => {
     console.log(alert('게시물이 등록되었습니다'));
   };
+
   const Div6 = styled.div`
     margin: auto;
     margin-top: 120px;
@@ -24,11 +25,10 @@ export default function Movie() {
       display: flex;
     }
   `;
-
   const Button = styled.button`
     width: 150px;
     height: 50px;
-    margin-top: 750px;
+    margin-top: 946px;
     margin-left: -600px;
     text-align: center;
     box-sizing: border-box;
@@ -54,7 +54,7 @@ export default function Movie() {
     }
     @media screen and (max-width: 700px) {
       flex-direction: column;
-      margin-top: 60px;
+      margin-top: 80px;
       margin-left: -10px;
       align-items: center;
       width: 200px;
@@ -66,29 +66,65 @@ export default function Movie() {
     display: flex;
     flex-direction: column;
     margin-left: 50px;
+
+    p {
+      color: white;
+      font-weight: 700;
+    }
+
+    textarea {
+      margin-top: -36px;
+      margin-left: 100px;
+      outline: none;
+      background-color: #d0d6c3;
+      color: #fefefe;
+      width: 600px;
+      height: 36px;
+      display: inline-block;
+      height: 200px;
+      @media screen and (max-width: 700px) {
+        margin-top: 26px;
+        margin-left: -162px;
+        align-items: center;
+        width: 407px;
+        display: flex;
+        padding-top: 11px;
+      }
+    }
   `;
+
+  //후기란 p 태그
+  const pStyle = {
+    marginTop: '60px',
+    marginLeft: '-595px',
+  };
+
   const Input = styled.input`
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1.5px solid black;
+    margin-top: 60px;
+    margin-left: 20px;
     outline: none;
     background-color: #d0d6c3;
     color: #fefefe;
     width: 600px;
-    height: 100px;
+    height: 36px;
     display: inline-block;
     flex-wrap: wrap;
+
     @media screen and (max-width: 700px) {
       width: 400px;
       margin-left: -180px;
     }
   `;
+
   const Img = styled.img`
     margin-left: -100px;
-    margin-top: 50px;
+    margin-top: 70px;
     width: 400px;
-    height: 500px;
+    height: 590px;
     border-radius: 20px;
     @media screen and (max-width: 700px) {
       text-align: center;
@@ -103,12 +139,26 @@ export default function Movie() {
       <Div6>
         <Img src={musicalImg} alt="예시이미지"></Img>
         <Div7>
-          <Input type="text" value="날짜" />
-          <Input type="text" value="제목" />
-          <Input type="text" value="극장" />
+          <p>
+            {' '}
+            날짜
+            <Input type="date" />
+          </p>
+          <p>
+            제목
+            <Input type="text" />
+          </p>
+          <p>
+            극장
+            <Input type="text" />
+          </p>
           <Input type="text" value="주연배우" />
-          <Input type="text" value="개인평점" />
-          <Input type="text" value="후기" />
+          <p>
+            개인평점
+            <Input type="text" />
+          </p>
+          <p style={pStyle}>후기</p>
+          <textarea placeholder="후기를 작성해주세요" />
         </Div7>
         <Button onClick={submit}>등록하기</Button>
       </Div6>

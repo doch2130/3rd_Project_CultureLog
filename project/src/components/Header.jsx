@@ -10,9 +10,14 @@ export default function Header() {
   const Nav = styled.nav`
     width: 100%;
     text-align: center;
+    //  background-color: #dacea8;
+    //  height: '50px';
     li {
       list-style: none;
-      color: aliceblue;
+      height: 100px;
+    }
+    p {
+      color: #828282;
     }
   `;
   const navigate = useNavigate();
@@ -34,16 +39,18 @@ export default function Header() {
           <li>
             {' '}
             <Link to="/" style={{ textDecoration: 'none' }}>
-              메인
+              <p style={{ fontSize: '30px' }}>HOME</p>
             </Link>
           </li>
           <li>
-            <img src={boxImg} alt="상자" style={imgStyle}></img>
-            <p>Culture Box</p>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <img src={boxImg} alt="상자" style={imgStyle}></img>
+              <p style={{ fontSize: '60px', marginTop: '-35px' }}>CultureLog</p>
+            </Link>
           </li>
           <li>
             <Link to="/login" style={{ textDecoration: 'none' }}>
-              로그인
+              <p style={{ fontSize: '30px' }}>LOGIN</p>
             </Link>
           </li>
           <li>

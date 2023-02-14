@@ -29,7 +29,6 @@ export default function Book() {
     padding: 180px;
     text-align: center;
     display: flex;
-    flex-direction: row;
     background-color: #d0d6c3;
     border-radius: 50px;
     @media screen and (max-width: 700px) {
@@ -43,7 +42,7 @@ export default function Book() {
   const Button = styled.button`
     width: 150px;
     height: 50px;
-    margin-top: 750px;
+    margin-top: 946px;
     margin-left: -600px;
     text-align: center;
     box-sizing: border-box;
@@ -69,7 +68,7 @@ export default function Book() {
     }
     @media screen and (max-width: 700px) {
       flex-direction: column;
-      margin-top: 60px;
+      margin-top: 80px;
       margin-left: -10px;
       align-items: center;
       width: 200px;
@@ -81,24 +80,60 @@ export default function Book() {
     display: flex;
     flex-direction: column;
     margin-left: 50px;
+
+    p {
+      color: white;
+      font-weight: 700;
+    }
+
+    textarea {
+      margin-top: -36px;
+      margin-left: 100px;
+      outline: none;
+      background-color: #d0d6c3;
+      color: #fefefe;
+      width: 600px;
+      height: 36px;
+      display: inline-block;
+      height: 200px;
+      @media screen and (max-width: 700px) {
+        margin-top: 26px;
+        margin-left: -162px;
+        align-items: center;
+        width: 407px;
+        display: flex;
+        padding-top: 11px;
+      }
+    }
   `;
+
+  //후기란 p 태그
+  const pStyle = {
+    marginTop: '60px',
+    marginLeft: '-595px',
+  };
+
   const Input = styled.input`
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1.5px solid black;
+    margin-top: 60px;
+    margin-left: 20px;
     outline: none;
     background-color: #d0d6c3;
     color: #fefefe;
     width: 600px;
-    height: 100px;
+    height: 36px;
     display: inline-block;
     flex-wrap: wrap;
+
     @media screen and (max-width: 700px) {
       width: 400px;
       margin-left: -180px;
     }
   `;
+
   const Img = styled.img`
     margin-left: -100px;
     margin-top: 50px;
@@ -118,17 +153,28 @@ export default function Book() {
       <Div6>
         <Img src={bookImg} alt="예시이미지"></Img>
         <Div7>
-          <Input type="text" value="날짜입력" />
-          <Input
-            type="text"
-            value={search}
-            onChange={onChange}
-            placeholder="제목을 입력해주세요"
-          />
-          <Input type="text" value="저자" />
-          <Input type="text" value="장르" />
-          <Input type="text" value="개인평점" />
-          <Input type="text" value="후기" />
+          <p>
+            날짜
+            <Input type="date" />
+          </p>
+          <p>
+            제목
+            <Input type="text" value={search} onChange={onChange} />
+          </p>
+          <p>
+            저자
+            <Input type="text" />
+          </p>
+          <p>
+            장르
+            <Input type="text" />{' '}
+          </p>
+          <p>
+            개인평점
+            <Input type="text" />
+          </p>
+          <p style={pStyle}>후기</p>
+          <textarea placeholder="후기를 작성해주세요" />
         </Div7>
         <Button onClick={submit}>등록하기</Button>
       </Div6>
