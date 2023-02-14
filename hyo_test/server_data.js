@@ -39,13 +39,16 @@ io.on('connection', (socket) => {
   // 이후 연결자는 userId에 값이 있는 것으로 인식해서 새로운 정보 반영이 안된다.
   // 그래서 일단 기본 값으로 roomUid를 설정하고, 로그인 하면 정보를 업데이트 하는 방식으로 변경하면 될 것 같다.
   // if (userId === undefined || userId === '') {
+  // if(socket.id['userId'])
   userId = roomUid;
   // }
+  // console.log("socket.id['userId']", socket.id['userId']);
 
   // 사용자 기본 데이터 저장
   const tempData = {
     userId: userId,
     roomId: roomUid,
+    permissions: 'default',
     msg: '',
   };
 
@@ -56,8 +59,8 @@ io.on('connection', (socket) => {
   // console.log('data json', JSON.stringify(data, null, 2));
 
   // 데이터 저장 방식
-  // redisCli.set(socketId, JSON.stringify(data[socketId]));
-  // redisCli.set(socketId, JSON.stringify(tempData));
+  // redisCli.set(socket.id, JSON.stringify(data[socket.id]));
+  // redisCli.set(socket.id, JSON.stringify(tempData));
 
   socket.on('disconnect', () => {
     console.log(data[socket.id].roomId);
