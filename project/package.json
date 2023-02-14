@@ -34,6 +34,7 @@
     "style-loader": "^3.3.1",
     "styled": "^1.0.0",
     "styled-components": "^5.3.6",
+    "antd": "^5.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

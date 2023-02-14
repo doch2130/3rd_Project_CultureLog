@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import HomeCalendar from './HomeCalendar';
 import Chatbot from './Chatbot';
 import './Home.css';
 import ChatbotManager from './ChatbotManager';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // Main Page
 export default function Home() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    axios.get('/api/hello').then((response) => console.log(response));
+  }, []);
   return (
     <Container fluid>
       <Row style={{ height: '100%' }}>
