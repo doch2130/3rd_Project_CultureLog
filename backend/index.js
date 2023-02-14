@@ -27,9 +27,12 @@
 
 const express = require('express');
 const app = express();
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http, {
+  cors: { origin: ['http://localhost:3000', 'http://127.0.0.1:3000'] },
+});
+const socket = require('./socketio/index');
 const port = 5000;
-
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -128,4 +131,8 @@ app.get('/api/users/logout', auth, (req, res) => {
 app.get('*', (req, res) => {
   res.send('주소가 존재하지 않습니다. 다시 한 번 확인해주세요.');
 });
-app.listen(port, () => console.log(`server port: ${port}!`));
+
+// 소켓 객체 전달
+socket(io);
+// app.listen(port, () => console.log(`server port: ${port}!`));
+http.listen(port, () => console.log(`server port: ${port}!`));

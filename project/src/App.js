@@ -8,8 +8,11 @@ import { Routes, Route } from 'react-router-dom';
 import Book from './components/Book';
 import Movie from './components/Movie';
 import Performance from './components/Performance';
+import io from 'socket.io-client';
+import socketIO from './socketio/index';
 
 function App() {
+  socketIO(io);
   // axios 기본 url 설정
   // 이후 axios 요청 시 기본 url은 빼고 작성하면 된다.
   // axios.defaults.baseURL = 'http://127.0.0.1:5500';
