@@ -1,9 +1,89 @@
 import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Header from './Header';
 import movieImg from '../movie.jpeg';
-import axios from 'axios';
+// import axios from 'axios';
 import './Movie.css';
+import { callMovieAPI } from '../actions/movie_action';
+
+export default function Movie() {
+  const clientTitle = useSelector((state) => state.movie);
+  const dispatch = useDispatch();
+  // const [clientTitle, setClientTitle] = useState([]);
+  const [searchClass, setSearchClass] = useState('searchBoard');
+  const movieSearch = useRef();
+  const titleNyear = useRef();
+  const director = useRef();
+  // function movie() {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:5000/movieAPI',
+  //     params: { title: movieSearch.current.value },
+  //   }).then((res) => {
+  //     console.log(res.data);
+  //     setClientTitle(res.data);
+  //   });
+  // }
+  function titleconfirm(e) {
+    let movieinfo = e.target.textContent.split(',');
+    setSearchClass('d-none');
+    titleNyear.current.value = `${movieinfo[0]},${movieinfo[1]}`;
+    director.current.value = movieinfo[2];
+  }
+  function submit() {
+    console.log(alert('게시물이 등록되었습니다'));
+  }
+
+  return (
+    <>
+      <Header />
+      <Div6>
+        <Img src={movieImg} alt="예시이미지"></Img>
+        <Div7>
+          <SearchInput
+            type="text"
+            name="search"
+            placeholder="영화 제목을 검색하세요"
+            ref={movieSearch}
+          />
+          <SearchBtn
+            type="button"
+            onClick={async () => {
+              const result = await callMovieAPI({
+                title: movieSearch.current.value,
+              });
+              console.log('component', result);
+              dispatch(result);
+              // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
+            }}
+          >
+            검색
+          </SearchBtn>
+          <div className={searchClass}>
+            {clientTitle.movieinfo === 'default'
+              ? '정보가 없습니다'
+              : clientTitle.movieinfo.map((el) => (
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: `${el.title},${el.pubDate},${el.director}`,
+                    }}
+                    onClick={titleconfirm}
+                  ></p>
+                ))}
+          </div>
+          <Input type="text" placeholder="날짜" />
+          <Input type="text" ref={titleNyear} placeholder="제목(개봉년도)" />
+          <Input type="text" ref={director} placeholder="감독" />
+          <Input type="text" placeholder="주연배우" />
+          <Input type="text" name="grade" placeholder="개인평점" />
+          <Input type="text" name="comment" placeholder="후기" />
+        </Div7>
+        <RegisterBtn onClick={submit}>등록하기</RegisterBtn>
+      </Div6>
+    </>
+  );
+}
 
 const Div6 = styled.div`
   margin: auto;
@@ -147,69 +227,3 @@ const Img = styled.img`
     margin-left: -126px;
   }
 `;
-
-export default function Movie() {
-  const [clientTitle, setClientTitle] = useState([]);
-  const [searchClass, setSearchClass] = useState('searchBoard');
-  const movieSearch = useRef();
-  const titleNyear = useRef();
-  const director = useRef();
-  function movie() {
-    axios({
-      method: 'get',
-      url: 'http://localhost:5000/movieAPI',
-      params: { title: movieSearch.current.value },
-    }).then((res) => {
-      console.log(res.data);
-      setClientTitle(res.data);
-    });
-  }
-  function titleconfirm(e) {
-    let movieinfo = e.target.textContent.split(',');
-    setSearchClass('d-none');
-    titleNyear.current.value = `${movieinfo[0]},${movieinfo[1]}`;
-    director.current.value = movieinfo[2];
-  }
-  function submit() {
-    console.log(alert('게시물이 등록되었습니다'));
-  }
-
-  return (
-    <>
-      <Header />
-      <Div6>
-        <Img src={movieImg} alt="예시이미지"></Img>
-        <Div7>
-          <SearchInput
-            type="text"
-            name="search"
-            placeholder="영화 제목을 검색하세요"
-            ref={movieSearch}
-          />
-          <SearchBtn type="button" onClick={movie}>
-            검색
-          </SearchBtn>
-          <div className={searchClass}>
-            {clientTitle.length < 1
-              ? '정보가 없습니다'
-              : clientTitle.map((el) => (
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: `${el.title},${el.pubDate},${el.director}`,
-                    }}
-                    onClick={titleconfirm}
-                  ></p>
-                ))}
-          </div>
-          <Input type="text" placeholder="날짜" />
-          <Input type="text" ref={titleNyear} placeholder="제목(개봉년도)" />
-          <Input type="text" ref={director} placeholder="감독" />
-          <Input type="text" placeholder="주연배우" />
-          <Input type="text" name="grade" placeholder="개인평점" />
-          <Input type="text" name="comment" placeholder="후기" />
-        </Div7>
-        <RegisterBtn onClick={submit}>등록하기</RegisterBtn>
-      </Div6>
-    </>
-  );
-}
