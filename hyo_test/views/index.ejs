@@ -26,6 +26,7 @@
     <!-- <script src="/socket.io/socket.io.js"></script> -->
     <script>
         let roomname = "room1";
+        let yourSocketId = '';
         const socket = io.connect();
         const msgform = document.getElementById('msgform');
         const roomsText = document.getElementById('rooms');
@@ -65,31 +66,44 @@
             const msginput = document.getElementById('msginput');
 
             // socket.emit으로 서버에 신호를 전달
-            socket.emit('message', msginput.value, roomname);
+            // socket.emit('message', msginput.value, roomname);
+            if(userName === 'test1') {
+                socket.emit('message', msginput.value, yourSocketId);
+            } else {
+                socket.emit('message', msginput.value, mySocektId);
+            }
 
             msginput.value = "";
         };
+
+        // 관리자 아이디 가진 경우에만 getRooms 실행
+        const userName = prompt('아이디를 입력해주세요');
+        if(userName === 'test1') {
+            socket.emit('getRooms');
+        }
+
         function getRooms() {
             socket.emit('getRooms');
         }
         socket.on('rooms', (data) => {
             console.log(data);
+            let temp = '';
+            temp += `<ul>`;
             for (let room in data) {
-                roomsText.innerHTML += room + "<br />";
+                // roomsText.innerHTML += room + "<br />";
+                temp += `<li onclick="clickJoinRoom(this, '${room}')">${room}</li>`;
             }
+            temp += `</ul>`;
+            roomsText.innerHTML += temp;
         });
 
-        // const debug = io.connect('http://localhost:8080/debug');
-        // function getRooms() {
-        //     debug.emit('getRooms');
-        // }
-        // debug.on('rooms', (data) => {
-        //     console.log(data);
-        //     // roomsText.textContent = '';
-        //     // for (let room in rooms) {
-        //     //     roomsText.innerHTML += room + "<br />";
-        //     // }
-        // });
+        function clickJoinRoom(e, socketId) {
+            console.log(e);
+            console.log(socketId);
+            // console.log(e.target.value());
+            yourSocketId = socketId;
+            socket.emit('joinRoom', roomname, socketId);
+        }
 
         function joinRoom() { // 방 접속 버튼 클릭시
            const roomOptions = document.getElementById("roomoptions");

@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
   // io로 바꾸면 다른 사람들도 인원이 업데이트가 된다.
   io.emit('usercount', io.engine.clientsCount);
 
+  // 관리자 socketID 넣어서 connection 생길때마다 추가해주기
+  // 나중에는 사용자가 message보내면 추가하는 방식으로 변경
+  // socket.to('관리자socketID').emit('rooms', roomList);
+
   // on 함수로 이벤트를 정의해 신호를 수신할 수 있다.
   // socket.on('message', (msg) => {
   socket.on('message', (msg, roomname) => {
@@ -51,7 +55,8 @@ io.on('connection', (socket) => {
   // 변경
   // const roomName = 'room' + roomList.length;
   const roomName = 'room1';
-  socket.join(roomName);
+  // socket.join(roomName);
+  socket.join(socket.id);
 
   socket.emit('info', socket.id);
 
