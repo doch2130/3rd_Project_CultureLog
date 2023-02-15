@@ -11,6 +11,16 @@
  margin: 6px 0px !important;
 }
 
+.chatRoomList > div:nth-child(1) {
+  padding: 5px;
+  cursor: default;
+  background-color: white;
+}
+
+.chatRoomList > div:nth-child(1):hover {
+  background-color: #f9edd8;
+}
+
 .chatRoomListContent {
   background-color: white;
   font-weight: 400;
@@ -23,4 +33,44 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+
+
+
+
+.offcanvas {
+  top: auto !important;
+  left: auto !important;
+  bottom: 50px;
+  right: 50px;
+  width: 352px !important;
+  height: 500px;
+  border: 1px solid black;
+}
+
+.offcanvas-header {
+  height: 30px;
+  padding: 0px;
+  padding-right: 15px;
+  justify-content: flex-end;
+}
+
+.offcanvas-header > button {
+  height: 30px;
+  padding: 0px;
+  font-size: 0.7rem;
+}
+
+.offcanvas-body {
+  width: 350px;
+  padding: 0px;
+}
+
+
+@media (max-width: 767px) {
+  .offcanvas {
+  right: 15px;
+  bottom: 10px;
+  }
 }

@@ -31,8 +31,8 @@ module.exports = (socketIO) => {
       userId: userId,
       roomid: roomUid,
       permissions: 'default',
-      msg: `test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.
-      test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.`,
+      // msg: `test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.
+      // test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.`,
     };
 
     // 사용자 기본 데이터를 DB에 저장

@@ -1,26 +1,44 @@
-import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Row, Col, Offcanvas } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import './ChatbotManager.css';
+import ChatbotRoom from './ChatbotRoom';
 
-export default function ChatbotManager2() {
+export default function ChatbotManager() {
   const roomList = useSelector((state) => state.socket.roomList);
+  const [selectRoom, setSelectRoom] = useState(null);
+  const handleClose = () => setSelectRoom(null);
+
   return (
     <>
+      <Offcanvas
+        show={selectRoom !== null}
+        onHide={handleClose}
+        scroll={true}
+        backdrop={false}
+      >
+        <Offcanvas.Header closeButton>
+          {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {/* {selectRoom?.roomId} */}
+          <ChatbotRoom />
+        </Offcanvas.Body>
+      </Offcanvas>
+
       {/* 채팅방 리스트 */}
       <Row className="chatRoomWindowAreaWrap">
         <Col xs={12}>
           {/* 방 목록 */}
-
-          {/* 방 목록 */}
           {roomList.map((el) => {
             // console.log('el', el);
             return (
-              <Row className="chatRoomList" key={el.roomId}>
-                <Col
-                  xs={12}
-                  style={{ padding: '2px 5px', backgroundColor: 'white' }}
-                >
+              <Row
+                className="chatRoomList"
+                key={el.roomId}
+                onClick={() => setSelectRoom(el)}
+              >
+                <Col xs={12}>
                   <Row>
                     <Col
                       xs={9}
