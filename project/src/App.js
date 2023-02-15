@@ -10,6 +10,7 @@ import Performance from './components/Performance';
 import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { socketInit } from './actions/socket_action';
+import './App.css';
 
 function App() {
   // axios 기본 url 설정

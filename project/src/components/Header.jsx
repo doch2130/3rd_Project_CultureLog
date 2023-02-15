@@ -7,34 +7,21 @@ import { useNavigate } from 'react-router-dom';
 
 // styled componets 설정은 함수 밖에서 해야 콘솔 창에 경고 메시지가 출력이 안된다.
 const Nav = styled.nav`
-  width: 100%;
-  text-align: center;
-  //  background-color: #dacea8;
-  //  height: '50px';
-  li {
-    list-style: none;
-    height: 100px;
-  }
-  p {
-    color: #828282;
-  }
-`;
+    width: 100%;
+    text-align: center;
+    li {
+      list-style: none;
+      height: 70px;
+    }
+    p {
+      color: #572b2b;
+      margin-top: 20px;
+    }
+  `;
 
 export default function Header() {
-  const imgStyle = { width: '50px', marginLeft: '10px' };
-  // const Nav = styled.nav`
-  //   width: 100%;
-  //   text-align: center;
-  //   //  background-color: #dacea8;
-  //   //  height: '50px';
-  //   li {
-  //     list-style: none;
-  //     height: 100px;
-  //   }
-  //   p {
-  //     color: #828282;
-  //   }
-  // `;
+  const imgStyle = { width: '50px', marginLeft: '10px', marginTop: '10px' };
+
   const navigate = useNavigate();
 
   const onClickHandler = () => {
@@ -54,33 +41,50 @@ export default function Header() {
   return (
     <>
       <Nav>
-        <ul style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <ul
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <li>
+            <Link to="/">
+              <img src={boxImg} alt="상자" style={imgStyle}></img>
+            </Link>
+          </li>
           <li>
             {' '}
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <p style={{ fontSize: '30px' }}>HOME</p>
+              <p style={{ fontSize: '25px' }}>HOME</p>
             </Link>
           </li>
           <li>
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <img src={boxImg} alt="상자" style={imgStyle}></img>
-              <p style={{ fontSize: '60px', marginTop: '-35px' }}>CultureLog</p>
+              <p
+                style={{
+                  fontSize: '50px',
+                  marginTop: '4px',
+                }}
+              >
+                CultureLog
+              </p>
             </Link>
           </li>
           <li className="Header_login">
             <Link to="/login" style={{ textDecoration: 'none' }}>
-              <p style={{ fontSize: '30px' }}>LOGIN</p>
+              <p style={{ fontSize: '25px' }}>LOGIN</p>
             </Link>
           </li>
           <li className="Header_logout">
-            <Link to="/" style={{ textDecoration: 'none' }}>
-              <p style={{ fontSize: '30px' }} onClick={onClickHandler}>
+            {/* <Link to="/" style={{ textDecoration: 'none' }}>
+              <p style={{ fontSize: '20px' }} onClick={onClickHandler}>
                 LOGOUT
               </p>
-            </Link>
+            </Link> */}
           </li>
         </ul>
       </Nav>
+      <hr style={{ color: '#572b2b', borderTop: '3px double #572b2b' }} />
     </>
   );
 }
