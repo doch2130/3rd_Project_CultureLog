@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header';
 import bookImg from '../book.jpeg';
 
 export default function Book() {
@@ -148,8 +147,6 @@ export default function Book() {
   `;
   return (
     <>
-      <Header />
-
       <Div6>
         <Img src={bookImg} alt="예시이미지"></Img>
         <Div7>

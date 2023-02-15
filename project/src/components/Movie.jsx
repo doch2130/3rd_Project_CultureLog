@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Header from './Header';
 import movieImg from '../movie.jpeg';
 // import axios from 'axios';
 import './Movie.css';
@@ -37,7 +36,6 @@ export default function Movie() {
 
   return (
     <>
-      <Header />
       <Div6>
         <Img src={movieImg} alt="예시이미지"></Img>
         <Div7>

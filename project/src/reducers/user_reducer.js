@@ -3,6 +3,7 @@ const initState = {
   loginSuccess: {
     loginSuccess: false,
     userId: '',
+    permission: 'default',
   },
 };
 // export default function user_reducer(state = {}, action) {

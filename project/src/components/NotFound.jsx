@@ -4,7 +4,7 @@ import Header from './Header';
 export default function NotFound() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <h1>page not found</h1>
     </>
   );

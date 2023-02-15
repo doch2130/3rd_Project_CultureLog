@@ -1,83 +1,4 @@
-/* 챗봇 아이콘 */
-.chatBotIconWrap {
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  z-index: 20;
-}
-
-.newAlertBtn {
-  cursor: pointer;
-  position: relative;
-  width: 60px;
-  height: 60px;
-  border-radius: 50px;
-  border: 1px solid black;
-  background-color: white;
-  padding: 0px;
-}
-
-.chatBotIcon {
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    top: 4px;
-    left: 7px;
-}
-
-.newAlertSpan {
-  position: absolute;
-  background-color: red;
-  border: 1px solid white;
-  border-radius: 50px;
-  width: 15px;
-  height: 15px;
-  top: 0px;
-  right: 0px;
-}
-
-/* 챗봇 채팅창 */
-
-/* 채팅창 베이스*/
-.chatWindowWrap {
-  width: 350px;
-  height: 500px;
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  border: 1px solid black;
-  z-index: 25;
-}
-
-/* 채팅창 닫기 버튼 */
-.chatWindowWrap > div.row:nth-child(1) {
-  background-color: #BACEE0;
-}
-.chatWindowWrap > div.row:nth-child(1) > div {
-  text-align: right;
-  height: 30px;
-}
-/* 닫기 버튼 */
-.closeBtn {
-  display:inline-block;
-}
-.closeBtn:after {
-  display: inline-block;
-  content: "\00d7";
-  font-size: 15pt;
-  font-weight: 700;
-}
-.closeBtn:hover {
-  color: white;
-  cursor: pointer;
-}
-
-
 /* 채팅창 */
-.chatWindowAreaWrap {
-  background-color: #BACEE0;
-}
-
 .chatWindowAreaWrap > div:nth-child(1) {
   height: 330px;
   padding: 0px 12px 5px;
@@ -86,7 +7,7 @@
 
 /* 내가 보낸 메시지 */
 .myMessageWrap {
-  margin: 5px 0px; 
+  margin: 5px 0px !important; 
 }
 .myMessageWrap > div:nth-child(1) {
   padding: 0px;
@@ -98,6 +19,7 @@
 .myMessageTime {
   font-size: 0.75rem;
   margin-right: 5px;
+  font-weight: 400;
 }
 .myMessageText {
   white-space: pre-wrap;
@@ -109,6 +31,7 @@
   display: inline-block;
   text-align: left;
   padding: 5px 10px;
+  font-weight: 400;
 }
 .myMessageText::after {
   content:'';
@@ -123,7 +46,7 @@
 
 /* 상대가 보낸 메시지 */
 .youMessageWrap {
-  margin: 5px 0px;
+  margin: 5px 0px !important;
 }
 .youMessageWrap > div:nth-child(1) {
   padding: 0px;
@@ -143,10 +66,12 @@
   font-size: 0.75rem;
   display: inline-block;
   padding: 5px 10px;
+  font-weight: 400;
 }
 .youMessageTime {
  font-size: 0.75rem; 
  margin-left: 5px;
+ font-weight: 400;
 }
 .youMessageText::after {
   content:'';
@@ -163,7 +88,6 @@
 /* 채팅 Footer */
 .chatWindowFooter {
   background-color: white;
-  margin-top: 0px;
 }
 /* 입력 창 */
 .chatWindowFooter > div:nth-child(1) > textarea {
@@ -173,6 +97,8 @@
   resize: none;
   margin-top: 5px;
   outline: none;
+  background-color: white;
+  font-weight: 400;
 }
 /* 전송 버튼 */
 .chatWindowFooter > div:nth-child(2) {
@@ -198,18 +124,4 @@
   position: relative;
   top:2px;
   color: white !important;
-}
-
-
-@media (max-width: 767px) {
-  .chatBotIconWrap {
-  right: 15px;
-  bottom: 10px;
-  }
-
-  .chatWindowWrap {
-    background-color: white;
-    right: 15px !important;
-    bottom: 10px !important;
-  }
 }

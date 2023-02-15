@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../Header';
 
 const Div2 = styled.div`
   margin: auto;
@@ -65,9 +64,15 @@ export default function Join() {
     if (Password !== ConfirmPassword) {
       return alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
     }
+
+    // 회원가입 DB에 저장할 때 permission도 설정 부탁드려요
+    // 기본 값 default
+    // 관리자는 따로 DB에서 직접 수정할 예정입니다.
+    // 관리자 manager
     let body = {
       email: Email,
       password: Password,
+      permission: 'default',
     };
     //리덕스를 쓰지 않을 경우
     //axios.post('/api/users/register', body)
@@ -99,7 +104,6 @@ export default function Join() {
         onSubmit={onSubmitHandler}
       >
         <Div2>
-          <Header />
           <h1>JOIN</h1>
           <label>ID</label>
           <input type="text" value={Email} onChange={onEmailHandler} />
