@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
 import Login from './components/Login/Login';
 import NotFound from './components/NotFound';
 import Join from './components/Join/Join';
@@ -10,6 +9,7 @@ import Movie from './components/Movie';
 import Performance from './components/Performance';
 import io from 'socket.io-client';
 import socketIO from './socketio/index';
+import './App.css';
 
 function App() {
   socketIO(io);

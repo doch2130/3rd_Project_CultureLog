@@ -23,7 +23,7 @@ const Div1 = styled.div`
   h1 {
     font-weight: 700;
     font-size: 40px;
-    color: #d2b6a9;
+    color: #572b2b;
   }
 `;
 
