@@ -1,8 +1,15 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+*{
+  background-color: #ddd9d2;
+  font-family: 'DM Serif Display', serif;
+ 
+  font-weight: 600;
+}
+
 .App {
   text-align: center;
-  font-family: 'Pacifico', cursive;
 }
 
 .App-logo {
@@ -17,7 +24,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f9fafd;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
