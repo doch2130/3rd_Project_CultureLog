@@ -5,9 +5,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
-  const imgStyle = { width: '50px', marginLeft: '10px', marginTop: '10px' };
-  const Nav = styled.nav`
+// styled componets 설정은 함수 밖에서 해야 콘솔 창에 경고 메시지가 출력이 안된다.
+const Nav = styled.nav`
     width: 100%;
     text-align: center;
     li {
@@ -19,6 +18,10 @@ export default function Header() {
       margin-top: 20px;
     }
   `;
+
+export default function Header() {
+  const imgStyle = { width: '50px', marginLeft: '10px', marginTop: '10px' };
+
   const navigate = useNavigate();
 
   const onClickHandler = () => {

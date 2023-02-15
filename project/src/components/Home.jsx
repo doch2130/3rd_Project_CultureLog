@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import HomeCalendar from './HomeCalendar';
 import Chatbot from './Chatbot';
@@ -6,12 +6,24 @@ import './Home.css';
 import ChatbotManager from './ChatbotManager';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // Main Page
 export default function Home() {
   const navigate = useNavigate();
+  const loginInformation = useSelector((state) => state.user.loginSuccess);
+  const [isManager, setIsManager] = useState(false);
+  // console.log('userId', loginInformation);
+
   useEffect(() => {
     axios.get('/api/hello').then((response) => console.log(response));
+
+    if (loginInformation.userId === '63ecad322ba25214448d088d') {
+      setIsManager(true);
+    } else {
+      setIsManager(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container fluid>
@@ -63,8 +75,9 @@ export default function Home() {
           </Row>
         </Col>
       </Row>
-      <Chatbot />
-      {/* <ChatbotManager /> */}
+      {/* {!isManager ? <ChatbotManager /> : <Chatbot />} */}
+      {!isManager && <Chatbot />}
+      {isManager && <ChatbotManager />}
     </Container>
   );
 }
