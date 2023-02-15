@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
+// 삭제해도 될 거 같긴한데 일단 보류
+
 export default function ChatbotManagerRoom() {
   return (
     <>

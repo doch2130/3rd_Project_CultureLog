@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import './Chatbot.css';
 import ChatbotTestComponent from './ChatbotTestComponent';
 
 export default function Chatbot() {
   const [isChattingBox, setIsChattingBox] = useState(false);
 
+  const socket = useSelector((state) => state.socket.socket);
+
+  useEffect(() => {
+    socket.on('welceome', (msg) => {
+      console.log(msg);
+    });
+  });
   return (
     <div>
       {/* 챗봇 아이콘 */}

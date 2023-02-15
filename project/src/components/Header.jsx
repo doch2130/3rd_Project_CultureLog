@@ -5,21 +5,36 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+// styled componets 설정은 함수 밖에서 해야 콘솔 창에 경고 메시지가 출력이 안된다.
+const Nav = styled.nav`
+  width: 100%;
+  text-align: center;
+  //  background-color: #dacea8;
+  //  height: '50px';
+  li {
+    list-style: none;
+    height: 100px;
+  }
+  p {
+    color: #828282;
+  }
+`;
+
 export default function Header() {
   const imgStyle = { width: '50px', marginLeft: '10px' };
-  const Nav = styled.nav`
-    width: 100%;
-    text-align: center;
-    //  background-color: #dacea8;
-    //  height: '50px';
-    li {
-      list-style: none;
-      height: 100px;
-    }
-    p {
-      color: #828282;
-    }
-  `;
+  // const Nav = styled.nav`
+  //   width: 100%;
+  //   text-align: center;
+  //   //  background-color: #dacea8;
+  //   //  height: '50px';
+  //   li {
+  //     list-style: none;
+  //     height: 100px;
+  //   }
+  //   p {
+  //     color: #828282;
+  //   }
+  // `;
   const navigate = useNavigate();
 
   const onClickHandler = () => {
