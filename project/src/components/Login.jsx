@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from './Header';
 
 const Div1 = styled.div`
   margin: auto;
@@ -54,7 +53,6 @@ export default function Login() {
 
   return (
     <>
-      <Header />
       <Div1>
         <h1>LOGIN</h1>
         <input id="id" name="userid" type="text" placeholder="아이디" />

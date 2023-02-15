@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../Header';
 // style={{
 //   display: 'flex',
 //   justifyContent: 'center',
@@ -95,7 +94,6 @@ export default function Login() {
 
   return (
     <>
-      <Header />
       <Form onSubmit={onSubmitHandler}>
         <Div1>
           <h1>LOGIN</h1>

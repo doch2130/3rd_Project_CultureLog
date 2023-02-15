@@ -1,0 +1,26 @@
+/* 방 목록 기본 베이스 */
+.chatRoomWindowAreaWrap > div:nth-child(1) {
+  height: 468px;
+  padding: 0px 12px 5px;
+  overflow: auto;
+}
+
+/* 방 목록 */
+.chatRoomList {
+ background-color: #f6f4f4;
+ margin: 6px 0px !important;
+}
+
+.chatRoomListContent {
+  background-color: white;
+  font-weight: 400;
+  margin: 0px;
+  overflow: hidden;
+  white-space: normal;
+  font-size: 0.7rem;
+  max-height: 33px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

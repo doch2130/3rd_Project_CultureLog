@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header';
 import musicalImg from '../musical.jpeg';
 
 export default function Movie() {
@@ -134,8 +133,6 @@ export default function Movie() {
   `;
   return (
     <>
-      <Header />
-
       <Div6>
         <Img src={musicalImg} alt="예시이미지"></Img>
         <Div7>

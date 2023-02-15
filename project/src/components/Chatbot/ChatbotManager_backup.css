@@ -1,0 +1,45 @@
+/* 채팅창 닫기 버튼 */
+/* .chatRoomWindowWrap > div.row:nth-child(1) {
+  background-color: white;
+} */
+/* 닫기 버튼 */
+/* .closeBtn:after {
+  display: inline-block;
+  content: "\00d7";
+  font-size: 15pt;
+  font-weight: 700;
+}
+.closeBtnRoom:hover {
+  color: #a39f9f;
+  cursor: pointer;
+} */
+
+
+/* 채팅창 기본 베이스 */
+.chatRoomWindowAreaWrap {
+  background-color: white;
+}
+
+.chatRoomWindowAreaWrap > div:nth-child(1) {
+  height: 468.9px;
+  padding: 0px 12px 5px;
+  overflow: auto;
+}
+
+/* 채팅방 */
+.chatRoomList {
+ background-color: #f6f4f4;
+ margin: 6px 0px !important;
+}
+
+.chatRoomListContent {
+  margin: 0px;
+  overflow: hidden;
+  white-space: normal;
+  font-size: 0.7rem;
+  max-height: 33px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from './Header';
 
 const Div2 = styled.div`
   margin: auto;
@@ -40,7 +39,6 @@ export default function Join() {
   };
   return (
     <>
-      <Header />
       <Div2>
         <h1>JOIN</h1>
         <input id="id" name="userid" type="text" value="아이디" />
