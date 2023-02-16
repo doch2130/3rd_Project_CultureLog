@@ -5,6 +5,7 @@ import {
   socketRooms,
   socketRoomsAdd,
   socketMessageAdd,
+  socketMessage,
 } from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
@@ -27,16 +28,27 @@ export default function Chatbot() {
       // console.log(initSocketData);
       const defaultMsgTime =
         date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
-      // dispatch(socketMessageAdd({ initSocketData, defaultMsgTime }));
+      dispatch(socketMessageAdd({ initSocketData, defaultMsgTime }));
       setMySocketId(initSocketData.socketId);
       setMyRoomId(initSocketData.roomId);
     });
 
     socket.on('getRooms', (roomsData) => {
-      // console.log('getRooms', roomsData);
-      for (let i = 0; i < roomsData.length; i++) {
-        dispatch(socketRooms(roomsData[i]));
-      }
+      // 따로 설정을 안해도 socketMessageAdd() 함수가 먼저 실행이 되지만,
+      // 혹시 모를 안전을 위해서 1초 후 실행되도록 설정
+
+      setTimeout(() => {
+        // console.log('getRooms', roomsData);
+        for (let i = 0; i < roomsData.length; i++) {
+          // console.log('oomsData[i].msg', roomsData[i].msg);
+          dispatch(socketRooms(roomsData[i]));
+        }
+
+        for (let i = 0; i < roomsData.length; i++) {
+          // console.log('oomsData[i].msg', roomsData[i].msg);
+          dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
+        }
+      }, 1000);
     });
 
     // let temp = [];
@@ -53,6 +65,10 @@ export default function Chatbot() {
     // });
 
     // console.log(temp);
+
+    // socket.on('userDisconnect', (dieSocketId) => {
+    //   console.log('asd', dieSocketId);
+    // });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

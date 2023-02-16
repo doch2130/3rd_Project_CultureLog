@@ -44,46 +44,27 @@ module.exports = (socketIO) => {
     // redisCli.set(socket.id, JSON.stringify(data[socket.id]));
     // redisCli.set(socket.id, JSON.stringify(tempData));
 
-    // 방 리스트 저장
+    // 방 리스트 임시 저장
     const tempRoom = {
       roomId: roomUid,
       clientSocketId: socket.id,
       clientUserId: userId,
-      // msg: `test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.
-      // test 메시지 입니다.test 메시지 입니다.test 메시지 입니다.`,
       msg: [
         {
           permission: 'server',
           content: '문의 사항이 있으시면 메시지 남겨주세요.',
           time: '',
-          // time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
         },
-        // {
-        //   permission: 'default',
-        //   content: '문gggggggg',
-        //   time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-        // },
+        {
+          permission: 'default',
+          content: '문gggggggg',
+          time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+        },
       ],
     };
 
-    // 메시지 저장
-    // const tempMessage = {
-    //   permission: 'server',
-    //   content: '문의 사항이 있으시면 메시지 남겨주세요.',
-    //   time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-    // };
-    // const tempMessage2 = {
-    //   permission: 'server',
-    //   content: '문의 사항이 있으시면 메시지 남겨주세요.',
-    //   time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-    // };
-
+    // 방 리스트 저장
     rooms.push(tempRoom);
-
-    // message[roomUid] = tempMessage;
-    // message[roomUid] = tempMessage2;
-
-    // console.log(message[0]);
 
     // 기본 메시지
     // socketIO
@@ -99,18 +80,11 @@ module.exports = (socketIO) => {
       time: '',
       // time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
     });
-    // 사용자 방 ID, 소켓 ID 전달하기
-    // socket.emit('info', { roomId: roomUid, socketId: socket.id });
 
-    // socket.on('send_message', (data) => {
-    //   console.log('send', data);
-    // });
-
-    // 관리자 로그인 시 실행해주면 될 것 같다.
-    // socket.emit('getRooms', message);
-    // socketIO.emit('getRooms', { rooms: rooms, message: message });
+    // 관리자 로그인 시 실행해주려고 했는데, 현재 Chatbot 컴포넌트가 따로 돌고 있어서 그런지,
+    // 로그인 이후에도 실행이 안되서, 바로 데이터 보내주는 방식으로 변경
+    // 단, 로그인 유저가 manager인 경우에만 데이터 볼 수 있게 함
     socketIO.emit('getRooms', rooms);
-    // console.log(message);
 
     // 기본 설정?
     // 수정이 필요할 듯
@@ -119,6 +93,7 @@ module.exports = (socketIO) => {
     socket.on('disconnect', () => {
       console.log(socket.id + ' Exit');
       delete data[socket.id];
+      // socketIO.emit('userDisconnect', socket.id);
     });
   });
 };
