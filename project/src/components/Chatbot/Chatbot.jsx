@@ -1,43 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { socketRooms, socketRoomsAdd } from '../../actions/socket_action';
+import {
+  socketRooms,
+  socketRoomsAdd,
+  socketMessageAdd,
+} from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
 import './Chatbot.css';
 
 export default function Chatbot() {
+  const date = new Date();
   const dispatch = useDispatch();
   const [isChatBotIcon, setIsChatBotIcon] = useState(true);
 
-  const userPermission = useSelector((state) => state.user.loginSuccess);
-  // const userPermission = useSelector(
-  //   (state) => state.user.loginSuccess.permission
-  // );
+  const userInfo = useSelector((state) => state.user.loginSuccess);
   const socket = useSelector((state) => state.socket.socket);
+  const message = useSelector((state) => state.socket.message);
+
+  const [mySocketId, setMySocketId] = useState('');
+  const [myRoomId, setMyRoomId] = useState('');
 
   useEffect(() => {
-    socket.on('welceome', (msg) => {
-      console.log(msg);
+    socket.on('welceome', (initSocketData) => {
+      // console.log(initSocketData);
+      const defaultMsgTime =
+        date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
+      // dispatch(socketMessageAdd({ initSocketData, defaultMsgTime }));
+      setMySocketId(initSocketData.socketId);
+      setMyRoomId(initSocketData.roomId);
     });
 
-    // 현재 방 목록 받아오기
     socket.on('getRooms', (roomsData) => {
-      // console.log('getRooms', data);
+      // console.log('getRooms', roomsData);
       for (let i = 0; i < roomsData.length; i++) {
         dispatch(socketRooms(roomsData[i]));
       }
     });
 
-    // console.log(roomList.length);
-    // if (roomList.length > 0) {
-    // 그냥 두었더니 방 목록 + 새로운 방 업데이트 둘다 실행되서 조건문을 걸어야 할 것 같다.
-    // 사용자 새로 접속 시 이벤트 발생
-    // socket.on('updateRooms', (roomData) => {
-    //   console.log(roomData);
-    //   dispatch(socketRoomsAdd(roomData));
+    // let temp = [];
+    // temp.push({
+    //   roomId: userSocketInfo.roomId,
+    //   msg: [
+    //     {
+    //       permission: 'server',
+    //       content: '문의 사항이 있으시면 메시지 남겨주세요.',
+    //       time:
+    //         date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+    //     },
+    //   ],
     // });
-  });
+
+    // console.log(temp);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       {/* 챗봇 아이콘 */}
@@ -71,8 +90,7 @@ export default function Chatbot() {
           </Row>
 
           {/* 관리자 or 일반 사용자 */}
-          {/* {userPermission === 'default' ? <ChatbotManager /> : <ChatbotRoom />} */}
-          {userPermission.userId === '63ecad322ba25214448d088d' ? (
+          {userInfo.permission === 'manager' ? (
             <ChatbotManager />
           ) : (
             <ChatbotRoom />
