@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import examimg from '../movie.jpeg';
 import './Movie.css';
-import { callMovieAPI } from '../actions/movie_action';
+import { callMovieAPI } from '../actions/logdata_action';
 
 export default function Movie() {
-  const clientTitle = useSelector((state) => state.movie.movieinfo);
+  const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const dispatch = useDispatch();
 
   const [searchClass, setSearchClass] = useState('searchBoard');
