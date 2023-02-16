@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+
+import bookImg from '../book.jpeg';
+import Star from './Star';
 import examImg from '../book.jpeg';
 import { callBookAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -93,7 +96,7 @@ export default function Book() {
           </p>
           <p>
             개인평점
-            <Input type="text" />
+            <Star />
           </p>
           <p style={pStyle}>후기</p>
           <textarea placeholder="후기를 작성해주세요" />
