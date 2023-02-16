@@ -1,16 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../actions/user_action';
+import { loginUser, cookieUser } from '../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// style={{
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   width: '100%',
-//   height: '100vh',
-// }}
+import Auth from '../../hoc/auth';
 
 const Div1 = styled.div`
   margin: auto;
@@ -53,11 +47,13 @@ const Div2 = styled.div`
     margin-right: 10px;
   }
 `;
-export default function Login() {
+function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+
+  /*   const [Cookies, setCookie, removeCookie] = useCookies(); */
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
@@ -76,13 +72,12 @@ export default function Login() {
       email: Email,
       password: Password,
     };
-
     dispatch(loginUser(body))
       //랜딩페이지(초기페이지로 렌딩)
-      //로그인 성공시 '/'로 이동.
+      //로그인 성공시 '/home'로 이동.
       .then((response) => {
         if (response.payload.loginSuccess) {
-          navigate('/');
+          navigate('/home');
         } else {
           alert('로그인에 실패했습니다.');
         }
@@ -114,3 +109,4 @@ export default function Login() {
     </>
   );
 }
+export default Auth(Login, null);

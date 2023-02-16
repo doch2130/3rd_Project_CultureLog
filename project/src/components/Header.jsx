@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../actions/user_action';
+import { Cookies } from 'react-cookie';
 
 // styled componets 설정은 함수 밖에서 해야 콘솔 창에 경고 메시지가 출력이 안된다.
 const Nav = styled.nav`
@@ -25,6 +26,7 @@ export default function Header() {
   const imgStyle = { width: '50px', marginLeft: '10px', marginTop: '10px' };
   const navigate = useNavigate();
 
+  const cookies = new Cookies();
   const isUser = useSelector((state) => state.user.loginSuccess);
   const dispatch = useDispatch();
 
@@ -36,7 +38,8 @@ export default function Header() {
         //기본은 로그인 페이지..
         navigate('/');
         alert('로그아웃 되었습니다.');
-        dispatch(logoutUser());
+        cookies.remove();
+        /* dispatch(logoutUser()); */
       } else {
         alert('로그아웃 실패.');
       }
@@ -64,9 +67,9 @@ export default function Header() {
             </Link>
           </li>
           {/* 로그인 여부에 따라 나오는 버튼 구현 */}
-          {isUser.userId ? (
+          {cookies.get('x_auth') ? (
             <li className="Header_logout">
-              <Link to="/" style={{ textDecoration: 'none' }}>
+              <Link to="/home" style={{ textDecoration: 'none' }}>
                 <p style={{ fontSize: '20px' }} onClick={onClickHandler}>
                   LOGOUT
                 </p>
