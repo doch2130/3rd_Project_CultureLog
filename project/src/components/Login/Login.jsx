@@ -81,6 +81,7 @@ export default function Login() {
       //랜딩페이지(초기페이지로 렌딩)
       //로그인 성공시 '/'로 이동.
       .then((response) => {
+        // 현재 방 목록 받아오기
         if (response.payload.loginSuccess) {
           navigate('/');
         } else {

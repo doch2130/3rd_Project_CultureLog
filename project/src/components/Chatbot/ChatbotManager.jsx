@@ -6,8 +6,11 @@ import ChatbotRoom from './ChatbotRoom';
 
 export default function ChatbotManager() {
   const roomList = useSelector((state) => state.socket.roomList);
+  const message = useSelector((state) => state.socket.message);
+  // const roomId = useSelector((state) => state.socket.roomList);
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
+  console.log(roomList);
 
   return (
     <>
@@ -17,11 +20,8 @@ export default function ChatbotManager() {
         scroll={true}
         backdrop={false}
       >
-        <Offcanvas.Header closeButton>
-          {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
-        </Offcanvas.Header>
+        <Offcanvas.Header closeButton></Offcanvas.Header>
         <Offcanvas.Body>
-          {/* {selectRoom?.roomId} */}
           <ChatbotRoom />
         </Offcanvas.Body>
       </Offcanvas>
@@ -81,8 +81,14 @@ export default function ChatbotManager() {
                       style={{ padding: '0px', backgroundColor: 'white' }}
                     >
                       <pre className="chatRoomListContent">
-                        {el.msg}
-                        {/* 안녕하세요. 안녕하세요. */}
+                        {/* 마지막 대화 내용 가져오기 */}
+                        {message.map((elMsg) => {
+                          let content = '';
+                          if (el.roomId === elMsg.roomId) {
+                            content = elMsg.msg[elMsg.msg.length - 1].content;
+                          }
+                          return content;
+                        })}
                       </pre>
                     </Col>
                     <Col

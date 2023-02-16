@@ -8,4 +8,5 @@ export const MOVIE = 'movie';
 // socket
 export const SOCKET_INIT = 'socket/init';
 export const SOCKET_ROOMS = 'socket/rooms';
-export const SOCKET_ROOMADD = 'socket/rooms/add';
+export const SOCKET_ROOM_ADD = 'socket/rooms/add';
+export const SOCKET_INIT_MESSAGE_ADD = 'socket/message/add';

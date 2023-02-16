@@ -1,4 +1,10 @@
-import { SOCKET_INIT, SOCKET_ROOMADD, SOCKET_ROOMS } from './types';
+import {
+  SOCKET_INIT,
+  SOCKET_ROOMADD,
+  SOCKET_ROOMS,
+  SOCKET_ROOM_ADD,
+  SOCKET_INIT_MESSAGE_ADD,
+} from './types';
 
 export function socketInit(socket) {
   return {
@@ -16,7 +22,14 @@ export function socketRooms(rooms) {
 
 export function socketRoomsAdd(room) {
   return {
-    type: SOCKET_ROOMADD,
+    type: SOCKET_ROOM_ADD,
     payload: room,
+  };
+}
+
+export function socketMessageAdd(msg) {
+  return {
+    type: SOCKET_INIT_MESSAGE_ADD,
+    payload: msg,
   };
 }
