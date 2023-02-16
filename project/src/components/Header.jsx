@@ -23,7 +23,7 @@ const Nav = styled.nav`
 `;
 
 export default function Header() {
-  const imgStyle = { width: '105px', marginLeft: '10px', marginTop: '10px' };
+  const imgStyle = { width: '103px', marginLeft: '10px', marginTop: '10px' };
   const navigate = useNavigate();
 
   const cookies = new Cookies();
@@ -70,7 +70,7 @@ export default function Header() {
           {cookies.get('x_auth') ? (
             <li className="Header_logout">
               <Link to="/home" style={{ textDecoration: 'none' }}>
-                <p style={{ fontSize: '20px' }} onClick={onClickHandler}>
+                <p style={{ fontSize: '25px' }} onClick={onClickHandler}>
                   LOGOUT
                 </p>
               </Link>
@@ -94,7 +94,7 @@ export default function Header() {
       >
         <hr
           style={{
-            width: '80%',
+            width: '90%',
             borderTop: '3px double #572b2b',
             marginTop: '22px',
           }}
