@@ -31,6 +31,15 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: { origin: ['http://localhost:3000', 'http://127.0.0.1:3000'] },
 });
+const cors = require('cors');
+
+let corsOption = {
+  origin: 'http://localhost:3000', // 허락하는 요청 주소
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
+};
+app.use(cors(corsOption));
 const socket = require('./socketio/index');
 const port = 5000;
 const bodyParser = require('body-parser');
