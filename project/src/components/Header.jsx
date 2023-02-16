@@ -25,6 +25,7 @@ const Nav = styled.nav`
 export default function Header() {
   const imgStyle = { width: '105px', marginLeft: '10px', marginTop: '10px' };
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const cookies = new Cookies();
   const isUser = useSelector((state) => state.user.loginSuccess);
