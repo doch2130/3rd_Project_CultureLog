@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: 5,
   },
+  permission: {
+    type: String,
+    default: 'default',
+  },
   token: {
     type: String,
   },
