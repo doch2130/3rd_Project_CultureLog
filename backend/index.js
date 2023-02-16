@@ -68,13 +68,26 @@ app.get('/api/hello', (req, res) => {});
 app.post('/api/users/register', (req, res) => {
   //회원가입을 할 때 필요한 정보들을 클라이언트에서 가져오면
   //그 정보들을 데이터 베이스에 넣어준다.
-  const user = new User(req.body);
-  //몽고db
-  user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-    });
+  // const user = new User(req.body);
+
+  console.log(req.body);
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (user) {
+      return res.json({
+        success: false,
+        msg: '이미 존재하는 아이디입니다.',
+      });
+    } else {
+      console.log(req.body);
+      //몽고db
+      const user = new User(req.body);
+      user.save((err, userInfo) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+        });
+      });
+    }
   });
 });
 
@@ -86,7 +99,7 @@ app.post('/api/users/login', async (req, res) => {
     if (!user) {
       return res.json({
         loginSuccess: false,
-        message: '제공된 이메일에 해당하는 유저가 없습니다.',
+        message: '제공된 아이디에 해당하는 유저가 없습니다.',
       });
     }
     //2. 데이터베이스에서 요청한 E-mail이 있다면 비밀번호가 같은지 확인
@@ -109,27 +122,6 @@ app.post('/api/users/login', async (req, res) => {
           permission: user.permission,
         });
       });
-      /*       if (res.cookie) {
-      } */
-      /* const { x_auth } = req.signedCookies;
-      if (!x_auth) {
-        console.log('Not_Refresh_Cookie');
-        res.clearCookie('x_auth');
-        res.send({ msg: 'Not_Refresh_cookie' });
-        return;
-      } else {
-        res.send({ msg: '로그인 성공' });
-      } */
-      /*       console.log('x_auth', req.body);
-      if (req.body) {
-        const jwtToken = await jwt.sign(req.body);
-        const jwtid = await hash.createRefreshToken(req.body.email);
-        console.log('jwtid', jwtid);
-        await jwtToken.create({
-          jwtid,
-          refresh: jwtToken.refreshToken,
-        });
-      } */
     });
   });
 });
@@ -142,7 +134,7 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     permission: req.user.permission,
-    role: req.user.role,
+    /*     role: req.user.role, */
   });
 });
 
