@@ -98,6 +98,10 @@ function Join() {
     // 기본 값 default
     // 관리자는 따로 DB에서 직접 수정할 예정입니다.
     // 관리자 manager
+    if (Password !== ConfirmPassword) {
+      return alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
+    }
+
     let body = {
       email: Email,
       password: Password,
@@ -114,7 +118,7 @@ function Join() {
           navigate('/login');
           alert(`환영합니다 ${Email}님😍`);
         } else {
-          alert('회원가입에 실패했습니다.😅');
+          alert(response.payload.msg);
         }
       });
   };
