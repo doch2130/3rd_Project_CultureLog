@@ -11,6 +11,9 @@
   border-color: #D0D6C3 !important;
   color: black !important;
 }
+.fc-toolbar-title, .fc-icon {
+  background-color: #D0D6C3;
+}
 /* 버튼 focus 테두리 제거 */
 .fc-toolbar-chunk > button:focus {
   box-shadow: none !important;
@@ -37,6 +40,7 @@ thead > tr {
 /* 테이블 월 년 텍스트 */
 h2.fc-toolbar-title {
   font-size: 1.5rem !important;
+  cursor: default;
 }
 
 /* 테이블 Header - 요일 */
