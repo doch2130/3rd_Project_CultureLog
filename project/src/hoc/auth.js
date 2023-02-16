@@ -16,8 +16,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
     useEffect(() => {
       //백엔드에서 처리한 정보가 response에 들어 있음.
       dispatch(auth()).then((response) => {
-        console.log(response);
-        console.log(response.payload.isAuth);
+        /* console.log(response);
+        console.log(response.payload.isAuth); */
         if (!response.payload.isAuth) {
           //로그인 하지 않은 상태
           if (option) {
