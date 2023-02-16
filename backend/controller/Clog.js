@@ -22,6 +22,7 @@ exports.Naver = (req, res) => {
         title: servertitle[i].title,
         pubDate: servertitle[i].pubDate,
         director: servertitle[i].director,
+        img: servertitle[i].image,
       });
     }
     console.log('clienttitle', clienttitle);
