@@ -78,8 +78,9 @@ function Login() {
       .then((response) => {
         if (response.payload.loginSuccess) {
           navigate('/home');
+          alert(`${Email}님 오늘도 행복한 하루 보내세요🥰`);
         } else {
-          alert('로그인에 실패했습니다.');
+          alert('아이디와 비밀번호 정보를 확인해주세요🙂');
         }
       });
   };

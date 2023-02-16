@@ -109,27 +109,6 @@ app.post('/api/users/login', async (req, res) => {
           permission: user.permission,
         });
       });
-      /*       if (res.cookie) {
-      } */
-      /* const { x_auth } = req.signedCookies;
-      if (!x_auth) {
-        console.log('Not_Refresh_Cookie');
-        res.clearCookie('x_auth');
-        res.send({ msg: 'Not_Refresh_cookie' });
-        return;
-      } else {
-        res.send({ msg: '로그인 성공' });
-      } */
-      /*       console.log('x_auth', req.body);
-      if (req.body) {
-        const jwtToken = await jwt.sign(req.body);
-        const jwtid = await hash.createRefreshToken(req.body.email);
-        console.log('jwtid', jwtid);
-        await jwtToken.create({
-          jwtid,
-          refresh: jwtToken.refreshToken,
-        });
-      } */
     });
   });
 });
@@ -142,7 +121,7 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     permission: req.user.permission,
-    role: req.user.role,
+    /*     role: req.user.role, */
   });
 });
 
