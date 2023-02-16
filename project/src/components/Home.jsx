@@ -4,9 +4,10 @@ import HomeCalendar from './HomeCalendar';
 import './Home.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Auth from '../hoc/auth';
 
 // Main Page
-export default function Home() {
+function Home() {
   const navigate = useNavigate();
   // const loginInformation = useSelector((state) => state.user.loginSuccess);
   // const [isManager, setIsManager] = useState(false);
@@ -75,3 +76,4 @@ export default function Home() {
     </Container>
   );
 }
+export default Auth(Home, true);

@@ -2,7 +2,7 @@
 // const app = express();
 // const dotenv = require('dotenv');
 // dotenv.config();
-// const router = require('./routes/index');
+const router = require('./routes/index');
 // const cors = require('cors');
 
 // let corsOption = {
@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
+app.use('/', router);
 
 const mongoose = require('mongoose');
 const { Router } = require('express');
@@ -61,10 +62,6 @@ mongoose
   .connect(config.mongoURI, {})
   .then(() => console.log('mongoDB Connected...'))
   .catch((err) => console.log(err));
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
 app.get('/api/hello', (req, res) => {});
 
@@ -81,7 +78,7 @@ app.post('/api/users/register', (req, res) => {
   });
 });
 
-app.post('/api/users/login', (req, res) => {
+app.post('/api/users/login', async (req, res) => {
   //1. 데이터베이스에서 요청한 e-mail찾기
   //요청된 이메일을 데이터베이스에 있는지 찾는다
   //findOne -> mongodb method
@@ -94,7 +91,7 @@ app.post('/api/users/login', (req, res) => {
     }
     //2. 데이터베이스에서 요청한 E-mail이 있다면 비밀번호가 같은지 확인
     //요청된 이메일이 데이터베이스에 있다면 비밀번호가 맞는 비밀번호인지 확인.
-    user.comparePassword(req.body.password, (err, isMatch) => {
+    user.comparePassword(req.body.password, async (err, isMatch) => {
       if (!isMatch)
         return res.json({
           loginSuccess: false,
@@ -106,11 +103,33 @@ app.post('/api/users/login', (req, res) => {
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
         // 토큰을 저장한다. 어디에? -> 쿠키, 로컬스토리지 등등..
-        res
-          .cookie('x_auth', user.token)
-          .status(200)
-          .json({ loginSuccess: true, userId: user._id });
+        res.cookie('x_auth', user.token, { maxAge: 30000 }).status(200).json({
+          loginSuccess: true,
+          userId: user._id,
+          permission: user.permission,
+        });
       });
+      /*       if (res.cookie) {
+      } */
+      /* const { x_auth } = req.signedCookies;
+      if (!x_auth) {
+        console.log('Not_Refresh_Cookie');
+        res.clearCookie('x_auth');
+        res.send({ msg: 'Not_Refresh_cookie' });
+        return;
+      } else {
+        res.send({ msg: '로그인 성공' });
+      } */
+      /*       console.log('x_auth', req.body);
+      if (req.body) {
+        const jwtToken = await jwt.sign(req.body);
+        const jwtid = await hash.createRefreshToken(req.body.email);
+        console.log('jwtid', jwtid);
+        await jwtToken.create({
+          jwtid,
+          refresh: jwtToken.refreshToken,
+        });
+      } */
     });
   });
 });
@@ -122,7 +141,7 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user.email,
-    // name: req.user.name,
+    permission: req.user.permission,
     role: req.user.role,
   });
 });

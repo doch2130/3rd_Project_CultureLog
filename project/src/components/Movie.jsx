@@ -1,34 +1,48 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import movieImg from '../movie.jpeg';
-// import axios from 'axios';
+import examimg from '../movie.jpeg';
 import './Movie.css';
-import { callMovieAPI } from '../actions/movie_action';
+import { callMovieAPI } from '../actions/logdata_action';
 
 export default function Movie() {
-  const clientTitle = useSelector((state) => state.movie);
+  const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const dispatch = useDispatch();
-  // const [clientTitle, setClientTitle] = useState([]);
+
   const [searchClass, setSearchClass] = useState('searchBoard');
+  const [Imgsrc, setImgsrc] = useState(examimg);
   const movieSearch = useRef();
   const titleNyear = useRef();
   const director = useRef();
-  // function movie() {
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://localhost:5000/movieAPI',
-  //     params: { title: movieSearch.current.value },
-  //   }).then((res) => {
-  //     console.log(res.data);
-  //     setClientTitle(res.data);
-  //   });
-  // }
+  const movieImg = useRef();
+
+  const onKeyPress = (e) => {
+    if (e.key == 'Enter') search();
+  };
+
+  const search = async () => {
+    const result = await callMovieAPI({
+      title: movieSearch.current.value,
+    });
+    console.log('component', result);
+    dispatch(result);
+    setSearchClass('searchBoard');
+    movieSearch.current.value = '';
+    // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
+  };
+
   function titleconfirm(e) {
-    let movieinfo = e.target.textContent.split(',');
+    let movieform = e.target.textContent.split(',');
+    console.log(movieform);
     setSearchClass('d-none');
-    titleNyear.current.value = `${movieinfo[0]},${movieinfo[1]}`;
-    director.current.value = movieinfo[2];
+    if (movieform.length > 3) {
+      titleNyear.current.value = `${movieform[0]}${movieform[1]}(${movieform[2]})`;
+      director.current.value = movieform[3];
+    } else {
+      titleNyear.current.value = `${movieform[0]}(${movieform[1]})`;
+      director.current.value = movieform[2].split('|')[0];
+    }
+    setImgsrc(e.target.id);
   }
   function submit() {
     console.log(alert('게시물이 등록되었습니다'));
@@ -37,32 +51,25 @@ export default function Movie() {
   return (
     <>
       <Div6>
-        <Img src={movieImg} alt="예시이미지"></Img>
+        <Img ref={movieImg} src={Imgsrc} alt="예시이미지"></Img>
         <Div7>
           <SearchInput
             type="text"
             name="search"
             placeholder="영화 제목을 검색하세요"
             ref={movieSearch}
+            onKeyPress={onKeyPress}
           />
-          <SearchBtn
-            type="button"
-            onClick={async () => {
-              const result = await callMovieAPI({
-                title: movieSearch.current.value,
-              });
-              console.log('component', result);
-              dispatch(result);
-              // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
-            }}
-          >
+          <SearchBtn type="button" onClick={search}>
             검색
           </SearchBtn>
           <div className={searchClass}>
-            {clientTitle.movieinfo === 'default'
-              ? '정보가 없습니다'
-              : clientTitle.movieinfo.map((el) => (
+            {clientTitle.length < 1
+              ? '영화를 찾을 수 없습니다'
+              : clientTitle.map((el) => (
                   <p
+                    key={el.img}
+                    id={el.img}
                     dangerouslySetInnerHTML={{
                       __html: `${el.title},${el.pubDate},${el.director}`,
                     }}
