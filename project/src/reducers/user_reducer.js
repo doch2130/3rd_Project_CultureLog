@@ -16,9 +16,11 @@ export default function user_reducer(state = initState, action) {
     case LOGOUT_USER:
       return {
         ...state,
-        loginSuccess: false,
-        userId: '',
-        permission: 'default',
+        loginSuccess: {
+          loginSuccess: false,
+          userId: '',
+          permission: 'default',
+        },
       };
     default:
       return state;
