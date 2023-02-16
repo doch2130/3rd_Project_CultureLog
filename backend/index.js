@@ -2,7 +2,7 @@
 // const app = express();
 // const dotenv = require('dotenv');
 // dotenv.config();
-// const router = require('./routes/index');
+const router = require('./routes/index');
 // const cors = require('cors');
 
 // let corsOption = {
@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
+app.use('/', router);
 
 const mongoose = require('mongoose');
 const { Router } = require('express');
@@ -61,10 +62,6 @@ mongoose
   .connect(config.mongoURI, {})
   .then(() => console.log('mongoDB Connected...'))
   .catch((err) => console.log(err));
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
 app.get('/api/hello', (req, res) => {});
 

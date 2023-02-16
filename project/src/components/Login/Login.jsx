@@ -69,8 +69,8 @@ export default function Login() {
 
   const onSubmitHandler = (e) => {
     e.preventDefault(); //이걸 써야 페이지가 초기화되는 것을 막을 수 있다.
-    console.log('Email', Email);
-    console.log('Password', Password);
+    // console.log('Email', Email);
+    // console.log('Password', Password);
 
     let body = {
       email: Email,
