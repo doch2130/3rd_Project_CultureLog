@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function Modal(props) {
   function closeModal() {
@@ -11,7 +13,13 @@ function Modal(props) {
         <button id="modalCloseBtn" onClick={closeModal}>
           ✖
         </button>
-        <p>안녕제발</p>
+
+        <h4>기록하려는 문화활동을 선택해주세요.</h4>
+        <Link to="/Movie">영화</Link>
+        <br />
+        <Link to="/Book">책</Link>
+        <br />
+        <Link to="/Performance">공연</Link>
       </div>
     </div>
   );

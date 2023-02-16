@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import './Home.css';
+import './Homeyeong.css';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,19 +9,9 @@ import YeongCalendar from './YeongCalendar';
 // Main Page(채영_리액트캘린더 이용)
 export default function Home() {
   const navigate = useNavigate();
-  // const loginInformation = useSelector((state) => state.user.loginSuccess);
-  // const [isManager, setIsManager] = useState(false);
-  // console.log('userId', loginInformation);
 
   useEffect(() => {
     axios.get('/api/hello').then((response) => console.log(response));
-
-    // if (loginInformation.userId === '63ecad322ba25214448d088d') {
-    //   setIsManager(true);
-    // } else {
-    //   setIsManager(false);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container fluid>

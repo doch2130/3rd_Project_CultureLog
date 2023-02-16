@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import musicalImg from '../musical.jpeg';
+import YeongCalendar from './YeongCalendar';
+import moment from 'moment';
+import Calendar from 'react-calendar';
 
-export default function Movie() {
+export default function Movie(props) {
   const submit = () => {
     console.log(alert('게시물이 등록되었습니다'));
   };
+
+  const { value, setValue } = props;
 
   const Div6 = styled.div`
     margin: auto;
@@ -131,16 +136,14 @@ export default function Movie() {
       margin-left: -126px;
     }
   `;
+  //<Calendar onChange={() => setValue} value={value} />
   return (
     <>
       <Div6>
         <Img src={musicalImg} alt="예시이미지"></Img>
         <Div7>
-          <p>
-            {' '}
-            날짜
-            <Input type="date" />
-          </p>
+          <p> 날짜</p>
+
           <p>
             제목
             <Input type="text" />
