@@ -1,4 +1,8 @@
 /* 채팅창 */
+.chatWindowAreaWrap {
+  background-color: #BACEE0 !important;
+  /* background-color: #fff !important; */
+}
 .chatWindowAreaWrap > div:nth-child(1) {
   height: 330px;
   padding: 0px 12px 5px;

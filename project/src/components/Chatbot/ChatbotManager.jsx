@@ -10,7 +10,7 @@ export default function ChatbotManager() {
   // const roomId = useSelector((state) => state.socket.roomList);
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
-  console.log(roomList);
+  // console.log(roomList);
 
   return (
     <>

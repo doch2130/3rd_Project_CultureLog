@@ -35,9 +35,10 @@ export default function Header() {
       if (response.data.success) {
         //로그 아웃 되었을 때 어디 페이지로 갈 건지 정해야 함.
         //기본은 로그인 페이지..
+        cookies.remove('x_auth');
+        dispatch(logoutUser());
         navigate('/');
         alert('로그아웃 되었습니다.');
-        cookies.remove('x_auth');
       } else {
         alert('로그아웃 실패.');
       }

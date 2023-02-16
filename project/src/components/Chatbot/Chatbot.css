@@ -52,9 +52,10 @@
 }
 
 /* 채팅창 닫기 버튼 */
-/* .chatWindowWrap > div.row:nth-child(1) {
+.chatWindowWrap > div.row:nth-child(1) {
   background-color: #BACEE0 !important;
-} */
+  /* background-color: #fff !important; */
+}
 .chatWindowWrap > div.row:nth-child(1) > div {
   text-align: right;
   height: 30px;

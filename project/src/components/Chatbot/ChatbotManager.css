@@ -4,6 +4,10 @@
   padding: 0px 12px 5px;
   overflow: auto;
 }
+.chatRoomWindowAreaWrap {
+  background-color: #BACEE0 !important;
+  /* background-color: #fff !important; */
+}
 
 /* 방 목록 */
 .chatRoomList {
@@ -17,9 +21,14 @@
   background-color: white;
 }
 
+.chatRoomList:hover {
+  background-color: red;
+}
+
 .chatRoomList > div:nth-child(1):hover {
   background-color: #f9edd8;
 }
+
 
 .chatRoomListContent {
   background-color: white;
@@ -54,6 +63,7 @@
   padding: 0px;
   padding-right: 15px;
   justify-content: flex-end;
+  background-color: #BACEE0;
 }
 
 .offcanvas-header > button {
