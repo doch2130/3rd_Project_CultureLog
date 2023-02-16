@@ -22,7 +22,7 @@ const Nav = styled.nav`
 `;
 
 export default function Header() {
-  const imgStyle = { width: '50px', marginLeft: '10px', marginTop: '10px' };
+  const imgStyle = { width: '105px', marginLeft: '10px', marginTop: '10px' };
   const navigate = useNavigate();
 
   const isUser = useSelector((state) => state.user.loginSuccess);
@@ -81,7 +81,22 @@ export default function Header() {
           )}
         </ul>
       </Nav>
-      <hr style={{ color: '#572b2b', borderTop: '3px double #572b2b' }} />
+      <div
+        style={{
+          width: '100%',
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <hr
+          style={{
+            width: '80%',
+            borderTop: '3px double #572b2b',
+            marginTop: '22px',
+          }}
+        ></hr>
+      </div>
     </>
   );
 }

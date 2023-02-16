@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from '../components/Home';
+import Homeyeong from '../components/Homeyeong';
 
 export default function main() {
   return (
     <div>
-      <Home />
+      <Homeyeong />
     </div>
   );
 }

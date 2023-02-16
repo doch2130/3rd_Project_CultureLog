@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import bookImg from '../book.jpeg';
+import Star from './Star';
 
 export default function Book() {
   const submit = () => {
@@ -168,7 +169,7 @@ export default function Book() {
           </p>
           <p>
             개인평점
-            <Input type="text" />
+            <Star />
           </p>
           <p style={pStyle}>후기</p>
           <textarea placeholder="후기를 작성해주세요" />
