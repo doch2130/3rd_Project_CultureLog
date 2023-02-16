@@ -28,7 +28,6 @@ export default function Header() {
 
   const cookies = new Cookies();
   const isUser = useSelector((state) => state.user.loginSuccess);
-  const dispatch = useDispatch();
 
   const onClickHandler = () => {
     axios.get(`/api/users/logout`).then((response) => {
@@ -38,8 +37,7 @@ export default function Header() {
         //기본은 로그인 페이지..
         navigate('/');
         alert('로그아웃 되었습니다.');
-        cookies.remove();
-        /* dispatch(logoutUser()); */
+        cookies.remove('x_auth');
       } else {
         alert('로그아웃 실패.');
       }
