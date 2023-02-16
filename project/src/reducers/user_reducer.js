@@ -1,4 +1,10 @@
-import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from '../actions/types';
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  LOGOUT_USER,
+  AUTH_USER,
+  /* COOKIE_USER, */
+} from '../actions/types';
 const initState = {
   loginSuccess: {
     loginSuccess: false,
@@ -22,6 +28,11 @@ export default function user_reducer(state = initState, action) {
           permission: 'default',
         },
       };
+    /* case COOKIE_USER:
+      return { ...state, cookieData: action.payload }; */
+    case AUTH_USER:
+      return { ...state, userData: action.payload };
+    /*  break;/ */
     default:
       return state;
   }

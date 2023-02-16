@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from './types';
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  LOGOUT_USER,
+  AUTH_USER,
+  COOKIE_USER,
+} from './types';
 export function loginUser(dataTosubmit) {
   const request = axios
     .post('/api/users/login', dataTosubmit)
@@ -21,5 +27,24 @@ export function registerUser(dataTosubmit) {
 export function logoutUser() {
   return {
     type: LOGOUT_USER,
+  };
+}
+export function cookieUser(cookie) {
+  const request = axios
+    .get('api/users/login', cookie)
+    .then((response) => response.data);
+  return {
+    type: COOKIE_USER,
+    payload: request,
+  };
+}
+export function auth() {
+  //여기서 보내주는 부분 //get 메소드 이므로 바디는 필요 없음.
+  const request = axios
+    .get('/api/users/auth')
+    .then((response) => response.data);
+  return {
+    type: AUTH_USER,
+    payload: request,
   };
 }

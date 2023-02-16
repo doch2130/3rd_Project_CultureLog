@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Auth from '../../hoc/auth';
 
 const Div2 = styled.div`
   margin: auto;
@@ -37,7 +38,7 @@ const Div2 = styled.div`
     font-size: 17px;
   }
 `;
-export default function Join() {
+function Join() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -126,3 +127,4 @@ export default function Join() {
     </div>
   );
 }
+export default Auth(Join, null);
