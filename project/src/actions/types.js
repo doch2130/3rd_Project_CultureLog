@@ -4,6 +4,7 @@ export const LOGOUT_USER = 'logout_user';
 
 // movie
 export const MOVIE = 'movie';
+export const BOOK = 'book';
 
 // socket
 export const SOCKET_INIT = 'socket/init';
