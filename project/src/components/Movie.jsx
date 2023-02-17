@@ -8,13 +8,12 @@ import { callMovieAPI } from '../actions/logdata_action';
 export default function Movie() {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const dispatch = useDispatch();
-
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examimg);
   const movieSearch = useRef();
   const titleNyear = useRef();
   const director = useRef();
-  const movieImg = useRef();
+  const actor = useRef();
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -32,17 +31,18 @@ export default function Movie() {
   };
 
   function titleconfirm(e) {
-    let movieform = e.target.textContent.split(',');
+    let movieform = clientTitle[e.target.className];
+    let title = e.target.innerText.split(',');
     console.log(movieform);
-    setSearchClass('d-none');
-    if (movieform.length > 3) {
-      titleNyear.current.value = `${movieform[0]}${movieform[1]}(${movieform[2]})`;
-      director.current.value = movieform[3];
+    if (title.length > 3) {
+      titleNyear.current.value = `${title[0]}${title[1]}(${title[2]})`;
     } else {
-      titleNyear.current.value = `${movieform[0]}(${movieform[1]})`;
-      director.current.value = movieform[2].split('|')[0];
+      titleNyear.current.value = `${title[0]}(${title[1]})`;
     }
-    setImgsrc(e.target.id);
+    setSearchClass('d-none');
+    director.current.value = movieform.director;
+    actor.current.value = movieform.actor;
+    setImgsrc(movieform.img);
   }
   function submit() {
     console.log(alert('게시물이 등록되었습니다'));
@@ -51,7 +51,7 @@ export default function Movie() {
   return (
     <>
       <Div6>
-        <Img ref={movieImg} src={Imgsrc} alt="예시이미지"></Img>
+        <Img src={Imgsrc} alt="예시이미지"></Img>
         <Div7>
           <SearchInput
             type="text"
@@ -66,10 +66,10 @@ export default function Movie() {
           <div className={searchClass}>
             {clientTitle.length < 1
               ? '영화를 찾을 수 없습니다'
-              : clientTitle.map((el) => (
+              : clientTitle.map((el, index) => (
                   <p
                     key={el.img}
-                    id={el.img}
+                    className={index}
                     dangerouslySetInnerHTML={{
                       __html: `${el.title},${el.pubDate},${el.director}`,
                     }}
@@ -80,7 +80,7 @@ export default function Movie() {
           <Input type="text" placeholder="날짜" />
           <Input type="text" ref={titleNyear} placeholder="제목(개봉년도)" />
           <Input type="text" ref={director} placeholder="감독" />
-          <Input type="text" placeholder="주연배우" />
+          <Input type="text" ref={actor} placeholder="주연배우" />
           <Input type="text" name="grade" placeholder="개인평점" />
           <Input type="text" name="comment" placeholder="후기" />
         </Div7>

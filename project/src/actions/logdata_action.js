@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BOOK, MOVIE } from './types';
+import { BOOK, MOVIE, PERFORMANCE } from './types';
 
 export function callMovieAPI(dataTosubmit) {
   return new Promise((resolve, reject) => {
@@ -29,6 +29,23 @@ export function callBookAPI(dataTosubmit) {
 
       resolve({
         type: BOOK,
+        payload: res.data,
+      });
+    });
+  });
+}
+
+export function callPerfoAPI(dataTosubmit) {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:5000/performanceAPI',
+      params: dataTosubmit,
+    }).then((res) => {
+      console.log('performanceactionfunction', res.data);
+
+      resolve({
+        type: PERFORMANCE,
         payload: res.data,
       });
     });

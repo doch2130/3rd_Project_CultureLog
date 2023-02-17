@@ -1,20 +1,19 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-
-import bookImg from '../book.jpeg';
 import Star from './Star';
 import examImg from '../book.jpeg';
 import { callBookAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Book() {
-  const bookSearch = useRef();
-  const [searchClass, setSearchClass] = useState('searchBoard');
   const clientTitle = useSelector((state) => state.logdata.bookinfo);
   const dispatch = useDispatch();
+  const [searchClass, setSearchClass] = useState('searchBoard');
+  const [Imgsrc, setImgsrc] = useState(examImg);
+  const bookSearch = useRef();
   const titleNyear = useRef();
   const author = useRef();
-  const [Imgsrc, setImgsrc] = useState(examImg);
+  const genre = useRef();
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -30,12 +29,12 @@ export default function Book() {
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
   function titleconfirm(e) {
-    let bookform = e.target.textContent.split(',');
-    console.log(bookform);
+    let bookform = clientTitle[e.target.className];
     setSearchClass('d-none');
-    titleNyear.current.value = bookform[0];
-    author.current.value = bookform[1];
-    setImgsrc(e.target.id);
+    titleNyear.current.value = `${bookform.title}(${bookform.publisher})`;
+    author.current.value = bookform.author;
+    genre.current.value = bookform.categoryName;
+    setImgsrc(bookform.img);
   }
   const submit = () => {
     console.log(alert('게시물이 등록되었습니다'));
@@ -67,12 +66,12 @@ export default function Book() {
           <div className={searchClass}>
             {clientTitle.length < 1
               ? '책을 찾을 수 없습니다'
-              : clientTitle.map((el) => (
+              : clientTitle.map((el, index) => (
                   <p
                     key={el.img}
-                    id={el.img}
+                    className={index}
                     dangerouslySetInnerHTML={{
-                      __html: `${el.title},${el.author}`,
+                      __html: `${el.title},${el.author},${el.publisher}`,
                     }}
                     onClick={titleconfirm}
                   ></p>
@@ -92,7 +91,7 @@ export default function Book() {
           </p>
           <p>
             장르
-            <Input type="text" />{' '}
+            <Input ref={genre} type="text" />
           </p>
           <p>
             개인평점

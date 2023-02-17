@@ -1,6 +1,10 @@
-import { MOVIE, BOOK } from '../actions/types';
+import { MOVIE, BOOK, PERFORMANCE } from '../actions/types';
 export default function movieAPI(
-  state = { movieinfo: ['default'], bookinfo: ['default'] },
+  state = {
+    movieinfo: ['default'],
+    bookinfo: ['default'],
+    perfoinfo: ['default'],
+  },
   action
 ) {
   // console.log('reducer', action);
@@ -9,6 +13,8 @@ export default function movieAPI(
       return { ...state, movieinfo: action.payload };
     case BOOK:
       return { ...state, bookinfo: action.payload };
+    case PERFORMANCE:
+      return { ...state, performanceinfo: action.payload };
     default:
       return state;
   }
