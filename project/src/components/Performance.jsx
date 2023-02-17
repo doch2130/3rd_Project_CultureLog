@@ -6,6 +6,7 @@ import musicalImg from '../musical.jpeg';
 // import Calendar from 'react-calendar';
 import { callPerfoAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
+import { dateData } from '../actions/date_action';
 
 export default function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
@@ -15,7 +16,8 @@ export default function Performance(props) {
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(musicalImg);
   const perfoSearch = useRef();
-
+  const date = useSelector(dateData);
+  console.log(date);
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
   };
@@ -59,7 +61,6 @@ export default function Performance(props) {
           <SearchBtn type="button" onClick={search}>
             검색
           </SearchBtn>
-
           {open === true ? (
             <Div8 className={searchClass}>
               {clientTitle.length < 1
@@ -76,6 +77,23 @@ export default function Performance(props) {
                   ))}
             </Div8>
           ) : null}
+
+          {/* <div className={searchClass}>
+            {clientTitle.length < 1
+              ? '공연을 찾을 수 없습니다'
+              : clientTitle.map((el, index) => (
+                  <p
+                    key={el.img}
+                    className={index}
+                    dangerouslySetInnerHTML={{
+                      __html: `${el.title},${el.author},${el.publisher}`,
+                    }}
+                    onClick={titleconfirm}
+                  ></p>
+                ))}
+          </div>
+          <p> 날짜</p>
+          <p>{date}</p> */}
 
           <Input type="date" placeholder="날짜" />
 

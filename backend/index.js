@@ -49,6 +49,7 @@ const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 
 const { User } = require('./models/User');
+const { Date } = require('./models/Date');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -88,6 +89,17 @@ app.post('/api/users/register', (req, res) => {
         });
       });
     }
+  });
+});
+
+app.post('api/users/date', (req, res) => {
+  console.log(req.body);
+  const Date = new Date(req.body);
+  Date.save((err, dateInfo) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true,
+    });
   });
 });
 

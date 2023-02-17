@@ -1,13 +1,22 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { dateData } from '../actions/date_action';
+import { DATE } from '../actions/types';
 
 function Pop(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const moveToBook = () => {
+    let dateP = {
+      date: props.value,
+    };
+    dispatch(dateData(dateP));
     navigate('/Book');
   };
-
+  // const datadate = useSelector((state) => state.dateData);
+  // console.log(datadate);
   const moveToMovie = () => {
     navigate('/Movie');
   };
@@ -15,7 +24,6 @@ function Pop(props) {
   const moveToPer = () => {
     navigate('/Performance');
   };
-
   return (
     <Modal
       {...props}
@@ -48,6 +56,7 @@ function Pop(props) {
           <Button variant="outline-danger" size="lg" onClick={moveToPer}>
             공연
           </Button>
+          {/* <span>{date}d</span> */}
         </div>
       </Modal.Body>
       <Modal.Footer>
