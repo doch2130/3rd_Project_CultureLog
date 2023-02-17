@@ -17,13 +17,13 @@ const Nav = styled.nav`
     height: 70px;
   }
   p {
-    color: #572b2b;
+    color: '#b1bd96';
     margin-top: 20px;
   }
 `;
 
 export default function Header() {
-  const imgStyle = { width: '103px', marginLeft: '10px', marginTop: '10px' };
+  const imgStyle = { width: '128px', marginLeft: '10px', marginTop: '10px' };
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -58,19 +58,34 @@ export default function Header() {
           <li>
             {' '}
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <p style={{ fontSize: '25px' }}>HOME</p>
+              <p
+                style={{
+                  fontSize: '27px',
+                  fontWeight: '600',
+                  color: '#b1bd96',
+                }}
+              >
+                HOME
+              </p>
             </Link>
           </li>
           <li>
             <Link to="/">
-              <img src={logoImg} alt="상자" style={imgStyle}></img>
+              <img src={logoImg} alt="로고" style={imgStyle}></img>
             </Link>
           </li>
           {/* 로그인 여부에 따라 나오는 버튼 구현 */}
           {cookies.get('x_auth') ? (
             <li className="Header_logout">
               <Link to="/home" style={{ textDecoration: 'none' }}>
-                <p style={{ fontSize: '25px' }} onClick={onClickHandler}>
+                <p
+                  style={{
+                    fontSize: '27px',
+                    fontWeight: '600',
+                    color: '#b1bd96',
+                  }}
+                  onClick={onClickHandler}
+                >
                   LOGOUT
                 </p>
               </Link>
@@ -78,7 +93,15 @@ export default function Header() {
           ) : (
             <li className="Header_login">
               <Link to="/login" style={{ textDecoration: 'none' }}>
-                <p style={{ fontSize: '25px' }}>LOGIN</p>
+                <p
+                  style={{
+                    fontSize: '30px',
+                    fontWeight: '700',
+                    color: '#b1bd96',
+                  }}
+                >
+                  LOGIN
+                </p>
               </Link>
             </li>
           )}
@@ -95,8 +118,8 @@ export default function Header() {
         <hr
           style={{
             width: '90%',
-            borderTop: '3px double #572b2b',
-            marginTop: '22px',
+            borderTop: '3px double #abd4c9',
+            marginTop: '25px',
           }}
         ></hr>
       </div>

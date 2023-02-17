@@ -26,6 +26,9 @@ export default function YeongCalendar() {
         value={value}
         onClickDay={(value, event) => setModalShow(!modalShow)}
       />
+      {/* {modalShow && <Pop show={modalShow} onHide={() => setModalShow(false)} />}
+      <div className="text-gray-500 mt-5">
+        선택한 날짜 : {moment(value).format('YYYY년 MM월 DD일')} <br /> */}
       {modalShow && (
         <Pop show={modalShow} date={value} onHide={() => setModalShow(false)} />
       )}
