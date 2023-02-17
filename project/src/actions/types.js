@@ -22,9 +22,11 @@ export const SOCKET_INIT = 'socket/init';
 export const SOCKET_ROOMS = 'socket/rooms';
 // 방 목록 불러올 때의 메시지
 export const SOCKET_MESSAGE = 'socket/rooms/message';
+// 처음 접속 메시지
+export const SOCKET_INIT_MESSAGE_ADD = 'socket/init/message/add';
+// 메시지 보내기
+export const SOCKET_MESSAGE_ADD = 'socket/message/add';
 // 방 추가 메시지 (아직 사용 안함)
 export const SOCKET_ROOM_ADD = 'socket/rooms/add';
-// 처음 접속 메시지
-export const SOCKET_INIT_MESSAGE_ADD = 'socket/message/add';
-// 사용자 연결 끊김
+// 사용자 연결 끊김 (사용 안할 것 같지만 보류)
 export const SOCKET_LOGOUT = 'socket/user/disconnect';

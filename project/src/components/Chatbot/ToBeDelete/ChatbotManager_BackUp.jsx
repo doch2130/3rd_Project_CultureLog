@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import './ChatbotManager.css';
-import { socketRooms, socketRoomsAdd } from '../../actions/socket_action';
+import { socketRooms, socketRoomsAdd } from '../../../actions/socket_action';
 
 export default function ChatbotManager() {
   const [isChattingBox, setIsChattingBox] = useState(false);

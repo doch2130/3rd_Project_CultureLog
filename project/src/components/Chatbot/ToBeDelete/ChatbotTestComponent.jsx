@@ -30,6 +30,17 @@ export default function ChatbotTestComponent() {
           </div>
         </Col>
       </Row>
+      <Row className="serverMessageWrap">
+        <Col xs={12}>
+          <div>
+            <pre className="serverMessageText">
+              만들기. 만들기. 만들기.만들기 만들기 만들기 만들기. 갑습니다요.{' '}
+              <br />
+              CSS 만들기 어려워요
+            </pre>
+          </div>
+        </Col>
+      </Row>
       <Row className="myMessageWrap">
         <Col xs={12}>
           <div>

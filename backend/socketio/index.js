@@ -54,11 +54,15 @@ module.exports = (socketIO) => {
           permission: 'server',
           content: '문의 사항이 있으시면 메시지 남겨주세요.',
           time: '',
+          socketId: 'e9f1',
+          userId: 'pasd123',
         },
         {
           permission: 'default',
           content: '문gggggggg',
           time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+          socketId: 'j2ygf8',
+          userId: 'zxcv123',
         },
       ],
     };
@@ -78,6 +82,7 @@ module.exports = (socketIO) => {
       permission: 'server',
       content: '문의 사항이 있으시면 메시지 남겨주세요.',
       time: '',
+      userId: '',
       // time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
     });
 
@@ -89,6 +94,18 @@ module.exports = (socketIO) => {
     // 기본 설정?
     // 수정이 필요할 듯
     // socketIO.emit('updateRooms', tempMessage);
+
+    socket.on('message', (data) => {
+      console.log('message', data);
+      // socketIO.to(data.roomId).emit('receiveMessage', {
+      socket.emit('receiveMessage', {
+        content: data.content,
+        socketId: data.socketId,
+        permission: data.permission,
+        userId: data.userId,
+        time: data.time,
+      });
+    });
 
     socket.on('disconnect', () => {
       console.log(socket.id + ' Exit');
