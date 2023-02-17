@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   socketRooms,
   socketRoomsAdd,
-  socketMessageAdd,
+  socketInitMessageAdd,
   socketMessage,
 } from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
@@ -18,7 +18,6 @@ export default function Chatbot() {
 
   const userInfo = useSelector((state) => state.user.loginSuccess);
   const socket = useSelector((state) => state.socket.socket);
-  const message = useSelector((state) => state.socket.message);
 
   const [mySocketId, setMySocketId] = useState('');
   const [myRoomId, setMyRoomId] = useState('');
@@ -28,13 +27,13 @@ export default function Chatbot() {
       // console.log(initSocketData);
       const defaultMsgTime =
         date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
-      dispatch(socketMessageAdd({ initSocketData, defaultMsgTime }));
+      dispatch(socketInitMessageAdd({ initSocketData, defaultMsgTime }));
       setMySocketId(initSocketData.socketId);
       setMyRoomId(initSocketData.roomId);
     });
 
     socket.on('getRooms', (roomsData) => {
-      // 따로 설정을 안해도 socketMessageAdd() 함수가 먼저 실행이 되지만,
+      // 따로 설정을 안해도 socketInitMessageAdd() 함수가 먼저 실행이 되지만,
       // 혹시 모를 안전을 위해서 1초 후 실행되도록 설정
 
       setTimeout(() => {
@@ -50,25 +49,6 @@ export default function Chatbot() {
         }
       }, 1000);
     });
-
-    // let temp = [];
-    // temp.push({
-    //   roomId: userSocketInfo.roomId,
-    //   msg: [
-    //     {
-    //       permission: 'server',
-    //       content: '문의 사항이 있으시면 메시지 남겨주세요.',
-    //       time:
-    //         date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-    //     },
-    //   ],
-    // });
-
-    // console.log(temp);
-
-    // socket.on('userDisconnect', (dieSocketId) => {
-    //   console.log('asd', dieSocketId);
-    // });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,7 +89,11 @@ export default function Chatbot() {
           {userInfo.permission === 'manager' ? (
             <ChatbotManager />
           ) : (
-            <ChatbotRoom />
+            <ChatbotRoom
+              mySocketId={mySocketId}
+              myRoomId={myRoomId}
+              userInfo={userInfo}
+            />
           )}
         </div>
       )}

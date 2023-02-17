@@ -129,3 +129,19 @@
   top:2px;
   color: white !important;
 }
+
+
+/* 서버 메시지 */
+.serverMessageWrap {
+  margin: 5px 0px !important;
+}
+
+.serverMessageText {
+  white-space: pre-wrap;
+  max-width: 250px;
+  background-color: rgb(245 241 230);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 5px 10px;
+  margin: auto;
+}
