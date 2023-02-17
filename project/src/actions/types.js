@@ -5,6 +5,11 @@ export const LOGOUT_USER = 'logout_user';
 export const AUTH_USER = 'auth_user';
 export const COOKIE_USER = 'cookie_user';
 
+//date
+export const YEAR = 'year';
+export const MONTH = 'month';
+export const DATE = 'date';
+
 // movie
 export const MOVIE = 'movie';
 export const BOOK = 'book';

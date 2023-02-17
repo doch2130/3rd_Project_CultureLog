@@ -1,27 +1,18 @@
 import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import HomeCalendar from './HomeCalendar';
-import './Home.css';
+import Auth from '../hoc/auth';
+import './Homeyeong.css';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Auth from '../hoc/auth';
+import YeongCalendar from './YeongCalendar';
 
-// Main Page
+// Main Page(채영_리액트캘린더 이용)
 function Home() {
   const navigate = useNavigate();
-  // const loginInformation = useSelector((state) => state.user.loginSuccess);
-  // const [isManager, setIsManager] = useState(false);
-  // console.log('userId', loginInformation);
 
   useEffect(() => {
     axios.get('/api/hello').then((response) => console.log(response));
-
-    // if (loginInformation.userId === '63ecad322ba25214448d088d') {
-    //   setIsManager(true);
-    // } else {
-    //   setIsManager(false);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container fluid>
@@ -29,7 +20,7 @@ function Home() {
         <Col xs={12} style={{ padding: '0px', margin: 'auto' }}>
           <Row style={{ maxWidth: '2000px', margin: 'auto' }}>
             <Col xs={12} md={6}>
-              <HomeCalendar />
+              <YeongCalendar />
               <Col xs={12} style={{ padding: '6px 12px' }}>
                 <p className="calendarFooter">
                   날짜를 클릭하여 오늘의 문화를 기록하세요
