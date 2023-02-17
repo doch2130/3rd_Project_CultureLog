@@ -8,6 +8,7 @@ export const COOKIE_USER = 'cookie_user';
 // movie
 export const MOVIE = 'movie';
 export const BOOK = 'book';
+export const PERFORMANCE = 'performance';
 
 // socket
 // socket() 함수
