@@ -20,8 +20,8 @@ export default function YeongCalendar(props) {
         onClickDay={(value, event) => setModalShow(!modalShow)}
       />
       {modalShow && <Pop show={modalShow} onHide={() => setModalShow(false)} />}
-      <div className="text-gray-500 mt-4">
-        선택한 날짜: {moment(value).format('YYYY년 MM월 DD일')}
+      <div className="text-gray-500 mt-5">
+        선택한 날짜 : {moment(value).format('YYYY년 MM월 DD일')} <br />
       </div>{' '}
     </div>
   );

@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import examimg from '../movie.jpeg';
 import './Movie.css';
 import { callMovieAPI } from '../actions/logdata_action';
+import Star from './Star';
 
 export default function Movie() {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examimg);
   const movieSearch = useRef();
@@ -27,6 +30,7 @@ export default function Movie() {
     dispatch(result);
     setSearchClass('searchBoard');
     movieSearch.current.value = '';
+    setOpen(true);
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
 
@@ -63,26 +67,33 @@ export default function Movie() {
           <SearchBtn type="button" onClick={search}>
             검색
           </SearchBtn>
-          <div className={searchClass}>
-            {clientTitle.length < 1
-              ? '영화를 찾을 수 없습니다'
-              : clientTitle.map((el, index) => (
-                  <p
-                    key={el.img}
-                    className={index}
-                    dangerouslySetInnerHTML={{
-                      __html: `${el.title},${el.pubDate},${el.director}`,
-                    }}
-                    onClick={titleconfirm}
-                  ></p>
-                ))}
-          </div>
-          <Input type="text" placeholder="날짜" />
-          <Input type="text" ref={titleNyear} placeholder="제목(개봉년도)" />
+
+          {open === true ? (
+            <Div8 className={searchClass}>
+              {clientTitle.length < 1
+                ? '영화를 찾을 수 없습니다'
+                : clientTitle.map((el, index) => (
+                    <p
+                      key={el.img}
+                      className={index}
+                      dangerouslySetInnerHTML={{
+                        __html: `${el.title},${el.pubDate},${el.director}`,
+                      }}
+                      onClick={titleconfirm}
+                    ></p>
+                  ))}
+            </Div8>
+          ) : null}
+
+          <Input type="date" placeholder="날짜" />
+
+          <Input ref={titleNyear} type="text" placeholder="제목(개봉년도)" />
+
           <Input type="text" ref={director} placeholder="감독" />
+
           <Input type="text" ref={actor} placeholder="주연배우" />
-          <Input type="text" name="grade" placeholder="개인평점" />
-          <Input type="text" name="comment" placeholder="후기" />
+
+          <textarea placeholder="후기를 작성해주세요" />
         </Div7>
         <RegisterBtn onClick={submit}>등록하기</RegisterBtn>
       </Div6>
@@ -92,25 +103,28 @@ export default function Movie() {
 
 const Div6 = styled.div`
   margin: auto;
-  margin-top: 120px;
+  margin-top: 70px;
+  height: 1200px;
   width: 1300px;
   padding: 180px;
   text-align: center;
   display: flex;
   background-color: #d0d6c3;
   border-radius: 50px;
+
   @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;
     margin-left: 30px;
     width: 500px;
+    height: 1610px;
     display: flex;
   }
 `;
 const RegisterBtn = styled.button`
   width: 150px;
   height: 50px;
-  margin-top: 750px;
+  margin-top: 900px;
   margin-left: -600px;
   text-align: center;
   box-sizing: border-box;
@@ -136,12 +150,12 @@ const RegisterBtn = styled.button`
   }
   @media screen and (max-width: 700px) {
     flex-direction: column;
-    margin-top: 60px;
+    margin-top: 55px;
     margin-left: -10px;
     align-items: center;
     width: 200px;
     display: flex;
-    padding-top: 11px;
+    padding: 11px 0px;
   }
 `;
 const SearchBtn = styled.button`
@@ -185,41 +199,91 @@ const Div7 = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 50px;
+  p {
+    color: #090909;
+    font-weight: 700;
+  }
+
+  textarea {
+    margin-top: 128px;
+    margin-left: 23px;
+    outline: none;
+    background-color: #fffafb80;
+    color: #353434;
+    border-radius: 15px;
+    width: 600px;
+    height: 36px;
+    display: inline-block;
+    height: 300px;
+    scroll-behavior: smooth;
+    @media screen and (max-width: 700px) {
+      margin-left: -178px;
+      align-items: center;
+      width: 407px;
+      display: flex;
+      padding-top: 11px;
+      scroll-behavior: smooth;
+    }
+  }
 `;
+
+const Div8 = styled.div`
+  position: absolute;
+  top: 30.5rem;
+  border-radius: 10px;
+  padding: 1.5rem;
+  background-color: white;
+  color: black;
+  width: 700px;
+  box-shadow: 1px 1px 1px 1px gray;
+  background-color: #e3a49f;
+  @media screen and (max-width: 700px) {
+    width: 400px;
+    margin-left: -180px;
+    top: 47rem;
+  }
+`;
+
 const Input = styled.input`
   border-top: none;
   border-left: none;
   border-right: none;
   border-bottom: 1.5px solid black;
+  margin-top: 60px;
+  margin-left: 20px;
   outline: none;
   background-color: #d0d6c3;
   color: #fefefe;
   width: 600px;
-  height: 100px;
+  height: 36px;
   display: inline-block;
   flex-wrap: wrap;
+
   @media screen and (max-width: 700px) {
     width: 400px;
     margin-left: -180px;
   }
 `;
+
 const SearchInput = styled.input`
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1.5px solid black;
+  border: 2px solid white;
+  margin-bottom: -3px;
+  margin-left: 20px;
+  border-radius: 20px;
   outline: none;
-  background-color: #d0d6c3;
-  color: #fefefe;
-  width: 400px;
-  height: 100px;
+  color: #010101;
+  width: 420px;
+  height: 52px;
   display: inline-block;
   flex-wrap: wrap;
   @media screen and (max-width: 700px) {
-    width: 400px;
-    margin-left: -180px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: -170px;
+    margin-bottom: 10px;
   }
 `;
+
 const Img = styled.img`
   margin-left: -100px;
   margin-top: 50px;
