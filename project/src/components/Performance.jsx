@@ -7,6 +7,8 @@ import musicalImg from '../musical.jpeg';
 import { callPerfoAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
 import { dateData } from '../actions/date_action';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
 
 export default function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
@@ -16,8 +18,11 @@ export default function Performance(props) {
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(musicalImg);
   const perfoSearch = useRef();
+  const logDate = useRef();
   const titleNyear = useRef();
   const hall = useRef();
+  const mainroll = useRef();
+  const review = useRef();
   const date = useSelector(dateData);
   console.log(date);
   const onKeyPress = (e) => {
@@ -42,7 +47,20 @@ export default function Performance(props) {
     setImgsrc(perfoform.img);
   }
   const submit = () => {
-    console.log(alert('게시물이 등록되었습니다'));
+    axios({
+      method: 'post',
+      url: axiosurl.toDBperfo,
+      data: {
+        date: logDate.current.value,
+        title: titleNyear.current.value,
+        hall: hall.current.value,
+        mainroll: mainroll.current.value,
+        review: review.current.value,
+      },
+    }).then(() => {
+      //console.log('todb', res.data);
+      console.log(alert('게시물이 등록되었습니다'));
+    });
   };
   //const [value, setValue] = useState();
   //<Calendar onChange={() => setValue} value={value} />
@@ -77,25 +95,7 @@ export default function Performance(props) {
                   ))}
             </Div8>
           ) : null}
-
-          {/* <div className={searchClass}>
-            {clientTitle.length < 1
-              ? '공연을 찾을 수 없습니다'
-              : clientTitle.map((el, index) => (
-                  <p
-                    key={el.img}
-                    className={index}
-                    dangerouslySetInnerHTML={{
-                      __html: `${el.title},${el.author},${el.publisher}`,
-                    }}
-                    onClick={titleconfirm}
-                  ></p>
-                ))}
-          </div>
-          <p> 날짜</p>
-          <p>{date}</p> */}
-
-          <Input type="date" placeholder="날짜" />
+          <Input type="date" ref={logDate} placeholder="날짜" />
 
           <Input
             ref={titleNyear}
@@ -105,11 +105,15 @@ export default function Performance(props) {
 
           <Input ref={hall} type="text" placeholder="극장" />
 
-          <Input type="text" placeholder="주요 출연자(직접입력)" />
+          <Input
+            type="text"
+            ref={mainroll}
+            placeholder="주요 출연자(직접입력)"
+          />
 
           {/* <Star /> */}
 
-          <textarea placeholder="후기를 작성해주세요" />
+          <textarea ref={review} placeholder="후기를 작성해주세요" />
         </Div7>
         <Button onClick={submit}>등록하기</Button>
       </Div6>
