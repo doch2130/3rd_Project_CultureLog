@@ -48,7 +48,7 @@ const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 
 const { User } = require('./models/User');
-const { Date } = require('./models/Date');
+const { Movie } = require('./models/Movie');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -89,13 +89,17 @@ app.post('/api/users/register', (req, res) => {
   });
 });
 
-// app.post('/api/date', (req, res) => {
-//   console.log('----');
-//   console.log(req.body);
-//   return res.status(200).json({
-//     success: true,
-//   });
-// });
+app.post('/api/board/movie', (req, res) => {
+  console.log('movie', req.body);
+  const movie_board = new Movie(req.body);
+  movie_board.save((err, movieInfo) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true,
+      // movieInfo: movie_board,
+    });
+  });
+});
 
 app.post('/api/users/login', async (req, res) => {
   //1. 데이터베이스에서 요청한 e-mail찾기
