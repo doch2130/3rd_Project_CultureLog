@@ -1,5 +1,6 @@
 const axios = require('axios');
 const apikeys = require('./apikeys');
+const parseXML = require('xml-js');
 
 exports.Naver = (req, res) => {
   console.log(req.query);
@@ -71,10 +72,9 @@ exports.Aladin = (req, res) => {
 const SeriveKey = apikeys.ServiceKey;
 
 // 시작 날짜
-const stdate = '20221201';
+const stdate = '20160101';
 // 종료 날짜
-let eddate = '20221231';
-//new Date().toISOString().slice(0, 10).split('-').join('');
+let eddate = new Date().toISOString().slice(0, 10).split('-').join('');
 
 // 필수 데이터만 입력한 상태의 URL
 //const kopisurl =
@@ -85,6 +85,25 @@ exports.Kopis = (req, res) => {
     method: 'get',
     url: `http://www.kopis.or.kr/openApi/restful/pblprfr?service=${SeriveKey}&stdate=${stdate}&eddate=${eddate}&cpage=1&rows=10&shprfnm=${req.query.title}`,
   }).then((result) => {
-    console.log(result.data);
+    console.log(`result.data => ${result.data}`);
+    const xmlToJson = JSON.parse(
+      parseXML.xml2json(result.data, {
+        compact: true,
+        spaces: 2,
+      })
+    ).dbs.db;
+    let perfoClientTitle = xmlToJson.map((el) => {
+      return {
+        title: el.prfnm._text,
+        startDate: el.prfpdfrom._text,
+        endDate: el.prfpdto._text,
+        hall: el.fcltynm._text,
+        img: el.poster._text,
+        genre: el.genrenm._text,
+        prfstate: el.prfstate._text,
+      };
+    });
+    console.log('clienttitle', perfoClientTitle);
+    res.send(perfoClientTitle);
   });
 };
