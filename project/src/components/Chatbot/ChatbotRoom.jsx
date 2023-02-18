@@ -59,42 +59,42 @@ export default function ChatbotRoom({
   console.log('messageRoom', messageRoom);
 
   // 메시지 받기
-  useEffect(() => {
-    function messageRecive(data) {
-      // console.log(data);
-      // if (data.socketId === mySocketId) {
-      const messageTempData = {
-        permission: data.permission,
-        content: data.content,
-        time: data.time,
-        socketId: data.socketId,
-        userId: data.userId,
-        // roomId: data.roomId,
-      };
-      const messageLength = Object.keys(messageRoom).length;
-      // console.log('messageLength', messageLength);
-      const newMessage = {
-        roomId: myRoomId,
-        // roomId: roomId,
-        messageLength: messageLength,
-        msg: messageTempData,
-      };
-      dispatch(socketMessageAdd(newMessage));
-    }
+  // useEffect(() => {
+  //   function messageRecive(data) {
+  //     // console.log(data);
+  //     // if (data.socketId === mySocketId) {
+  //     const messageTempData = {
+  //       permission: data.permission,
+  //       content: data.content,
+  //       time: data.time,
+  //       socketId: data.socketId,
+  //       userId: data.userId,
+  //       // roomId: data.roomId,
+  //     };
+  //     const messageLength = Object.keys(messageRoom).length;
+  //     // console.log('messageLength', messageLength);
+  //     const newMessage = {
+  //       roomId: myRoomId,
+  //       // roomId: roomId,
+  //       messageLength: messageLength,
+  //       msg: messageTempData,
+  //     };
+  //     dispatch(socketMessageAdd(newMessage));
+  //   }
 
-    socket.on('receiveMessage', messageRecive);
-    const chatWindowAreaScroll = document.getElementById(
-      'chatWindowAreaScroll'
-    );
-    // 메시지 받을 때 스크롤 이동
-    setTimeout(() => {
-      chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight + 39;
-    }, 5);
+  //   socket.on('receiveMessage', messageRecive);
+  //   const chatWindowAreaScroll = document.getElementById(
+  //     'chatWindowAreaScroll'
+  //   );
+  //   // 메시지 받을 때 스크롤 이동
+  //   setTimeout(() => {
+  //     chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight + 39;
+  //   }, 5);
 
-    return () => {
-      socket.off('receiveMessage', messageRecive);
-    };
-  }, [socket, messageRoom, myRoomId, dispatch, userInfo]);
+  //   return () => {
+  //     socket.off('receiveMessage', messageRecive);
+  //   };
+  // }, [socket, messageRoom, myRoomId, dispatch, userInfo]);
 
   function messageSend() {
     // console.log('chatInput: ', chatInput.current.value);
@@ -171,7 +171,7 @@ export default function ChatbotRoom({
       'chatWindowAreaScroll'
     );
     chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight;
-  }, []);
+  }, [messageRoom]);
 
   // TextArea에서 Enter 누르면 메시지 전송
   // TextArea에서 Ctrl + Enter 누르면 다음줄로 이동

@@ -7,6 +7,7 @@ import {
   socketInitMessageAdd,
   socketMessage,
   socketRoomsRefresh,
+  socketMessageAdd,
 } from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
@@ -24,6 +25,21 @@ export default function Chatbot() {
 
   const [mySocketId, setMySocketId] = useState('');
   const [myRoomId, setMyRoomId] = useState('');
+
+  const messageRoomDefaultData = {
+    0: {
+      permission: 'server',
+      content: 'Error Prevention',
+      time: '2023. 1. 01. 00:00:00',
+      socketId: '00000000000000000000',
+      userId: '',
+    },
+  };
+  // const messageRoom = message[0][myRoomId]
+  //   ? message[0][myRoomId]
+  //   : messageRoomDefaultData;
+
+  const messageRoom = message[0] ? message[0] : messageRoomDefaultData;
 
   useEffect(() => {
     socket.on('welceome', (initSocketData) => {
@@ -55,6 +71,46 @@ export default function Chatbot() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 메시지 받기 - 이사 중
+  useEffect(() => {
+    function messageRecive(data) {
+      // console.log(data);
+      // if (data.socketId === mySocketId) {
+      const messageTempData = {
+        permission: data.permission,
+        content: data.content,
+        time: data.time,
+        socketId: data.socketId,
+        userId: data.userId,
+        // roomId: data.roomId,
+      };
+      // const messageLength = Object.keys(messageRoom[myRoomId]).length;
+      const messageLength = Object.keys(messageRoom[data.roomId]).length;
+      // console.log('messageLength', messageLength);
+      const newMessage = {
+        roomId: data.roomId,
+        // roomId: myRoomId,
+        // roomId: roomId,
+        messageLength: messageLength,
+        msg: messageTempData,
+      };
+      dispatch(socketMessageAdd(newMessage));
+    }
+
+    socket.on('receiveMessage', messageRecive);
+    // const chatWindowAreaScroll = document.getElementById(
+    //   'chatWindowAreaScroll'
+    // );
+    // // 메시지 받을 때 스크롤 이동
+    // setTimeout(() => {
+    //   chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight + 39;
+    // }, 5);
+
+    return () => {
+      socket.off('receiveMessage', messageRecive);
+    };
+  }, [socket, messageRoom, myRoomId, dispatch, userInfo]);
 
   const roomRefrsh = () => {
     socket.emit('getRoomsList', myRoomId);
