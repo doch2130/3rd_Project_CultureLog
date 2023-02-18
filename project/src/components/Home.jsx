@@ -7,6 +7,7 @@ import './Home.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../hoc/auth';
+import YeongCalendar from './YeongCalendar';
 
 // Main Page
 function Home() {
@@ -31,7 +32,7 @@ function Home() {
         <Col xs={12} style={{ padding: '0px', margin: 'auto' }}>
           <Row style={{ maxWidth: '2000px', margin: 'auto' }}>
             <Col xs={12} md={6}>
-              <HomeCalendar />
+              <YeongCalendar />
               <Col xs={12} style={{ padding: '6px 12px' }}>
                 <p className="calendarFooter">
                   달력 속 날짜를 클릭하면 책, 영화, 공연을 선택해 이야기를 남길
