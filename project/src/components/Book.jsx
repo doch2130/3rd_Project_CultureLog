@@ -4,6 +4,8 @@ import Star from './Star';
 import examImg from '../book.jpeg';
 import { callBookAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
 
 export default function Book() {
   const clientTitle = useSelector((state) => state.logdata.bookinfo);
@@ -13,9 +15,11 @@ export default function Book() {
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examImg);
   const bookSearch = useRef();
+  const logDate = useRef();
   const titleNyear = useRef();
   const author = useRef();
   const genre = useRef();
+  const review = useRef();
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -40,7 +44,20 @@ export default function Book() {
     setImgsrc(bookform.img);
   }
   const submit = () => {
-    console.log(alert('게시물이 등록되었습니다'));
+    axios({
+      method: 'post',
+      url: axiosurl.toDBbook,
+      data: {
+        date: logDate.current.value,
+        title: titleNyear.current.value,
+        author: author.current.value,
+        genre: genre.current.value,
+        review: review.current.value,
+      },
+    }).then(() => {
+      //console.log('todb', res.data);
+      console.log(alert('게시물이 등록되었습니다'));
+    });
   };
 
   // const filterTitle = movies.filter((p) => {
@@ -86,7 +103,7 @@ export default function Book() {
             </Div8>
           ) : null}
 
-          <Input type="date" placeholder="날짜" />
+          <Input type="date" ref={logDate} placeholder="날짜" />
 
           <Input ref={titleNyear} type="text" placeholder="제목" />
 
@@ -96,7 +113,7 @@ export default function Book() {
 
           {/* <Star /> */}
 
-          <textarea placeholder="후기를 작성해주세요" />
+          <textarea ref={review} placeholder="후기를 작성해주세요" />
         </Div7>
         <Button onClick={submit}>등록하기</Button>
       </Div6>

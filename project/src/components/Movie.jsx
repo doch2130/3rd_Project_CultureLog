@@ -6,6 +6,8 @@ import './Movie.css';
 import { callMovieAPI } from '../actions/logdata_action';
 import Star from './Star';
 import { dateData } from '../actions/date_action';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
 
 export default function Movie() {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
@@ -17,9 +19,11 @@ export default function Movie() {
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examimg);
   const movieSearch = useRef();
+  const logDate = useRef();
   const titleNyear = useRef();
   const director = useRef();
   const actor = useRef();
+  const review = useRef();
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -52,7 +56,20 @@ export default function Movie() {
     setImgsrc(movieform.img);
   }
   function submit() {
-    console.log(alert('게시물이 등록되었습니다'));
+    axios({
+      method: 'post',
+      url: axiosurl.toDBmovie,
+      data: {
+        date: logDate.current.value,
+        title: titleNyear.current.value,
+        director: director.current.value,
+        actor: actor.current.value,
+        review: review.current.value,
+      },
+    }).then(() => {
+      //console.log('todb', res.data);
+      console.log(alert('게시물이 등록되었습니다'));
+    });
   }
 
   return (
@@ -87,7 +104,11 @@ export default function Movie() {
                   ))}
             </Div8>
           ) : null}
-          <Input type="text" placeholder={P.toISOString().slice(0, 10)} />
+          <Input
+            type="text"
+            ref={logDate}
+            placeholder={P.toISOString().slice(0, 10)}
+          />
 
           <Input ref={titleNyear} type="text" placeholder="제목(개봉년도)" />
 
@@ -95,7 +116,7 @@ export default function Movie() {
 
           <Input type="text" ref={actor} placeholder="주연배우" />
 
-          <textarea placeholder="후기를 작성해주세요" />
+          <textarea ref={review} placeholder="후기를 작성해주세요" />
         </Div7>
         <RegisterBtn onClick={submit}>등록하기</RegisterBtn>
       </Div6>
