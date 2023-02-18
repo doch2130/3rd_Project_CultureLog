@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const dateSchema = mongoose.Schema({
-  date: String,
+  date: { type: String },
 });
 
 const Date = mongoose.model('Date', dateSchema);

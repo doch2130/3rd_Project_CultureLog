@@ -13,12 +13,13 @@ export function monthData(month) {
     payload: month,
   };
 }
-export function dateData(date) {
-  const request = axios
-    .post('/api/users/date', date)
-    .then((response) => response.data);
+export async function dateData(date) {
+  // const request = await axios
+  //   .post('/api/date', { date })
+  //   .then((response) => response.data);
+  // console.log(request);
   return {
     type: DATE,
-    payload: request,
+    payload: date,
   };
 }

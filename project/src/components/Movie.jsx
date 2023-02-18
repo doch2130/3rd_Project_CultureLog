@@ -5,11 +5,14 @@ import examimg from '../movie.jpeg';
 import './Movie.css';
 import { callMovieAPI } from '../actions/logdata_action';
 import Star from './Star';
+import { dateData } from '../actions/date_action';
 
 export default function Movie() {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
+  const P = useSelector((state) => state.date.date);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  console.log('p', P);
 
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examimg);
@@ -84,8 +87,7 @@ export default function Movie() {
                   ))}
             </Div8>
           ) : null}
-
-          <Input type="date" placeholder="날짜" />
+          <Input type="text" placeholder={P.toISOString().slice(0, 10)} />
 
           <Input ref={titleNyear} type="text" placeholder="제목(개봉년도)" />
 

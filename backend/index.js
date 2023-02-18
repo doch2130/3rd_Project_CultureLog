@@ -42,7 +42,6 @@ let corsOption = {
 app.use(cors(corsOption));
 const socket = require('./socketio/index');
 const port = 5000;
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const config = require('./config/key');
@@ -51,11 +50,9 @@ const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
 const { Date } = require('./models/Date');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/', router);
 
 const mongoose = require('mongoose');
 const { Router } = require('express');
@@ -92,16 +89,13 @@ app.post('/api/users/register', (req, res) => {
   });
 });
 
-app.post('api/users/date', (req, res) => {
-  console.log(req.body);
-  const Date = new Date(req.body);
-  Date.save((err, dateInfo) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-    });
-  });
-});
+// app.post('/api/date', (req, res) => {
+//   console.log('----');
+//   console.log(req.body);
+//   return res.status(200).json({
+//     success: true,
+//   });
+// });
 
 app.post('/api/users/login', async (req, res) => {
   //1. 데이터베이스에서 요청한 e-mail찾기
@@ -160,6 +154,7 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
+app.use('/', router);
 app.get('*', (req, res) => {
   res.send('주소가 존재하지 않습니다. 다시 한 번 확인해주세요.');
 });
