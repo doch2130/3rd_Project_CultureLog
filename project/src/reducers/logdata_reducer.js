@@ -14,7 +14,7 @@ export default function movieAPI(
     case BOOK:
       return { ...state, bookinfo: action.payload };
     case PERFORMANCE:
-      return { ...state, performanceinfo: action.payload };
+      return { ...state, perfoinfo: action.payload };
     default:
       return state;
   }
