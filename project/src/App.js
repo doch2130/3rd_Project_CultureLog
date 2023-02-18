@@ -13,7 +13,8 @@ import { socketInit } from './actions/socket_action';
 import './App.css';
 import Header from './components/Header';
 import Chatbot from './components/Chatbot/Chatbot';
-import Homeyeong from './components/Homeyeong';
+
+import Home from './components/Home';
 
 function App() {
   // axios 기본 url 설정
@@ -29,7 +30,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/home" element={<Homeyeong />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/Book" element={<Book />} />
