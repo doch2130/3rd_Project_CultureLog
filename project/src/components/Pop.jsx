@@ -8,16 +8,15 @@ import { DATE } from '../actions/types';
 function Pop(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log(props.date);
   const moveToBook = () => {
-    let dateP = {
-      date: props.value,
-    };
-    dispatch(dateData(dateP));
+    dispatch(dateData(props.date));
     navigate('/Book');
   };
-  // const datadate = useSelector((state) => state.dateData);
-  // console.log(datadate);
+
   const moveToMovie = () => {
+    console.log(props.date);
+    dispatch(dateData(props.date));
     navigate('/Movie');
   };
 
