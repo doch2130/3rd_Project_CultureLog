@@ -63,7 +63,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
                 key={el.roomId}
                 onClick={() => {
                   setSelectRoom(el);
-                  // console.log('el', el);
+                  console.log('el', el);
                 }}
               >
                 <Col xs={12}>
