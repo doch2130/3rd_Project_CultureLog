@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 import Star from './Star';
 import examImg from '../book.jpeg';
@@ -6,10 +8,12 @@ import { callBookAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
+import moment from 'moment';
 
 export default function Book() {
   const clientTitle = useSelector((state) => state.logdata.bookinfo);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [searchClass, setSearchClass] = useState('searchBoard');
@@ -20,6 +24,7 @@ export default function Book() {
   const author = useRef();
   const genre = useRef();
   const review = useRef();
+  const P = useSelector((state) => state.date.date);
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -57,6 +62,7 @@ export default function Book() {
     }).then(() => {
       //console.log('todb', res.data);
       console.log(alert('게시물이 등록되었습니다'));
+      navigate('/home');
     });
   };
 
@@ -103,7 +109,11 @@ export default function Book() {
             </Div8>
           ) : null}
 
-          <Input type="date" ref={logDate} placeholder="날짜" />
+          <Input
+            type="text"
+            ref={logDate}
+            value={moment(P).format('YYYY년 MM월 DD일')}
+          />
 
           <Input ref={titleNyear} type="text" placeholder="제목" />
 

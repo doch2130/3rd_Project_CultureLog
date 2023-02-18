@@ -21,6 +21,7 @@ function Pop(props) {
   };
 
   const moveToPer = () => {
+    dispatch(dateData(props.date));
     navigate('/Performance');
   };
   return (

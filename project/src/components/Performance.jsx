@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import musicalImg from '../musical.jpeg';
 // import YeongCalendar from './YeongCalendar';
@@ -9,11 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dateData } from '../actions/date_action';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
+import moment from 'moment';
 
 export default function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const P = useSelector((state) => state.date.date);
 
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(musicalImg);
@@ -25,9 +28,11 @@ export default function Performance(props) {
   const review = useRef();
   const date = useSelector(dateData);
   console.log(date);
+  const navigate = useNavigate();
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
   };
+
   const search = async () => {
     const result = await callPerfoAPI({
       title: perfoSearch.current.value,
@@ -60,6 +65,7 @@ export default function Performance(props) {
     }).then(() => {
       //console.log('todb', res.data);
       console.log(alert('게시물이 등록되었습니다'));
+      navigate('/home');
     });
   };
   //const [value, setValue] = useState();
@@ -95,18 +101,18 @@ export default function Performance(props) {
                   ))}
             </Div8>
           ) : null}
-          <Input type="date" ref={logDate} placeholder="날짜" />
 
-          <Input type="date" placeholder="날짜" />
-
-          <Input type="text" placeholder="공연명" />
+          <Input
+            type="text"
+            ref={logDate}
+            value={moment(P).format('YYYY년 MM월 DD일')}
+          />
 
           <Input
             ref={titleNyear}
             type="text"
             placeholder="공연명(공연연도, 공연장르)"
           />
-
 
           <Input ref={hall} type="text" placeholder="극장" />
 
