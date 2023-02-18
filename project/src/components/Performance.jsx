@@ -97,11 +97,16 @@ export default function Performance(props) {
           ) : null}
           <Input type="date" ref={logDate} placeholder="날짜" />
 
+          <Input type="date" placeholder="날짜" />
+
+          <Input type="text" placeholder="공연명" />
+
           <Input
             ref={titleNyear}
             type="text"
             placeholder="공연명(공연연도, 공연장르)"
           />
+
 
           <Input ref={hall} type="text" placeholder="극장" />
 
