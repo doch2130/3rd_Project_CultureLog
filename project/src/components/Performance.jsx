@@ -78,23 +78,6 @@ export default function Performance(props) {
             </Div8>
           ) : null}
 
-          {/* <div className={searchClass}>
-            {clientTitle.length < 1
-              ? '공연을 찾을 수 없습니다'
-              : clientTitle.map((el, index) => (
-                  <p
-                    key={el.img}
-                    className={index}
-                    dangerouslySetInnerHTML={{
-                      __html: `${el.title},${el.author},${el.publisher}`,
-                    }}
-                    onClick={titleconfirm}
-                  ></p>
-                ))}
-          </div>
-          <p> 날짜</p>
-          <p>{date}</p> */}
-
           <Input type="date" placeholder="날짜" />
 
           <Input type="text" placeholder="공연명" />

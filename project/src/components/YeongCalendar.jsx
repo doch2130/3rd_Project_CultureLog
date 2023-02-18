@@ -10,9 +10,12 @@ import { dateData } from '../actions/date_action';
 
 export default function YeongCalendar() {
   const [value, setValue] = useState(new Date());
-  console.log(value); // 내가 선택한 날짜
-  //console.log(new Date()); // 당일 날짜
+
   const [modalShow, setModalShow] = useState(false);
+
+  console.log(value); // 내가 선택한 날짜
+
+  //console.log(new Date()); // 당일 날짜
   //채영님께
   //데이터를 받아서 달력에 이벤트로 띄워질 때
   //Full날짜로 다 받았을 때 데이터가 해당 날짜에 표시될 지 확인해보아야 할 것 같아요
