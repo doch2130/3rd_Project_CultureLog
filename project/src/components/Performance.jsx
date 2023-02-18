@@ -7,6 +7,8 @@ import musicalImg from '../musical.jpeg';
 import { callPerfoAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
 import { dateData } from '../actions/date_action';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
 
 export default function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
@@ -16,6 +18,11 @@ export default function Performance(props) {
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(musicalImg);
   const perfoSearch = useRef();
+  const logDate = useRef();
+  const titleNyear = useRef();
+  const hall = useRef();
+  const mainroll = useRef();
+  const review = useRef();
   const date = useSelector(dateData);
   console.log(date);
   const onKeyPress = (e) => {
@@ -27,22 +34,33 @@ export default function Performance(props) {
     });
     console.log('component', result);
     setOpen(true);
-
-    // dispatch(result);
-    // setSearchClass('searchBoard');
-    // perfoSearch.current.value = '';
+    dispatch(result);
+    setSearchClass('searchBoard');
+    perfoSearch.current.value = '';
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
   function titleconfirm(e) {
-    // let bookform = clientTitle[e.target.className];
-    // setSearchClass('d-none');
-    // titleNyear.current.value = `${bookform.title}(${bookform.publisher})`;
-    // author.current.value = bookform.author;
-    // genre.current.value = bookform.categoryName;
-    // setImgsrc(bookform.img);
+    let perfoform = clientTitle[e.target.className];
+    setSearchClass('d-none');
+    titleNyear.current.value = `${perfoform.title}(${perfoform.startDate}~${perfoform.endDate},${perfoform.genre})`;
+    hall.current.value = perfoform.hall;
+    setImgsrc(perfoform.img);
   }
   const submit = () => {
-    console.log(alert('게시물이 등록되었습니다'));
+    axios({
+      method: 'post',
+      url: axiosurl.toDBperfo,
+      data: {
+        date: logDate.current.value,
+        title: titleNyear.current.value,
+        hall: hall.current.value,
+        mainroll: mainroll.current.value,
+        review: review.current.value,
+      },
+    }).then(() => {
+      //console.log('todb', res.data);
+      console.log(alert('게시물이 등록되었습니다'));
+    });
   };
   //const [value, setValue] = useState();
   //<Calendar onChange={() => setValue} value={value} />
@@ -70,25 +88,37 @@ export default function Performance(props) {
                       key={el.img}
                       className={index}
                       dangerouslySetInnerHTML={{
-                        __html: `${el.title},${el.author},${el.publisher}`,
+                        __html: `[${el.genre}]-${el.title},${el.hall}`,
                       }}
                       onClick={titleconfirm}
                     ></p>
                   ))}
             </Div8>
           ) : null}
+          <Input type="date" ref={logDate} placeholder="날짜" />
 
           <Input type="date" placeholder="날짜" />
 
           <Input type="text" placeholder="공연명" />
 
-          <Input type="text" placeholder="극장" />
+          <Input
+            ref={titleNyear}
+            type="text"
+            placeholder="공연명(공연연도, 공연장르)"
+          />
 
-          <Input type="text" placeholder="주연배우" />
+
+          <Input ref={hall} type="text" placeholder="극장" />
+
+          <Input
+            type="text"
+            ref={mainroll}
+            placeholder="주요 출연자(직접입력)"
+          />
 
           {/* <Star /> */}
 
-          <textarea placeholder="후기를 작성해주세요" />
+          <textarea ref={review} placeholder="후기를 작성해주세요" />
         </Div7>
         <Button onClick={submit}>등록하기</Button>
       </Div6>

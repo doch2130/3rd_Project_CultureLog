@@ -48,7 +48,6 @@ const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 
 const { User } = require('./models/User');
-const { Date } = require('./models/Date');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -88,14 +87,6 @@ app.post('/api/users/register', (req, res) => {
     }
   });
 });
-
-// app.post('/api/date', (req, res) => {
-//   console.log('----');
-//   console.log(req.body);
-//   return res.status(200).json({
-//     success: true,
-//   });
-// });
 
 app.post('/api/users/login', async (req, res) => {
   //1. 데이터베이스에서 요청한 e-mail찾기

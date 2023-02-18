@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { BOOK, MOVIE, PERFORMANCE } from './types';
+import axiosurl from '../axiosurl';
 
 export function callMovieAPI(dataTosubmit) {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url: 'http://localhost:5000/movieAPI',
+      url: axiosurl.callmovie,
       params: dataTosubmit,
     }).then((res) => {
       console.log('movieactionfunction', res.data);
@@ -22,7 +23,7 @@ export function callBookAPI(dataTosubmit) {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url: 'http://localhost:5000/bookAPI',
+      url: axiosurl.callbook,
       params: dataTosubmit,
     }).then((res) => {
       console.log('bookactionfunction', res.data);
@@ -39,7 +40,7 @@ export function callPerfoAPI(dataTosubmit) {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url: 'http://localhost:5000/performanceAPI',
+      url: axiosurl.callperfo,
       params: dataTosubmit,
     }).then((res) => {
       console.log('performanceactionfunction', res.data);
