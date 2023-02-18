@@ -122,12 +122,12 @@ export default function socket_reducer(state = initState, action) {
       // const updatedMessages = [updatedRoom, ...state.message.slice(1)];
 
       let tempIndex = '';
-      // state.message.map((el, index) => {
-      //   if (Object.keys(el)[index] === roomId) {
-      //     tempIndex = index;
-      //   }
-      //   return tempIndex;
-      // });
+      state.message.map((el, index) => {
+        if (Object.keys(el)[index] === roomId) {
+          tempIndex = index;
+        }
+        return tempIndex;
+      });
 
       // eslint-disable-next-line no-unused-vars
       // let test;
@@ -137,7 +137,6 @@ export default function socket_reducer(state = initState, action) {
       //   test = el[roomId][msgLength] = newMessage;
       //   // console.log('test', test);
       // });
-      tempIndex = 0;
 
       console.log('roomId', roomId);
       console.log('state.message', state.message);

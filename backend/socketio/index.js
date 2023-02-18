@@ -53,7 +53,7 @@ module.exports = (socketIO) => {
         {
           permission: 'server',
           content: '문의 사항이 있으시면 메시지 남겨주세요.',
-          time: '',
+          time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
           socketId: 'e9f1',
           userId: 'pasd123',
         },
@@ -89,7 +89,16 @@ module.exports = (socketIO) => {
     // 관리자 로그인 시 실행해주려고 했는데, 현재 Chatbot 컴포넌트가 따로 돌고 있어서 그런지,
     // 로그인 이후에도 실행이 안되서, 바로 데이터 보내주는 방식으로 변경
     // 단, 로그인 유저가 manager인 경우에만 데이터 볼 수 있게 함
-    socketIO.emit('getRooms', rooms);
+    // socketIO.emit('getRooms', rooms);
+    // 자동 뿌리기 말고, 요청시로 변경
+    socket.on('getRoomsList', (myRoomId) => {
+      // console.log('rooms', rooms);
+      for (let i = 0; i < rooms.length; i++) {
+        if (myRoomId === rooms[i].roomId) continue;
+        socket.join(rooms[i].roomId);
+      }
+      socket.emit('getRooms', rooms);
+    });
 
     // 기본 설정?
     // 수정이 필요할 듯
@@ -97,13 +106,16 @@ module.exports = (socketIO) => {
 
     socket.on('message', (data) => {
       console.log('message', data);
-      // socketIO.to(data.roomId).emit('receiveMessage', {
-      socket.emit('receiveMessage', {
+      // io, socket 둘다 메시지가 보이기는 함
+      // 관리자랑 연결 후에 따라 사용 방법이 다를듯
+      socketIO.to(data.roomId).emit('receiveMessage', {
+        // socket.emit('receiveMessage', {
         content: data.content,
         socketId: data.socketId,
         permission: data.permission,
         userId: data.userId,
         time: data.time,
+        roomId: data.roomId,
       });
     });
 
