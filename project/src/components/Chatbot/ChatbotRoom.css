@@ -138,7 +138,7 @@
 
 .serverMessageText {
   white-space: pre-wrap;
-  max-width: 250px;
+  max-width: 255px;
   background-color: rgb(245 241 230);
   border-radius: 3px;
   font-size: 0.7rem;

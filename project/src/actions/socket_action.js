@@ -5,6 +5,7 @@ import {
   SOCKET_ROOM_ADD,
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
+  SOCKET_ROOM_REFRESH,
   // SOCKET_LOGOUT,
 } from './types';
 
@@ -62,3 +63,9 @@ export function socketMessageAdd(msg) {
 //     payload: dieSocketId,
 //   };
 // }
+
+export function socketRoomsRefresh() {
+  return {
+    type: SOCKET_ROOM_REFRESH,
+  };
+}

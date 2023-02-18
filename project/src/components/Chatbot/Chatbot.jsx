@@ -6,6 +6,7 @@ import {
   socketRoomsAdd,
   socketInitMessageAdd,
   socketMessage,
+  socketRoomsRefresh,
 } from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
@@ -18,6 +19,8 @@ export default function Chatbot() {
 
   const userInfo = useSelector((state) => state.user.loginSuccess);
   const socket = useSelector((state) => state.socket.socket);
+  const roomList = useSelector((state) => state.socket.roomList);
+  const message = useSelector((state) => state.socket.message);
 
   const [mySocketId, setMySocketId] = useState('');
   const [myRoomId, setMyRoomId] = useState('');
@@ -53,6 +56,12 @@ export default function Chatbot() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const roomRefrsh = () => {
+    socket.emit('getRoomsList', myRoomId);
+    dispatch(socketRoomsRefresh());
+    alert('새로고침');
+  };
+
   return (
     <div>
       {/* 챗봇 아이콘 */}
@@ -78,6 +87,25 @@ export default function Chatbot() {
           <Row>
             {/* 채팅창 닫기 버튼 */}
             <Col xs={12}>
+              {userInfo.permission === 'manager' && (
+                <div
+                  style={{ display: 'inline-block', cursor: 'pointer' }}
+                  onClick={() => {
+                    roomRefrsh();
+                  }}
+                >
+                  <img
+                    src="/refreshImg.png"
+                    alt="refreshImg"
+                    style={{
+                      width: '15px',
+                      height: '15px',
+                      marginRight: '5px',
+                      marginBottom: '3px',
+                    }}
+                  />
+                </div>
+              )}
               <div
                 className="closeBtn"
                 onClick={() => setIsChatBotIcon(!isChatBotIcon)}
@@ -87,12 +115,17 @@ export default function Chatbot() {
 
           {/* 관리자 or 일반 사용자 */}
           {userInfo.permission === 'manager' ? (
-            <ChatbotManager />
+            <ChatbotManager
+              mySocketId={mySocketId}
+              myRoomId={myRoomId}
+              userInfo={userInfo}
+            />
           ) : (
             <ChatbotRoom
               mySocketId={mySocketId}
               myRoomId={myRoomId}
               userInfo={userInfo}
+              message={message}
             />
           )}
         </div>
