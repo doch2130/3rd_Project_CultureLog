@@ -116,6 +116,7 @@ app.post('/api/users/login', async (req, res) => {
         res.cookie('x_auth', user.token, { maxAge: 30000 }).status(200).json({
           loginSuccess: true,
           userId: user._id,
+          email: user.email,
           permission: user.permission,
         });
       });

@@ -32,3 +32,5 @@ export const SOCKET_LOGOUT = 'socket/user/disconnect';
 export const SOCKET_ROOM_ADD = 'socket/rooms/add';
 // 방 목록 새로고침
 export const SOCKET_ROOM_REFRESH = 'socket/rooms/refresh';
+// 로그인 시 SOCKET쪽의 userID 업데이트
+export const SOCEKT_LOGIN_UPDATE = 'socket/user/login';

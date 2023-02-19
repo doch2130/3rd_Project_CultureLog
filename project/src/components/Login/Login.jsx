@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, cookieUser } from '../../actions/user_action';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Auth from '../../hoc/auth';
+import { socketUserLogin } from '../../actions/socket_action';
 
 const Div1 = styled.div`
   margin: auto;
@@ -53,6 +54,9 @@ function Login() {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
 
+  const socket = useSelector((state) => state.socket.socket);
+  const roomList = useSelector((state) => state.socket.roomList);
+
   /*   const [Cookies, setCookie, removeCookie] = useCookies(); */
 
   const onEmailHandler = (e) => {
@@ -78,6 +82,7 @@ function Login() {
       .then((response) => {
         // 현재 방 목록 받아오기
         if (response.payload.loginSuccess) {
+          socket.emit('userLogin', roomList[0], response.payload);
           navigate('/home');
           alert(`${Email}님 오늘도 행복한 하루 보내세요🥰`);
         } else {

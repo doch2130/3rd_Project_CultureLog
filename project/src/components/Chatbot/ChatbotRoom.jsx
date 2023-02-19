@@ -34,76 +34,20 @@ export default function ChatbotRoom({
   const date = new Date();
   const chatInput = useRef();
 
-  // console.log('messageRoomDefaultData', messageRoomDefaultData);
-  // console.log('message[0][myRoomId]', message[0][myRoomId]);
-  // console.log('messageRoom', messageRoom);
-  console.log('mySocketId', mySocketId);
-  console.log('myRoomId', myRoomId);
-
-  // const messageTemp = message[0][myRoomId];
-  // const [messageData, setMessageData] = useState([]);
-  // console.log(myRoomId);
-  // console.log(message[0]);
-  // console.log('messageTemp', messageTemp);
-  // console.log('messageData', messageData);
-
-  // useEffect(() => {
-  //   // console.log(Object.keys(messageTemp));
-  //   const newMessageData = [];
-  //   for (let i = 0; i < Object.keys(messageTemp).length; i++) {
-  //     newMessageData.push({ [i]: messageTemp[i] });
-  //     setMessageData(newMessageData);
-  //   }
-  // }, []);
-
-  console.log('messageRoom', messageRoom);
-
-  // 메시지 받기
-  // useEffect(() => {
-  //   function messageRecive(data) {
-  //     // console.log(data);
-  //     // if (data.socketId === mySocketId) {
-  //     const messageTempData = {
-  //       permission: data.permission,
-  //       content: data.content,
-  //       time: data.time,
-  //       socketId: data.socketId,
-  //       userId: data.userId,
-  //       // roomId: data.roomId,
-  //     };
-  //     const messageLength = Object.keys(messageRoom).length;
-  //     // console.log('messageLength', messageLength);
-  //     const newMessage = {
-  //       roomId: myRoomId,
-  //       // roomId: roomId,
-  //       messageLength: messageLength,
-  //       msg: messageTempData,
-  //     };
-  //     dispatch(socketMessageAdd(newMessage));
-  //   }
-
-  //   socket.on('receiveMessage', messageRecive);
-  //   const chatWindowAreaScroll = document.getElementById(
-  //     'chatWindowAreaScroll'
-  //   );
-  //   // 메시지 받을 때 스크롤 이동
-  //   setTimeout(() => {
-  //     chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight + 39;
-  //   }, 5);
-
-  //   return () => {
-  //     socket.off('receiveMessage', messageRecive);
-  //   };
-  // }, [socket, messageRoom, myRoomId, dispatch, userInfo]);
-
   function messageSend() {
     // console.log('chatInput: ', chatInput.current.value);
+
+    if (!userInfo.email) {
+      userInfo.email = '사용자' + mySocketId.slice(2, 7);
+    }
+
     socket.emit('message', {
       content: chatInput.current.value,
       socketId: mySocketId,
       roomId: myRoomId,
       permission: userInfo.permission,
-      userId: userInfo.userId,
+      // userId: userInfo.userId,
+      userId: userInfo.email,
       time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
     });
 
@@ -206,7 +150,7 @@ export default function ChatbotRoom({
 
   const messageRender = () => {
     const result = [];
-    console.log('message lee', Object.keys(messageRoom).length);
+    // console.log('message lee', Object.keys(messageRoom).length);
     for (let i = 0; i < Object.keys(messageRoom).length; i++) {
       let temp = '';
       let tempHour = '';

@@ -108,7 +108,8 @@ module.exports = (socketIO) => {
       console.log('message', data);
       // io, socket 둘다 메시지가 보이기는 함
       // 관리자랑 연결 후에 따라 사용 방법이 다를듯
-      socketIO.to(data.roomId).emit('receiveMessage', {
+      // socketIO.to(data.roomId).emit('receiveMessage', {
+      socketIO.emit('receiveMessage', {
         // socket.emit('receiveMessage', {
         content: data.content,
         socketId: data.socketId,
@@ -119,10 +120,27 @@ module.exports = (socketIO) => {
       });
     });
 
+    // 사용자 로그인 시 정보 업데이트
+    socket.on('userLogin', (roomData, userData) => {
+      console.log('userLogin userData', userData);
+      console.log('userLogin roomData', roomData);
+      socketIO.emit('userLoginUpdate', roomData, userData);
+    });
+
+    // 사용자 연결 종료
     socket.on('disconnect', () => {
       console.log(socket.id + ' Exit');
+
+      socketIO.emit('userDisconnect', {
+        content: '사용자가 접속을 종료하였습니다.',
+        socketId: socket.id,
+        permission: 'server',
+        userId: '',
+        time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+        roomId: roomUid,
+      });
+
       delete data[socket.id];
-      // socketIO.emit('userDisconnect', socket.id);
     });
   });
 };
