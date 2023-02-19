@@ -9,6 +9,7 @@ const initState = {
   loginSuccess: {
     loginSuccess: false,
     userId: '',
+    userEmail: '',
     permission: 'default',
   },
 };
@@ -25,6 +26,7 @@ export default function user_reducer(state = initState, action) {
         loginSuccess: {
           loginSuccess: false,
           userId: '',
+          userEmail: '',
           permission: 'default',
         },
       };

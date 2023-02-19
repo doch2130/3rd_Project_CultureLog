@@ -6,6 +6,7 @@ import {
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
   SOCKET_ROOM_REFRESH,
+  SOCEKT_LOGIN_UPDATE,
   // SOCKET_LOGOUT,
 } from './types';
 
@@ -42,10 +43,10 @@ export function socketInitMessageAdd(msg) {
   };
 }
 
-export function socketRoomsAdd(room) {
+export function socketRoomsAdd(roomData) {
   return {
     type: SOCKET_ROOM_ADD,
-    payload: room,
+    payload: roomData,
   };
 }
 
@@ -67,5 +68,14 @@ export function socketMessageAdd(msg) {
 export function socketRoomsRefresh() {
   return {
     type: SOCKET_ROOM_REFRESH,
+  };
+}
+
+export function socketUserLogin(roomData, userData) {
+  // console.log('roomData action', roomData);
+  // console.log('userData action', userData);
+  return {
+    type: SOCEKT_LOGIN_UPDATE,
+    payload: { roomData, userData },
   };
 }

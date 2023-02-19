@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Offcanvas } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import './ChatbotManager.css';
@@ -7,28 +7,8 @@ import ChatbotRoom from './ChatbotRoom';
 export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   const roomList = useSelector((state) => state.socket.roomList);
   const message = useSelector((state) => state.socket.message);
-  // const roomId = useSelector((state) => state.socket.roomList);
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
-  // console.log('roomList', roomList);
-
-  useEffect(() => {
-    const roomEmpty = () => {
-      const chatRoomWindowAreaWrap = document.getElementsByClassName(
-        'chatRoomWindowAreaWrap'
-      );
-      const div = document.createElement('div');
-      div.classList.add('roomEmptyMessage');
-      const temp = '<span>상단의 새로고침 버튼을 눌러주세요.</span>';
-      div.innerHTML = temp;
-      chatRoomWindowAreaWrap[0].children[0].append(div);
-    };
-    if (roomList.length === 0) {
-      roomEmpty();
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -42,7 +22,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
         <Offcanvas.Body>
           <ChatbotRoom
             mySocketId={mySocketId}
-            myRoomId={selectRoom !== null ? selectRoom.roomId : mySocketId}
+            myRoomId={selectRoom !== null ? selectRoom.roomId : myRoomId}
             userInfo={userInfo}
             message={message}
           />
@@ -52,18 +32,23 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
       {/* 채팅방 리스트 */}
       <Row className="chatRoomWindowAreaWrap">
         <Col xs={12}>
+          {roomList.length === 0 ? (
+            <div className="roomEmptyMessage">
+              <span>상단의 새로고침 버튼을 눌러주세요.</span>
+            </div>
+          ) : (
+            <span></span>
+          )}
           {/* 방 목록 */}
           {roomList.map((el) => {
             // console.log('el', el);
-            document.getElementsByClassName('roomEmptyMessage')[0].textContent =
-              '';
             return (
               <Row
                 className="chatRoomList"
                 key={el.roomId}
                 onClick={() => {
                   setSelectRoom(el);
-                  console.log('el', el);
+                  // console.log('el', el);
                 }}
               >
                 <Col xs={12}>

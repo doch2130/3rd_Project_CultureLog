@@ -6,6 +6,7 @@ import {
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
   SOCKET_ROOM_REFRESH,
+  SOCEKT_LOGIN_UPDATE,
 } from '../actions/types';
 
 const initState = {
@@ -74,6 +75,7 @@ export default function socket_reducer(state = initState, action) {
         message: updatedMessage,
       };
     case SOCKET_INIT_MESSAGE_ADD:
+      // console.log('action.payload.initSocketData', action.payload.initSocketData);
       const initMessage = [
         {
           ...state.message,
@@ -93,7 +95,6 @@ export default function socket_reducer(state = initState, action) {
         message: initMessage,
       };
     case SOCKET_ROOM_ADD:
-      // 방 추가는 아직 설정 X
       return {
         ...state,
         roomList: state.roomList.concat({
@@ -103,7 +104,7 @@ export default function socket_reducer(state = initState, action) {
         }),
       };
     case SOCKET_MESSAGE_ADD:
-      console.log('actionPayload', action.payload);
+      // console.log('actionPayload', action.payload);
       const roomId = action.payload.roomId;
       const newMessage = action.payload.msg;
       const msgLength = action.payload.messageLength;
@@ -121,32 +122,17 @@ export default function socket_reducer(state = initState, action) {
       // const updatedRoom = { [roomId]: roomMessages };
       // const updatedMessages = [updatedRoom, ...state.message.slice(1)];
 
-      let tempIndex = '';
-      // state.message.map((el, index) => {
-      //   if (Object.keys(el)[index] === roomId) {
-      //     tempIndex = index;
-      //   }
-      //   return tempIndex;
-      // });
+      // let tempIndex = 0;
+      const tempIndex = 0;
 
-      // eslint-disable-next-line no-unused-vars
-      // let test;
-      // state.message.map((el, index) => {
-      //   // console.log('el', el);
-      //   // console.log('elIndex', el[roomId]);;
-      //   test = el[roomId][msgLength] = newMessage;
-      //   // console.log('test', test);
-      // });
-      tempIndex = 0;
-
-      console.log('roomId', roomId);
-      console.log('state.message', state.message);
-      console.log('tempIndex', tempIndex);
-      console.log('state.message[tempIndex]', state.message[tempIndex]);
-      console.log(
-        'state.message[tempIndex][roomId]',
-        state.message[tempIndex][roomId]
-      );
+      // console.log('roomId', roomId);
+      // console.log('state.message', state.message);
+      // console.log('tempIndex', tempIndex);
+      // console.log('state.message[tempIndex]', state.message[tempIndex]);
+      // console.log(
+      //   'state.message[tempIndex][roomId]',
+      //   state.message[tempIndex][roomId]
+      // );
       return {
         ...state,
         message: [
@@ -203,13 +189,46 @@ export default function socket_reducer(state = initState, action) {
     //   message: [...state.message, updateMessage],
     // };
 
-    // 관리자 - 방 새로고침
+    // 관리자 - 방 새로고침 - roomList 초기화 후 재등록
     case SOCKET_ROOM_REFRESH:
       return {
         ...state,
         roomList: [],
       };
+    // // 로그인 - 해당 RoomID의 userID 업데이트
+    case SOCEKT_LOGIN_UPDATE:
+      const roomData = action.payload.roomData;
+      const userData = action.payload.userData;
 
+      // console.log('action.payload.roomData', action.payload.roomData);
+      // console.log('action.payload.userData', action.payload.userData);
+
+      if (userData.permission === 'manager') {
+        // console.log('manager');
+        // 관리자인 경우 관리자 roomList 삭제
+        const updateRoomList = state.roomList.filter(
+          (el) => el.roomId !== roomData.roomId
+        );
+        return {
+          ...state,
+          roomList: updateRoomList,
+        };
+      } else {
+        // 사용자인 경우 사용자 roomList 정보 업데이트
+        const updateRoomList = state.roomList.map((el) => {
+          // console.log(el);
+          if (el.roomId === roomData.roomId) {
+            return { ...el, clientUserId: userData.email };
+          } else {
+            return el;
+          }
+        });
+
+        return {
+          ...state,
+          roomList: updateRoomList,
+        };
+      }
     default:
       return state;
   }
