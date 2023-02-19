@@ -52,7 +52,16 @@ const { User } = require('./models/User');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+const Movie = require('./models/Movie');
+app.use((req, res, next) => {
+  return Movie.find()
+    .populate('email')
+    .then((moviesArray) => {
+      console.log(`${p.email._id}입니다.`);
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 const mongoose = require('mongoose');
 const { Router } = require('express');
 mongoose

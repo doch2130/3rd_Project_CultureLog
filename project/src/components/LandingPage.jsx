@@ -6,8 +6,15 @@ import githubLogo from '../github.png';
 function LandingPage() {
   return (
     <>
-      <div style={{ display: 'flex', padding: '50px', alignItems: 'center' }}>
-        <div style={{ width: '1000px', padding: '20px' }}>
+      <div
+        style={{
+          display: 'flex',
+          padding: '50px',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ width: '1000px', margin: 'auto' }}>
           <span style={{ color: '#545d42', fontSize: '4rem' }}>
             나만의 문화 기록, Culture Log
           </span>
