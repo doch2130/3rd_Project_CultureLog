@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-
+import Auth from '../../src/hoc/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import examimg from '../movie.jpeg';
@@ -12,7 +12,7 @@ import moment from 'moment';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 
-export default function Movie() {
+function Movie() {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const navigate = useNavigate();
   const P = useSelector((state) => state.date.date);
@@ -323,3 +323,4 @@ const Img = styled.img`
     margin-left: -126px;
   }
 `;
+export default Auth(Movie, true);
