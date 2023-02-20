@@ -6,6 +6,8 @@ import moment from 'moment';
 import Pop from './Pop';
 import { dateData } from '../actions/date_action';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
 
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
@@ -20,23 +22,14 @@ export default function YeongCalendar(props) {
   // };
 
   // // 하이라이트 표시를 위한 배열
-  // const marks = data.map({ data.date });
-
-  // 날짜 클릭 이벤트핸들러
-  const handleDayClick = (value, event) => {
-    // const selectedDate = value.getDate();
-    // console.log(value, selectedDate);
-    setModalShow(!modalShow);
-  };
-  //Date 객체를 value 매개변수로 받아와서, getDate() 메서드를 이용하여 선택한 날짜 추출
-  //이후, 선택한 날짜를 처리하는 로직을 추가
+  const fromDBdate = () => {};
 
   const dispatch = useDispatch();
   const P = useSelector((state) => state.date.date);
   // const marks = [{ P }];
   const marks = [moment(P).format('DD-MM-YYYY')];
 
-  console.log(value); // 내가 선택한 날짜
+  console.log('내가선택한날짜', value); // 내가 선택한 날짜
   //console.log(data.);
   //console.log(moment(P).format('DD-MM-YYYY'));
   //console.log(new Date()); // 당일 날짜
@@ -44,6 +37,22 @@ export default function YeongCalendar(props) {
   //데이터를 받아서 달력에 이벤트로 띄워질 때
   //Full날짜로 다 받았을 때 데이터가 해당 날짜에 표시될 지 확인해보아야 할 것 같아요
   //만약에 안되면 year, month, date로 했을 때 띄워지는 지 확인해보아야 할 것 같습니다!
+
+  // 날짜 클릭 이벤트핸들러
+  const handleDayClick = (value, event) => {
+    //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
+    axios({
+      method: 'get',
+      url: axiosurl.fromDBperfo,
+      params: { date: moment(value).format('YYYY년 MM월 DD일') },
+    }).then((re) => {
+      console.log(re.data);
+      //if (re.data == null) return setModalShow(!modalShow);
+    });
+  };
+  //Date 객체를 value 매개변수로 받아와서, getDate() 메서드를 이용하여 선택한 날짜 추출
+  //이후, 선택한 날짜를 처리하는 로직을 추가
+
   return (
     <div>
       <Calendar
