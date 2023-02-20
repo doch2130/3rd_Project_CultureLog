@@ -3,7 +3,7 @@ import {
   REGISTER_USER,
   LOGOUT_USER,
   AUTH_USER,
-  /* COOKIE_USER, */
+  COOKIE_USER,
 } from '../actions/types';
 const initState = {
   loginSuccess: {
@@ -30,8 +30,8 @@ export default function user_reducer(state = initState, action) {
           permission: 'default',
         },
       };
-    /* case COOKIE_USER:
-      return { ...state, cookieData: action.payload }; */
+    case COOKIE_USER:
+      return { ...state, cookie: action.payload };
     case AUTH_USER:
       return { ...state, userData: action.payload };
     /*  break;/ */

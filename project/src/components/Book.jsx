@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Auth from '../../src/hoc/auth';
 import styled from 'styled-components';
 import Star from './Star';
 import examImg from '../book.jpeg';
@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 import moment from 'moment';
+import { loginUser } from '../actions/user_action';
 
-export default function Book() {
+function Book() {
   const clientTitle = useSelector((state) => state.logdata.bookinfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -48,11 +49,13 @@ export default function Book() {
     genre.current.value = bookform.categoryName;
     setImgsrc(bookform.img);
   }
+  const user = useSelector((state) => state.user.loginSuccess);
   const submit = () => {
     axios({
       method: 'post',
       url: axiosurl.toDBbook,
       data: {
+        email: user.email,
         date: logDate.current.value,
         title: titleNyear.current.value,
         author: author.current.value,
@@ -328,3 +331,4 @@ const Img = styled.img`
     margin-left: -126px;
   }
 `;
+export default Auth(Book, true);

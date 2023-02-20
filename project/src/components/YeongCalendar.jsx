@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './YeongCalendar.css';
@@ -13,45 +13,78 @@ export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
   const [modalShow, setModalShow] = useState(false);
 
-  const data = props.data;
+  const [data, setData] = useState([]);
+  const [marks, setMarks] = useState([]);
 
-  // // 날짜 문자열을 Date 객체로 변환하는 함수
-  // const parseDate = (dateString) => {
-  //   const [year, month, day] = dateString.split('-');
-  //   return new Date(year, month - 1, day);
-  // };
+  // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
+
+  // useEffect(() => {
+  //   axios.get('/data').then((response) => {});
+  // }, []);
+
+  // axios({ method: 'get', url: 'axiosurl.fromDBperfo', timeout: 5000 })
+  //   .then((response) => {
+  //     const data = response.data.data;
+  //     const marks = response.data.marks;
+  //     setData(data);
+  //     setMarks(marks);
+  //   })
+  //   .catch((error) => {
+  //     if (error.response) {
+  //       console.log(error.response.data);
+  //       console.log(error.response.status);
+  //       console.log(error.response.headers);
+  //     } else if (error.request) {
+  //       console.log(error.request);
+  //     } else {
+  //       console.log('Error', error.message);
+  //     }
+  //     console.log(error.config);
+  //   });
 
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
-
   const dispatch = useDispatch();
   const P = useSelector((state) => state.date.date);
   // const marks = [{ P }];
-  const marks = [moment(P).format('DD-MM-YYYY')];
-
+  //const marks = [moment(P).format('DD-MM-YYYY')];
+  //const marks = data.map((item) => new Date(item.date));
   console.log('내가선택한날짜', value); // 내가 선택한 날짜
-  //console.log(data.);
-  //console.log(moment(P).format('DD-MM-YYYY'));
-  //console.log(new Date()); // 당일 날짜
-  //채영님께
-  //데이터를 받아서 달력에 이벤트로 띄워질 때
-  //Full날짜로 다 받았을 때 데이터가 해당 날짜에 표시될 지 확인해보아야 할 것 같아요
-  //만약에 안되면 year, month, date로 했을 때 띄워지는 지 확인해보아야 할 것 같습니다!
 
-  // 날짜 클릭 이벤트핸들러
   const handleDayClick = (value, event) => {
-    //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
+    const clickedDate = moment(value).format('YYYY년 MM월 DD일');
+
     axios({
-      method: 'get',
+      method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.fromDBperfo,
-      params: { date: moment(value).format('YYYY년 MM월 DD일') },
-    }).then((re) => {
-      console.log(re.data);
-      //if (re.data == null) return setModalShow(!modalShow);
+      params: { date: clickedDate },
+    }).then((response) => {
+      const data = response.data;
+      if (Object.keys(data).length === 0) {
+        setModalShow(!modalShow);
+      } else {
+        alert(data.title);
+        console.log(data);
+      }
     });
   };
-  //Date 객체를 value 매개변수로 받아와서, getDate() 메서드를 이용하여 선택한 날짜 추출
-  //이후, 선택한 날짜를 처리하는 로직을 추가
+
+  //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
+
+  // 날짜 클릭 이벤트핸들러
+  // const handleDayClick = (value, event) => {
+  //   //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
+  //   axios({
+  //     method: 'get',
+  //     url: axiosurl.fromDBperfo,
+  //     params: { date: moment(value).format('YYYY년 MM월 DD일') },
+  //   }).then((re) => {
+  //     console.log(re.data);
+  //     if (re.data == null) {
+  //       setModalShow(!modalShow);
+  //     } else alert(re.data);
+  //   });
+  // };
 
   return (
     <div>
@@ -60,8 +93,9 @@ export default function YeongCalendar(props) {
         value={value}
         onClickDay={handleDayClick}
         // tileClassName={({ date }) =>
-        //   marks.includes(date) ? 'highlight' : null
+        //   marks.includes(moment(date).format('DD-MM-YYYY')) ? 'highlight' : null
         // }
+
         tileClassName={({ date, view }) => {
           if (marks.find((x) => x === moment(date).format('DD-MM-YYYY'))) {
             return 'highlight';
@@ -73,7 +107,14 @@ export default function YeongCalendar(props) {
       )}
       <div className="text-gray-500 mt-4">
         선택한 날짜: {moment(value).format('YYYY년 MM월 DD일')}
-      </div>{' '}
+        <div>
+          <b>{data.title}</b>
+          <span>{data.hall}</span>
+        </div>
+      </div>
     </div>
   );
 }
+// const data = response.data;
+// if (Object.keys(data).length === 0) {
+//   alert(data.title);

@@ -11,8 +11,10 @@ import { dateData } from '../actions/date_action';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 import moment from 'moment';
+import Auth from '../../src/hoc/auth';
+import { loginUser } from '../actions/user_action';
 
-export default function Performance(props) {
+function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -51,11 +53,13 @@ export default function Performance(props) {
     hall.current.value = perfoform.hall;
     setImgsrc(perfoform.img);
   }
+  const user = useSelector((state) => state.user.loginSuccess);
   const submit = () => {
     axios({
       method: 'post',
       url: axiosurl.toDBperfo,
       data: {
+        email: user.email,
         date: logDate.current.value,
         title: titleNyear.current.value,
         hall: hall.current.value,
@@ -329,3 +333,4 @@ const Img = styled.img`
     margin-left: -126px;
   }
 `;
+export default Auth(Performance, true);

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Auth from '../../hoc/auth';
 import { socketUserLogin } from '../../actions/socket_action';
+import { useCookies } from 'react-cookie';
+import moment from 'moment';
 
 const Div1 = styled.div`
   margin: auto;
@@ -57,7 +59,7 @@ function Login() {
   const socket = useSelector((state) => state.socket.socket);
   const roomList = useSelector((state) => state.socket.roomList);
 
-  /*   const [Cookies, setCookie, removeCookie] = useCookies(); */
+  const [Cookies, setCookie, removeCookie] = useCookies();
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
@@ -66,17 +68,17 @@ function Login() {
   const onPasswordHandler = (e) => {
     setPassword(e.currentTarget.value);
   };
-
   const onSubmitHandler = (e) => {
     e.preventDefault(); //이걸 써야 페이지가 초기화되는 것을 막을 수 있다.
     // console.log('Email', Email);
     // console.log('Password', Password);
-
+    // const expires = moment().add('100', 'm').toDate();
+    // setCookie('coookeee', true, { expires });
     let body = {
       email: Email,
       password: Password,
     };
-    dispatch(loginUser(body))
+    dispatch(loginUser(body), cookieUser(Email))
       //랜딩페이지(초기페이지로 렌딩)
       //로그인 성공시 '/home'로 이동.
       .then((response) => {
