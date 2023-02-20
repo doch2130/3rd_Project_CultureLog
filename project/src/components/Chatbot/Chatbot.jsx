@@ -41,7 +41,7 @@ export default function Chatbot() {
   const messageRoom = message[0] ? message[0] : messageRoomDefaultData;
 
   useEffect(() => {
-    socket.on('welceome', (initSocketData) => {
+    socket.on('welcome', (initSocketData) => {
       // console.log('initSocketData', initSocketData);
       const defaultMsgTime =
         date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);

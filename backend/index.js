@@ -1,37 +1,20 @@
-// const express = require('express');
-// const app = express();
-// const dotenv = require('dotenv');
-// dotenv.config();
-const router = require('./routes/index');
-// const cors = require('cors');
-
-// let corsOption = {
-//   origin: 'http://localhost:3000', // 허락하는 요청 주소
-//   credentials: true,
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-//   optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
-// };
-
-// app.use(cors(corsOption));
-// app.use('/public', express.static(__dirname + '/public'));
-// app.use(express.json());
-// app.use('/', router);
-
-// app.get('*', (req, res) => {
-//   res.send('주소가 존재하지 않습니다. 다시 한 번 확인해주세요.');
-// });
-
-// app.listen(5000, () => {
-//   console.log('server port', 5000);
-// });
-
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: { origin: ['http://localhost:3000', 'http://127.0.0.1:3000'] },
 });
+const socket = require('./socketio/index');
+const port = 5000;
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
+// const dotenv = require('dotenv');
+const config = require('./config/key');
+const { auth } = require('./middleware/auth');
+const { User } = require('./models/User');
+const { Movie } = require('./models/Movie');
+const { Book } = require('./models/Book');
+const { Performance } = require('./models/Performance');
 
 let corsOption = {
   origin: 'http://localhost:3000', // 허락하는 요청 주소
@@ -40,17 +23,6 @@ let corsOption = {
   optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 };
 app.use(cors(corsOption));
-const socket = require('./socketio/index');
-const port = 5000;
-const cookieParser = require('cookie-parser');
-
-const config = require('./config/key');
-const { auth } = require('./middleware/auth');
-
-const { User } = require('./models/User');
-const { Movie } = require('./models/Movie');
-const { Book } = require('./models/Book');
-const { Performance } = require('./models/Performance');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -81,7 +53,6 @@ app.use((req, res, next) => {
 });
 
 const mongoose = require('mongoose');
-const { Router } = require('express');
 mongoose
   .connect(config.mongoURI, {})
   .then(() => console.log('mongoDB Connected...'))
@@ -173,6 +144,7 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
+const router = require('./routes/index');
 app.use('/', router);
 app.get('*', (req, res) => {
   res.send('주소가 존재하지 않습니다. 다시 한 번 확인해주세요.');
