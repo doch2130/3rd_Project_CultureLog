@@ -48,20 +48,38 @@ const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 
 const { User } = require('./models/User');
-
+const { Movie } = require('./models/Movie');
+const { Book } = require('./models/Book');
+const { Performance } = require('./models/Performance');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// const Movie = require('./models/Movie');
-// app.use((req, res, next) => {
-//   return Movie.find()
-//     .populate('email')
-//     .then((moviesArray) => {
-//       console.log(`${p.email._id}입니다.`);
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+
+app.use((req, res, next) => {
+  return Movie.find()
+    .populate('email')
+    .then((moviesArray) => {
+      next();
+    })
+    .catch((err) => console.log(err));
+});
+app.use((req, res, next) => {
+  return Book.find()
+    .populate('email')
+    .then((booksArray) => {
+      next();
+    })
+    .catch((err) => console.log(err));
+});
+app.use((req, res, next) => {
+  return Performance.find()
+    .populate('email')
+    .then((performancesArray) => {
+      next();
+    })
+    .catch((err) => console.log(err));
+});
+
 const mongoose = require('mongoose');
 const { Router } = require('express');
 mongoose
@@ -122,7 +140,7 @@ app.post('/api/users/login', async (req, res) => {
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
         // 토큰을 저장한다. 어디에? -> 쿠키, 로컬스토리지 등등..
-        res.cookie('x_auth', user.token, { maxAge: 30000 }).status(200).json({
+        res.cookie('x_auth', user.token, { minAge: 30000 }).status(200).json({
           loginSuccess: true,
           userId: user._id,
           email: user.email,

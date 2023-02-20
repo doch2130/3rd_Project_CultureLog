@@ -11,6 +11,7 @@ import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import Reducer from './reducers';
 import { composeWithDevTools } from '@redux-devtools/extension';
+import { CookiesProvider } from 'react-cookie';
 
 const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,
@@ -19,11 +20,15 @@ const createStoreWithMiddleware = applyMiddleware(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <BrowserRouter>
-    <Provider store={createStoreWithMiddleware(Reducer, composeWithDevTools())}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+  <CookiesProvider>
+    <BrowserRouter>
+      <Provider
+        store={createStoreWithMiddleware(Reducer, composeWithDevTools())}
+      >
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </CookiesProvider>
 );
 
 reportWebVitals();
