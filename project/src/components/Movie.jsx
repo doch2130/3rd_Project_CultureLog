@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import Auth from '../../src/hoc/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,7 @@ import moment from 'moment';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 
-function Movie() {
+function Movie(props) {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const navigate = useNavigate();
   const P = useSelector((state) => state.date.date);
