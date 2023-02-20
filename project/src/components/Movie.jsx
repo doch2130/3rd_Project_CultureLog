@@ -10,7 +10,7 @@ import { dateData } from '../actions/date_action';
 import moment from 'moment';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
-
+import { loginUser } from '../actions/user_action';
 function Movie(props) {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function Movie(props) {
     setOpen(true);
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
-
+  const user = useSelector((state) => state.user.loginSuccess);
   function titleconfirm(e) {
     let movieform = clientTitle[e.target.className];
     let title = e.target.innerText.split(',');
@@ -65,6 +65,7 @@ function Movie(props) {
       method: 'post',
       url: axiosurl.toDBmovie,
       data: {
+        email: user.email,
         date: logDate.current.value,
         title: titleNyear.current.value,
         director: director.current.value,
