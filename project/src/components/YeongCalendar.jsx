@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -8,6 +9,7 @@ import { dateData } from '../actions/date_action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
+import styled from 'styled-components';
 
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
@@ -66,7 +68,9 @@ export default function YeongCalendar(props) {
       setModalShow(!modalShow);
     });
   };
-
+  const Div5 = styled.div`
+    margin-left: 10px;
+  `;
   //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
 
   // 날짜 클릭 이벤트핸들러
@@ -104,24 +108,83 @@ export default function YeongCalendar(props) {
         <Pop show={modalShow} date={value} onHide={() => setModalShow(false)} />
       )}
       <div className="text-gray-500 mt-4">
-        선택한 날짜: {moment(value).format('YYYY년 MM월 DD일')}
-        <div>
-          {data.length > 0
-            ? data[0].map((el) => {
-                return <p>{el.title}</p>;
-              })
-            : 'perfo default'}
-          {data.length > 0
-            ? data[1].map((el) => {
-                return <p>{el.title}</p>;
-              })
-            : 'book default'}
-          {data.length > 0
-            ? data[2].map((el) => {
-                return <p>{el.title}</p>;
-              })
-            : 'movie default'}
-        </div>
+        <Div5>
+          <h4
+            style={{
+              backgroundColor: '	#96C7ED',
+              borderRadius: '20px',
+              width: '190px',
+              height: '40px',
+              textAlign: 'center',
+              justifyContent: 'center',
+              paddingTop: '5px',
+            }}
+          >
+            {' '}
+            그 날의 기록
+          </h4>
+          <h2
+            style={{
+              backgroundColor: '#FFC6C3',
+              width: '190px',
+              fontSize: '20px',
+              borderRadius: '20px',
+              height: '30px',
+              fontWeight: '400',
+              paddingLeft: '12px',
+            }}
+          >
+            {moment(value).format('YYYY년 MM월 DD일')}
+          </h2>
+          <span>
+            {data.length > 0
+              ? data[0].map((el) => {
+                  return (
+                    <p>
+                      <h3>공연</h3>
+                      제목 : {el.title}, 극장 : {el.hall}
+                    </p>
+                  );
+                })
+              : ''}
+          </span>
+          <hr style={{ marginTop: '30px' }} />
+          <span>
+            {data.length > 0
+              ? data[1].map((el) => {
+                  return (
+                    <p>
+                      {' '}
+                      <h3>책</h3>
+                      제목 : {el.title} <br /> 저자 : {el.author}
+                      {/* <hr
+                        style={{
+                          borderTop: '1px dashed #7f3333',
+                          marginTop: '30px',
+                        }}
+                      /> */}
+                    </p>
+                  );
+                })
+              : ''}
+          </span>
+          <hr style={{ marginTop: '30px' }} />
+          <span>
+            {data.length > 0
+              ? data[2].map((el) => {
+                  return (
+                    <p>
+                      <h3>영화</h3>
+                      제목 : {el.title} <br />
+                      감독 : {el.director}
+                    </p>
+                  );
+                })
+              : ''}
+          </span>
+
+          <hr style={{ marginTop: '30px' }} />
+        </Div5>
       </div>
     </div>
   );

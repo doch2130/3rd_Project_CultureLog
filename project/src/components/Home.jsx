@@ -46,12 +46,6 @@ function Home() {
           <Row style={{ maxWidth: '2000px', margin: 'auto' }}>
             <Col xs={12} md={6}>
               <YeongCalendar />
-              <Col xs={12} style={{ padding: '6px 12px' }}>
-                <p className="calendarFooter">
-                  달력 속 날짜를 클릭하면 책, 영화, 공연을 선택해 이야기를 남길
-                  수 있는 작성창으로 이동합니다.
-                </p>
-              </Col>
             </Col>
             <Col xs={12} md={6}>
               <Row style={{ height: '100%' }}>
@@ -84,20 +78,13 @@ function Home() {
                     지나쳐버리게 되는 날이 많아집니다. <br /> CultureLog는 내가
                     보고 듣고 읽은 것들을 기록하는 공간입니다. <br /> 자신이
                     경험한 문화생활과 리뷰, 그리고 생각을 기록하며 삶의 빈 곳을
-                    채워보는 건 어떨까요?
+                    채워보는 건 어떨까요? <br />
+                    <br />
+                    달력 속 날짜를 클릭하면 책, 영화, 공연을 선택해 이야기를
+                    남길 수 있는 작성창으로 이동합니다.
                   </p>
                 </Col>
-                <hr style={{ borderTop: '1px dashed #7f3333' }} />
-
-                <Col xs={12} style={{ height: '50%' }}>
-                  {/* <img
-                    src="http://placehold.it/320x100?text=sample"
-                    alt="temporary"
-                    id="tempImg"
-                  /> */}
-                  <div>2023년 2월 14일(임시)</div>
-                  게시판 구현 예정입니다.
-                </Col>
+                {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
 
                 <hr />
                 <Col xs={12} style={{ height: '50%', paddingTop: '10px' }}>
