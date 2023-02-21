@@ -5,6 +5,7 @@ import ReactTypingEffect from 'react-typing-effect';
 import HomeCalendar from './HomeCalendar';
 import './Home.css';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../hoc/auth';
 import YeongCalendar from './YeongCalendar';
@@ -17,6 +18,7 @@ function Home() {
   const navigate = useNavigate();
   // const loginInformation = useSelector((state) => state.user.loginSuccess);
   // const [isManager, setIsManager] = useState(false);
+
   // console.log('userId', loginInformation);]
   const user = useSelector((state) => state.user.loginSuccess);
   useEffect(() => {
