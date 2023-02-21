@@ -39,7 +39,7 @@ export default function user_reducer(state = initState, action) {
           loginSuccess: true,
           userId: action.payload._id,
           email: action.payload.email,
-          permission: 'default',
+          permission: action.payload.permission,
         };
         returnState['loginSuccess'] = authLogin;
       }
