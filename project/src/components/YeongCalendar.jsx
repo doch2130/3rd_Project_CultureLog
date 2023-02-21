@@ -10,12 +10,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 import styled from 'styled-components';
+import { Toast } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
   const [modalShow, setModalShow] = useState(false);
 
   const [data, setData] = useState([]);
+
+  //타이틀 눌렀을 때 누른 게시글 보게끔
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [marks, setMarks] = useState([]);
 
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
@@ -63,14 +72,26 @@ export default function YeongCalendar(props) {
       url: axiosurl.fromDB,
       params: { date: clickedDate, user: user.email },
     }).then((response) => {
-      console.log('data', response.data);
+      // console.log('data', response.data);
+      // console.log('공연리뷰', data[0][1]);
+
       setData(response.data);
       setModalShow(!modalShow);
     });
   };
+
   const Div5 = styled.div`
     margin-left: 10px;
   `;
+
+  const allReview = () => {
+    alert(data[2][0].review);
+    console.log(data[2][0]);
+  };
+
+  //그치만 alert로 띄우면 삭제가 안되니까 다른 방식으로 해야한다.
+
+  //지금은 각 값이 들어오는지만 확인을 하였다. 몇 번째 배열의 값을 누를 지 모르기때문에 그에 따라 값을 가져와야함.
   //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
 
   // 날짜 클릭 이벤트핸들러
@@ -136,59 +157,139 @@ export default function YeongCalendar(props) {
           >
             {moment(value).format('YYYY년 MM월 DD일')}
           </h2>
+          <p> 날짜를 클릭하면 나의 기록을 볼 수 있습니다 '◡' </p>
+
           <span>
-            {data.length > 0
-              ? data[0].map((el) => {
-                  return (
-                    <p>
-                      <h3>공연</h3>
-                      제목 : {el.title}, 극장 : {el.hall}
-                    </p>
-                  );
-                })
-              : ''}
-          </span>
-          <hr style={{ marginTop: '30px' }} />
-          <span>
-            {data.length > 0
-              ? data[1].map((el) => {
-                  return (
-                    <p>
-                      {' '}
-                      <h3>책</h3>
-                      제목 : {el.title} <br /> 저자 : {el.author}
-                      {/* <hr
-                        style={{
-                          borderTop: '1px dashed #7f3333',
-                          marginTop: '30px',
-                        }}
-                      /> */}
-                    </p>
-                  );
-                })
-              : ''}
-          </span>
-          <hr style={{ marginTop: '30px' }} />
-          <span>
-            {data.length > 0
-              ? data[2].map((el) => {
-                  return (
-                    <p>
-                      <h3>영화</h3>
-                      제목 : {el.title} <br />
-                      감독 : {el.director}
-                    </p>
-                  );
-                })
-              : ''}
+            {data.length > 0 ? (
+              data[0].map((el) => {
+                return (
+                  <p>
+                    <h3> 🎼 공연 </h3>
+                    제목 : {el.title}
+                    <br /> 극장 : {el.hall}
+                    <Button variant="primary" onClick={handleShow}>
+                      상세보기
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>기록 상세보기</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        🎵 제목 : {el.title} <br />
+                        🪩 극장 : {el.author} <br />
+                        🎤 배우 : {el.mainroll} <br />
+                        💭 후기 : {el.review}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                          Save Changes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                    <hr style={{ marginTop: '30px' }} />
+                  </p>
+                );
+              })
+            ) : (
+              <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
+            )}
           </span>
 
-          <hr style={{ marginTop: '30px' }} />
+          <span>
+            {data.length > 0 ? (
+              data[1].map((el) => {
+                return (
+                  <>
+                    <h3> 📚 책</h3>
+                    제목 :{el.title}
+                    <br />
+                    저자: {el.author}
+                    <Button variant="primary" onClick={handleShow}>
+                      상세보기
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>기록 상세보기</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        📚 제목 : {el.title} <br />
+                        📝 저자 : {el.author} <br />
+                        📖 장르 : {el.genre} <br />
+                        💭 후기 : {el.review}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                          Save Changes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                    <hr style={{ marginTop: '30px' }} />
+                  </>
+                );
+
+                // (
+                //   <p>
+                //     {' '}
+                //     <h3>책</h3>
+                //     제목 : {el.title} <br /> 저자 : {el.author}
+                //     <hr style={{ marginTop: '30px' }} />
+                //   </p>
+                // );
+              })
+            ) : (
+              <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
+            )}
+          </span>
+
+          <span>
+            {data.length > 0 ? (
+              data[2].map((el) => {
+                return (
+                  <p>
+                    <h3> 🎬 영화</h3>
+                    제목 : {el.title} <br />
+                    감독 : {el.director}
+                    <Button
+                      variant="primary"
+                      onClick={handleShow}
+                      style={{ marginLeft: 'auto' }}
+                    >
+                      상세보기
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>기록 상세보기</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        🎞️ 제목 : {el.title} <br />
+                        🎬 감독 : {el.director} <br />
+                        💃🏻 배우 : {el.actor} <br />
+                        💭 후기 : {el.review}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                          Save Changes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </p>
+                );
+              })
+            ) : (
+              <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
+            )}
+          </span>
         </Div5>
       </div>
     </div>
   );
 }
-// const data = response.data;
-// if (Object.keys(data).length === 0) {
-//   alert(data.title);

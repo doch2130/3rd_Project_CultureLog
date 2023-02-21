@@ -12,6 +12,7 @@ import YeongCalendar from './YeongCalendar';
 import axiosurl from '../axiosurl';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 // Main Page
 function Home() {
@@ -22,9 +23,30 @@ function Home() {
   // console.log('userId', loginInformation);]
   const user = useSelector((state) => state.user.loginSuccess);
   const [yearData, setYearData] = useState([]);
+  const P = styled.p`
+    display: flex;
+    font-size: 13.9px;
+    margin-top: 50px;
+    color: #3c5087;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 550px;
+    @media screen and (max-width: 880px) {
+      overflow: scroll;
+      height: 250px;
+      display: flex;
+      margin-bottom: 400px;
+    }
+  `;
+
   useEffect(() => {
     console.log(moment(new Date()).format('YYYY년'));
     console.log('user', user);
+
+    console.log('공연:', yearData[0]);
+    console.log('책:', yearData[1]);
+    console.log('영화:', yearData[2]); //현재 영화만 값이 들어옴.
+
     axios({
       method: 'get',
       url: axiosurl.logOfyear,
@@ -66,19 +88,11 @@ function Home() {
                     text={['고스란히 기록하는 나의 문화생활']}
                     style={{
                       backgroundColor: '#FFC6C3	',
-                      fontSize: '35px',
+                      fontSize: '33px',
                       fontWeight: '600',
                     }}
                   />
-                  <p
-                    style={{
-                      fontSize: '13.9px',
-                      marginTop: '50px',
-                      color: '#3C5087',
-                      textAlign: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+                  <P>
                     모든 것이 바쁘게 흘러가는 요즘, 문화생활까지 덧없이 자연스레
                     지나쳐버리게 되는 날이 많아집니다. <br /> CultureLog는 내가
                     보고 듣고 읽은 것들을 기록하는 공간입니다. <br /> 자신이
@@ -87,12 +101,14 @@ function Home() {
                     <br />
                     달력 속 날짜를 클릭하면 책, 영화, 공연을 선택해 이야기를
                     남길 수 있는 작성창으로 이동합니다.
-                  </p>
+                  </P>
                 </Col>
-                {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
 
                 <hr />
-                <Col xs={12} style={{ height: '50%', paddingTop: '10px' }}>
+
+                {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
+
+                <Col xs={12} style={{ height: '70%', paddingTop: '10px' }}>
                   <div className="recordYear">
                     <div className="recordYearTitle">올해의 기록</div>
                     <div className="recordYearSubTitle">
