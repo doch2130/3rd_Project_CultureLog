@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../../src/hoc/auth';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import axiosurl from '../axiosurl';
 import moment from 'moment';
 import { loginUser } from '../actions/user_action';
+import { Cookies } from 'react-cookie';
 
 function Book() {
   const clientTitle = useSelector((state) => state.logdata.bookinfo);
@@ -26,7 +27,12 @@ function Book() {
   const genre = useRef();
   const review = useRef();
   const P = useSelector((state) => state.date.date);
-
+  useEffect(() => {
+    const cookies = new Cookies();
+    if (cookies.get('x_auth') == null) {
+      navigate('/');
+    }
+  });
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
   };

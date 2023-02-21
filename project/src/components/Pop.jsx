@@ -56,7 +56,6 @@ function Pop(props) {
           <Button variant="outline-danger" size="lg" onClick={moveToPer}>
             공연
           </Button>
-          {/* <span>{date}d</span> */}
         </div>
       </Modal.Body>
       <Modal.Footer>

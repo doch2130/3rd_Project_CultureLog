@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import musicalImg from '../musical.jpeg';
@@ -13,7 +13,7 @@ import axiosurl from '../axiosurl';
 import moment from 'moment';
 import Auth from '../../src/hoc/auth';
 import { loginUser } from '../actions/user_action';
-
+import { Cookies } from 'react-cookie';
 function Performance(props) {
   const clientTitle = useSelector((state) => state.logdata.perfoinfo);
   const dispatch = useDispatch();
@@ -31,6 +31,13 @@ function Performance(props) {
   const date = useSelector(dateData);
   console.log(date);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const cookies = new Cookies();
+    if (cookies.get('x_auth') == null) {
+      navigate('/');
+    }
+  });
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
   };

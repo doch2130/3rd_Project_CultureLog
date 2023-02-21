@@ -5,6 +5,7 @@ import ReactTypingEffect from 'react-typing-effect';
 import HomeCalendar from './HomeCalendar';
 import './Home.css';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../hoc/auth';
 import YeongCalendar from './YeongCalendar';
@@ -15,17 +16,16 @@ function Home() {
   // const loginInformation = useSelector((state) => state.user.loginSuccess);
   // const [isManager, setIsManager] = useState(false);
   // console.log('userId', loginInformation);
+  // useEffect(() => {
+  //   axios.get('/api/hello').then((response) => console.log(response));
 
-  useEffect(() => {
-    axios.get('/api/hello').then((response) => console.log(response));
-
-    // if (loginInformation.userId === '63ecad322ba25214448d088d') {
-    //   setIsManager(true);
-    // } else {
-    //   setIsManager(false);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // if (loginInformation.userId === '63ecad322ba25214448d088d') {
+  //   //   setIsManager(true);
+  //   // } else {
+  //   //   setIsManager(false);
+  //   // }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <Container fluid>
       <Row style={{ height: '77%', margin: '50px' }}>

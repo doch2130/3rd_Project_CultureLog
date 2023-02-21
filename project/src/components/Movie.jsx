@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../../src/hoc/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,8 @@ import moment from 'moment';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 import { loginUser } from '../actions/user_action';
+import { Cookies } from 'react-cookie';
+
 function Movie(props) {
   const clientTitle = useSelector((state) => state.logdata.movieinfo);
   const navigate = useNavigate();
@@ -27,6 +29,13 @@ function Movie(props) {
   const director = useRef();
   const actor = useRef();
   const review = useRef();
+
+  useEffect(() => {
+    const cookies = new Cookies();
+    if (cookies.get('x_auth') == null) {
+      navigate('/');
+    }
+  });
 
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
@@ -325,4 +334,4 @@ const Img = styled.img`
     margin-left: -126px;
   }
 `;
-export default Auth(Movie, true);
+export default Auth(Movie, true, true);
