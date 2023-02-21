@@ -15,6 +15,7 @@ import Header from './components/Header';
 import Chatbot from './components/Chatbot/Chatbot';
 
 import Home from './components/Home';
+import { Cookies } from 'react-cookie';
 
 function App() {
   // axios 기본 url 설정
@@ -25,6 +26,7 @@ function App() {
   const dispatch = useDispatch();
   const socket = io.connect('http://localhost:5000');
   dispatch(socketInit(socket));
+
   return (
     <>
       <Header />
