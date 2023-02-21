@@ -12,6 +12,7 @@ router.post('/performanceDB', controller2.PerfoDB);
 router.post('/movieDB', controller2.MovieDB);
 router.post('/bookDB', controller2.BookDB);
 
-router.get('/fromDBperfo', controller3.fromDBperfo);
+router.get('/fromDB', controller3.fromDB);
+router.get('/logOfyear', controller3.logOfyear);
 
 module.exports = router;
