@@ -9,6 +9,7 @@ import {
   socketRoomsRefresh,
   socketMessageAdd,
   socketUserLogin,
+  socketRoomsRefreshUpdate,
 } from '../../actions/socket_action';
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
@@ -61,21 +62,23 @@ export default function Chatbot() {
       // 따로 설정을 안해도 socketInitMessageAdd() 함수가 먼저 실행이 되지만,
       // 혹시 모를 안전을 위해서 1초 후 실행되도록 설정
 
-      setTimeout(() => {
-        // console.log('getRooms', roomsData);
-        for (let i = 0; i < roomsData.length; i++) {
-          // console.log('oomsData[i].msg', roomsData[i].msg);
-          dispatch(socketRooms(roomsData[i]));
-        }
+      console.log('roomsData', roomsData);
 
-        for (let i = 0; i < roomsData.length; i++) {
-          // console.log('oomsData[i].msg', roomsData[i].msg);
-          dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
-        }
-      }, 1000);
+      // console.log('getRooms', roomsData);
+      for (let i = 0; i < roomsData.length; i++) {
+        // console.log('oomsData[i].msg', roomsData[i].msg);
+        // dispatch(socketRooms(roomsData[i]));
+        // dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
+        dispatch(socketRoomsRefreshUpdate(roomsData[i]));
+      }
+
+      // setTimeout(() => {
+      //   for (let i = 0; i < roomsData.length; i++) {
+      //     // console.log('oomsData[i].msg', roomsData[i].msg);
+      //     dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
+      //   }
+      // }, 3000);
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 메시지 받기
