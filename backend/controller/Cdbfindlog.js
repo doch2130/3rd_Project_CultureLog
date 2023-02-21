@@ -9,10 +9,8 @@ mongoose
   .then(() => console.log('mongoDB Connected...'))
   .catch((err) => console.log(err));
 
-exports.fromDBperfo = async (req, res) => {
+exports.fromDB = async (req, res) => {
   console.log('fromperfo', req.query);
-  // const findemail = await Book.find().populate('email');
-  // console.log('findemail', findemail);
   const findMyPerfo = await Performance.find({
     $and: [{ date: req.query.date }, { email: req.query.user }],
   });
@@ -27,4 +25,20 @@ exports.fromDBperfo = async (req, res) => {
   findMylog.push(findMyPerfo, findMyBook, findMyMovie);
   console.log('findMylog', findMylog);
   res.send(findMylog);
+};
+
+exports.logOfyear = async (req, res) => {
+  console.log('fromlogofyear', req.query);
+  const findMyPerfo = await Performance.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  const findMyMovie = await Movie.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  const findMyBook = await Book.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  let findLogOfYear = [];
+  findLogOfYear.push(findMyPerfo, findMyBook, findMyMovie);
+  console.log('findLogOfYear', findLogOfYear);
 };
