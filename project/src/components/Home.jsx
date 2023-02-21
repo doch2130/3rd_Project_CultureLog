@@ -21,14 +21,19 @@ function Home() {
 
   // console.log('userId', loginInformation);]
   const user = useSelector((state) => state.user.loginSuccess);
+  const [yearData, setYearData] = useState([]);
   useEffect(() => {
     console.log(moment(new Date()).format('YYYY년'));
+    console.log('user', user);
     axios({
       method: 'get',
       url: axiosurl.logOfyear,
       params: { date: moment(new Date()).format('YYYY년'), user: user.email },
+    }).then((re) => {
+      console.log('year', re.data);
+      setYearData(re.data);
     });
-  });
+  }, []);
   useEffect(() => {
     axios.get('/api/hello').then((response) => console.log(response));
 
@@ -96,17 +101,23 @@ function Home() {
                   </div>
                   <div className="recordYear">
                     <span>책</span>
-                    <span>0000000</span>
+                    <span>
+                      {yearData.length > 0 ? yearData[1].length : '0000000'}
+                    </span>
                   </div>
                   <hr />
                   <div className="recordYear">
                     <span>공연</span>
-                    <span>0000000</span>
+                    <span>
+                      {yearData.length > 0 ? yearData[0].length : '0000000'}
+                    </span>
                   </div>
                   <hr />
                   <div className="recordYear">
                     <span>영화</span>
-                    <span>0000000</span>
+                    <span>
+                      {yearData.length > 0 ? yearData[2].length : '0000000'}
+                    </span>
                   </div>
                   <hr />
                 </Col>
