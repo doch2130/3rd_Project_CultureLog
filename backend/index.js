@@ -27,30 +27,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  return Movie.find()
-    .populate('email')
-    .then((moviesArray) => {
-      next();
-    })
-    .catch((err) => console.log(err));
-});
-app.use((req, res, next) => {
-  return Book.find()
-    .populate('email')
-    .then((booksArray) => {
-      next();
-    })
-    .catch((err) => console.log(err));
-});
-app.use((req, res, next) => {
-  return Performance.find()
-    .populate('email')
-    .then((performancesArray) => {
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+// app.use((req, res, next) => {
+//   return Movie.find()
+//     .populate('email')
+//     .then((moviesArray) => {
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
+// app.use((req, res, next) => {
+//   return Book.find()
+//     .populate('email')
+//     .then((booksArray) => {
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
+// app.use((req, res, next) => {
+//   return Performance.find()
+//     .populate('email')
+//     .then((performancesArray) => {
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 const mongoose = require('mongoose');
 mongoose
