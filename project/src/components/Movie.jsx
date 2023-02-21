@@ -70,8 +70,6 @@ function Movie(props) {
 
   const user = useSelector((state) => state.user.loginSuccess);
   function submit() {
-    console.log(alert('게시물이 등록되었습니다.'));
-
     axios({
       method: 'post',
       url: axiosurl.toDBmovie,
