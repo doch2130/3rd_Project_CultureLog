@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Homeyeong.css';
 import ReactTypingEffect from 'react-typing-effect';
@@ -9,23 +9,36 @@ import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../hoc/auth';
 import YeongCalendar from './YeongCalendar';
+import axiosurl from '../axiosurl';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 // Main Page
 function Home() {
   const navigate = useNavigate();
   // const loginInformation = useSelector((state) => state.user.loginSuccess);
   // const [isManager, setIsManager] = useState(false);
-  // console.log('userId', loginInformation);
-  // useEffect(() => {
-  //   axios.get('/api/hello').then((response) => console.log(response));
 
-  //   // if (loginInformation.userId === '63ecad322ba25214448d088d') {
-  //   //   setIsManager(true);
-  //   // } else {
-  //   //   setIsManager(false);
-  //   // }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  // console.log('userId', loginInformation);]
+  const user = useSelector((state) => state.user.loginSuccess);
+  useEffect(() => {
+    console.log(moment(new Date()).format('YYYY년'));
+    axios({
+      method: 'get',
+      url: axiosurl.logOfyear,
+      params: { date: moment(new Date()).format('YYYY년'), user: user.email },
+    });
+  });
+  useEffect(() => {
+    axios.get('/api/hello').then((response) => console.log(response));
+
+    // if (loginInformation.userId === '63ecad322ba25214448d088d') {
+    //   setIsManager(true);
+    // } else {
+    //   setIsManager(false);
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Container fluid>
       <Row style={{ height: '77%', margin: '50px' }}>

@@ -6,7 +6,8 @@ import {
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
   SOCKET_ROOM_REFRESH,
-  SOCEKT_LOGIN_UPDATE,
+  SOCKET_LOGIN_UPDATE,
+  SOCKET_ROOM_REFRESH_UPATE,
 } from '../actions/types';
 
 const initState = {
@@ -18,6 +19,65 @@ export default function socket_reducer(state = initState, action) {
   switch (action.type) {
     case SOCKET_INIT:
       return { ...state, socket: action.payload };
+    case SOCKET_ROOM_REFRESH_UPATE:
+      const payloadRoomId2 = action.payload.room.roomId;
+      const payloadMsg2 = action.payload.roomMsg;
+      // console.log('payloadRoomId2', payloadRoomId2);
+      // console.log('payloadMsg2', payloadMsg2);
+
+      const updatedMessage2 = state.message.map((el) => {
+        console.log('el[payloadRoomId2]', el[payloadRoomId2]);
+        if (el[payloadRoomId2] != null) {
+          // payloadMsg 개체의 데이터를 메시지 개체의 기존 데이터와 병합
+          let baseData = Object.keys(payloadMsg2);
+          if (baseData.length >= Object.keys(el[payloadRoomId2]).length) {
+            for (let i = 0; i < baseData.length; i++) {
+              if (el[payloadRoomId2][i]) {
+                // console.log('data 있');
+                payloadMsg2[i] = el[payloadRoomId2][i];
+              }
+            }
+          } else {
+            // else 부분은 아직 정확하게 테스트를 못해봤습니다.
+            for (let i = 0; i < Object.keys(el[payloadRoomId2]).length; i++) {
+              if (el[payloadRoomId2][i]) {
+                console.log('data 있2');
+                payloadMsg2[i] = el[payloadRoomId2][i];
+              }
+            }
+          }
+          return {
+            ...el,
+            [payloadRoomId2]: {
+              ...payloadMsg2,
+            },
+          };
+        } else {
+          // console.log('test Object.keys(payloadMsg2).length',Object.keys(payloadMsg2).length);
+          // console.log('Object.keys(payloadMsg2)[0]', Object.keys(payloadMsg2)[0]);
+          let newRoomData = {};
+          for (let i = 0; i < Object.keys(payloadMsg2).length; i++) {
+            newRoomData[i] = payloadMsg2[i];
+          }
+          console.log('newRoomData', newRoomData);
+          // const newRoomId = Object.keys(payloadMsg2)[0];
+          return {
+            ...el,
+            // [payloadRoomId2]: {[newRoomId]: payloadMsg2[newRoomId],},
+            [payloadRoomId2]: newRoomData,
+          };
+        }
+      });
+
+      return {
+        ...state,
+        roomList: state.roomList.concat({
+          roomId: action.payload.room.roomId,
+          clientSocketId: action.payload.room.clientSocketId,
+          clientUserId: action.payload.room.clientUserId,
+        }),
+        message: updatedMessage2,
+      };
     case SOCKET_ROOMS:
       return {
         ...state,
@@ -194,9 +254,10 @@ export default function socket_reducer(state = initState, action) {
       return {
         ...state,
         roomList: [],
+        // message: [],
       };
     // // 로그인 - 해당 RoomID의 userID 업데이트
-    case SOCEKT_LOGIN_UPDATE:
+    case SOCKET_LOGIN_UPDATE:
       const roomData = action.payload.roomData;
       const userData = action.payload.userData;
 

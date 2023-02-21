@@ -2,9 +2,9 @@ const uuid = require('uuid');
 const dbChat = require('./chat');
 
 // 소켓 임시 저장 변수
-const data = {};
-const rooms = [];
-let userId = '';
+// const data = {};
+// const rooms = [];
+// let userId = '';
 
 // 메시지 시간 저장 변수
 const date = new Date();
@@ -23,36 +23,34 @@ module.exports = (socketIO) => {
     // userId = roomUid;
 
     // 방 리스트 임시 저장
-    const tempRoom = {
-      roomId: roomUid,
-      clientSocketId: socket.id,
-      clientUserId: userId,
-      msg: [
-        {
-          permission: 'server',
-          content: '문의 사항이 있으시면 메시지 남겨주세요.',
-          time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-          socketId: 'e9f1',
-          userId: 'pasd123',
-        },
-        {
-          permission: 'default',
-          content: '문gggggggg',
-          time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-          socketId: 'j2ygf8',
-          userId: 'zxcv123',
-        },
-      ],
-    };
-
+    // const tempRoom = {
+    //   roomId: roomUid,
+    //   clientSocketId: socket.id,
+    //   clientUserId: userId,
+    //   msg: [
+    //     {
+    //       permission: 'server',
+    //       content: '문의 사항이 있으시면 메시지 남겨주세요.',
+    //       time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+    //       socketId: 'e9f1',
+    //       userId: 'pasd123',
+    //     },
+    //     {
+    //       permission: 'default',
+    //       content: '문gggggggg',
+    //       time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
+    //       socketId: 'j2ygf8',
+    //       userId: 'zxcv123',
+    //     },
+    //   ],
+    // };
     // 방 리스트 저장
-    rooms.push(tempRoom);
+    // rooms.push(tempRoom);
 
-    // DB 테스트
     // console.log('roomSave roomId', roomUid);
     // console.log('roomSave roomId', socket.id);
     // console.log('roomSave roomId', userId);
-    dbChat.roomSave(roomUid, socket.id, userId).then((response) => {
+    dbChat.roomSave(roomUid, socket.id).then((response) => {
       // console.log('dbChat.roomSave', response);
       const welcomeData = {
         ChatRoom_id: response._id,
@@ -61,7 +59,7 @@ module.exports = (socketIO) => {
         permission: 'server',
         content: '문의 사항이 있으시면 메시지 남겨주세요.',
         time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-        userId: '',
+        userId: 'System Server',
       };
       dbChat.messageSave(welcomeData).then((response) => {
         // console.log('dbChat.messageSave response', response);
@@ -94,33 +92,47 @@ module.exports = (socketIO) => {
     // 자동 뿌리기 말고, 새로고침 버튼으로 요청 할때 주는 걸로 변경
     socket.on('getRoomsList', (myRoomId) => {
       // console.log('rooms', rooms);
-      for (let i = 0; i < rooms.length; i++) {
-        if (myRoomId === rooms[i].roomId) continue;
-        socket.join(rooms[i].roomId);
-      }
-      console.log('base rooms', rooms);
-      dbChat.roomListCall(myRoomId);
+      // for (let i = 0; i < rooms.length; i++) {
+      //   if (myRoomId === rooms[i].roomId) continue;
+      //   socket.join(rooms[i].roomId);
+      // }
 
-      socket.emit('getRooms', rooms);
+      // console.log('base rooms', rooms);
+      dbChat.roomListCall(myRoomId).then((response) => {
+        // console.log('roomListCall End', response);
+        // console.log('rooms', rooms);
+
+        for (let i = 0; i < response.length; i++) {
+          if (myRoomId === response[i].roomId) continue;
+          socket.join(response[i].roomId);
+        }
+
+        socket.emit('getRooms', response);
+      });
+      // socket.emit('getRooms', rooms);
     });
 
-    // 기본 설정?
-    // 수정이 필요할 듯
-    // socketIO.emit('updateRooms', tempMessage);
-
     socket.on('message', (data) => {
-      console.log('message', data);
-      // io, socket 둘다 메시지가 보이기는 함
-      // 관리자랑 연결 후에 따라 사용 방법이 다를듯
-      // socketIO.to(data.roomId).emit('receiveMessage', {
-      socketIO.emit('receiveMessage', {
-        // socket.emit('receiveMessage', {
-        content: data.content,
+      // console.log('message', data);
+      const messageData = {
+        ChatRoom_id: '',
+        roomId: data.roomId,
         socketId: data.socketId,
         permission: data.permission,
-        userId: data.userId,
+        content: data.content,
         time: data.time,
-        roomId: data.roomId,
+        userId: data.userId,
+      };
+
+      dbChat.messageSave(messageData).then((response) => {
+        socketIO.emit('receiveMessage', {
+          content: response.content,
+          socketId: response.socketId,
+          permission: response.permission,
+          userId: response.userId,
+          time: response.time,
+          roomId: response.roomId,
+        });
       });
     });
 
@@ -143,8 +155,8 @@ module.exports = (socketIO) => {
         time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
         roomId: roomUid,
       });
-
-      delete data[socket.id];
+      dbChat.userDisconnection(roomUid);
+      // delete data[socket.id];
     });
   });
 };

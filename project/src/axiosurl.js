@@ -5,5 +5,6 @@ module.exports = {
   toDBperfo: 'http://localhost:5000/performanceDB',
   toDBmovie: 'http://localhost:5000/movieDB',
   toDBbook: 'http://localhost:5000/bookDB',
-  fromDBperfo: 'http://localhost:5000/fromDBperfo',
+  fromDB: 'http://localhost:5000/fromDB',
+  logOfyear: 'http://localhost:5000/logOfyear',
 };

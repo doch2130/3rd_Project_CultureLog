@@ -6,14 +6,27 @@ import {
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
   SOCKET_ROOM_REFRESH,
-  SOCEKT_LOGIN_UPDATE,
+  SOCKET_LOGIN_UPDATE,
   // SOCKET_LOGOUT,
+  SOCKET_ROOM_REFRESH_UPATE,
 } from './types';
 
 export function socketInit(socket) {
   return {
     type: SOCKET_INIT,
     payload: socket,
+  };
+}
+
+// 테스트
+export function socketRoomsRefreshUpdate(roomData) {
+  const tempMsg = [];
+  for (let i = 0; i < roomData.msg.length; i++) {
+    tempMsg.push(roomData.msg[i]);
+  }
+  return {
+    type: SOCKET_ROOM_REFRESH_UPATE,
+    payload: { room: roomData, roomMsg: tempMsg },
   };
 }
 
@@ -75,7 +88,7 @@ export function socketUserLogin(roomData, userData) {
   // console.log('roomData action', roomData);
   // console.log('userData action', userData);
   return {
-    type: SOCEKT_LOGIN_UPDATE,
+    type: SOCKET_LOGIN_UPDATE,
     payload: { roomData, userData },
   };
 }
