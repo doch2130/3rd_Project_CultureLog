@@ -51,20 +51,23 @@ export default function YeongCalendar(props) {
   //const marks = data.map((item) => new Date(item.date));
   console.log('내가선택한날짜', value); // 내가 선택한 날짜
 
+  const user = useSelector((state) => state.user.loginSuccess);
   const handleDayClick = (value, event) => {
+    //console.log('user', user);
     const clickedDate = moment(value).format('YYYY년 MM월 DD일');
 
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.fromDBperfo,
-      params: { date: clickedDate },
+      params: { date: clickedDate, user: user.email },
     }).then((response) => {
-      const data = response.data;
-      if (Object.keys(data).length === 0) {
+      console.log('data', response.data);
+      const data2 = response.data;
+      if (Object.keys(data2).length === 0) {
         setModalShow(!modalShow);
       } else {
-        alert(data.title);
-        console.log(data);
+        alert(data2[0].title);
+        setData(data2);
       }
     });
   };
@@ -108,8 +111,11 @@ export default function YeongCalendar(props) {
       <div className="text-gray-500 mt-4">
         선택한 날짜: {moment(value).format('YYYY년 MM월 DD일')}
         <div>
-          <b>{data.title}</b>
-          <span>{data.hall}</span>
+          {/* <b>{data[0].title}</b>
+          <span>{data[0].hall}</span>
+          <br />
+          <b>{data[1].title}</b>
+          <span>{data[1].actor}</span> */}
         </div>
       </div>
     </div>

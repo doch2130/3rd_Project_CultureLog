@@ -11,9 +11,20 @@ mongoose
 
 exports.fromDBperfo = async (req, res) => {
   console.log('fromperfo', req.query);
-  const findemail = await Book.find().populate('email');
-  console.log('findemail', findemail);
-  const findDate = await Performance.findOne({ date: req.query.date });
-  console.log('finddate', findDate);
-  res.send(findDate);
+  // const findemail = await Book.find().populate('email');
+  // console.log('findemail', findemail);
+  const findMyPerfo = await Performance.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  const findMyMovie = await Movie.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  const findMyBook = await Book.find({
+    $and: [{ date: req.query.date }, { email: req.query.user }],
+  });
+  console.log('find3', findMyPerfo, findMyBook, findMyMovie);
+  let findMylog = [];
+  findMylog.push(findMyPerfo, findMyBook, findMyMovie);
+  console.log('findMylog', findMylog);
+  res.send(findMylog);
 };
