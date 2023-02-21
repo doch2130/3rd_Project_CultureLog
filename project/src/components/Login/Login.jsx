@@ -78,7 +78,7 @@ function Login() {
       email: Email,
       password: Password,
     };
-    dispatch(loginUser(body), cookieUser(Email))
+    dispatch(loginUser(body))
       //랜딩페이지(초기페이지로 렌딩)
       //로그인 성공시 '/home'로 이동.
       .then((response) => {
