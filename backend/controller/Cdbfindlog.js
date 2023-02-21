@@ -11,6 +11,8 @@ mongoose
 
 exports.fromDBperfo = async (req, res) => {
   console.log('fromperfo', req.query);
+  const findemail = await Book.find().populate('email');
+  console.log('findemail', findemail);
   const findDate = await Performance.findOne({ date: req.query.date });
   console.log('finddate', findDate);
   res.send(findDate);
