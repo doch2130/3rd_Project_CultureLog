@@ -130,7 +130,6 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     permission: req.user.permission,
-    /*     role: req.user.role, */
   });
 });
 

@@ -63,7 +63,7 @@ export default function YeongCalendar(props) {
     }).then((response) => {
       console.log('data', response.data);
       const data2 = response.data;
-      if (Object.keys(data2).length === 0) {
+      if (Object.keys(data2[0]).length === 0) {
         setModalShow(!modalShow);
       } else {
         alert(data2[0].title);

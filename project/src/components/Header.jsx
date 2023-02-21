@@ -57,7 +57,7 @@ export default function Header() {
         >
           <li>
             {' '}
-            <Link to="/" style={{ textDecoration: 'none' }}>
+            <Link to="/home" style={{ textDecoration: 'none' }}>
               <p
                 style={{
                   fontSize: '27px',
