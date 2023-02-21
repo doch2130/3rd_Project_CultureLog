@@ -43,7 +43,7 @@ function Movie(props) {
     setOpen(true);
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
-  const user = useSelector((state) => state.user.loginSuccess);
+
   function titleconfirm(e) {
     let movieform = clientTitle[e.target.className];
     let title = e.target.innerText.split(',');
@@ -58,6 +58,8 @@ function Movie(props) {
     actor.current.value = movieform.actor;
     setImgsrc(movieform.img);
   }
+
+  const user = useSelector((state) => state.user.loginSuccess);
   function submit() {
     console.log(alert('게시물이 등록되었습니다.'));
 
