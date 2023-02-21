@@ -33,7 +33,17 @@ export default function user_reducer(state = initState, action) {
     case COOKIE_USER:
       return { ...state, cookie: action.payload };
     case AUTH_USER:
-      return { ...state, userData: action.payload };
+      const returnState = { ...state, userData: action.payload };
+      if (action.payload.isAuth) {
+        const authLogin = {
+          loginSuccess: true,
+          userId: action.payload._id,
+          email: action.payload.email,
+          permission: 'default',
+        };
+        returnState['loginSuccess'] = authLogin;
+      }
+      return returnState;
     /*  break;/ */
     default:
       return state;
