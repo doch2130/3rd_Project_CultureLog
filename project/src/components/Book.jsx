@@ -51,6 +51,7 @@ function Book() {
   }
   const user = useSelector((state) => state.user.loginSuccess);
   const submit = () => {
+    console.log('user', user);
     axios({
       method: 'post',
       url: axiosurl.toDBbook,

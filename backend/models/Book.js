@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bookSchema = mongoose.Schema({
-  email: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  // email: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User',
+  // },
   date: {
     type: String,
   },
