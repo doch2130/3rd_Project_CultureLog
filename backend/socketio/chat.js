@@ -4,9 +4,6 @@ const { ChatRoom, Chat } = require('../models/Chat');
 // 처음 접속 시 방 정보 저장
 exports.roomSave = async (roomId, socketId) => {
   try {
-    // if (userId === '' || userId === undefined) {
-    //   userId = '사용자' + socketId.slice(2, 7);
-    // }
     // console.log('roomSave roomId', roomId);
     // console.log('roomSave roomId', socketId);
     // console.log('roomSave roomId', userId);
@@ -30,9 +27,13 @@ exports.messageSave = async (data) => {
     // console.log('messageSave data', data);
 
     if (data.ChatRoom_id === '' || data.ChatRoom_id === undefined) {
-      const messageRoomFind = await ChatRoom.findOne({
-        roomId: data.roomId,
-      });
+      const messageRoomFind = await ChatRoom.findOne(
+        {
+          roomId: data.roomId,
+        },
+        // 특정 컬럼 제외하는 방법 (0: 제외, 1: 선택)
+        { createdAt: 0 }
+      );
       // console.log('messageRoomFind', messageRoomFind);
       data.ChatRoom_id = messageRoomFind._id;
     }
@@ -55,7 +56,11 @@ exports.roomListCall = async (myRoomId) => {
     let resultRoomList = [];
     // 해당 데이터 제외하고 조회 (Not)
     // { roomId: { $ne: myRoomId } }
-    const roomResult = await ChatRoom.find({ roomId: { $ne: myRoomId } });
+    const roomResult = await ChatRoom.find(
+      { roomId: { $ne: myRoomId } },
+      // 특정 컬럼 제외하는 방법 (0: 제외, 1: 선택)
+      { createdAt: 0 }
+    );
     // console.log('roomListCall result', roomResult);
 
     // forEach 함수는 async await 작동이 안된다.
@@ -68,7 +73,7 @@ exports.roomListCall = async (myRoomId) => {
           ChatRoom_id: el._id,
         },
         // 특정 컬럼 제외하는 방법 (0: 제외, 1: 선택)
-        { _id: 0, ChatRoom_id: 0 }
+        { _id: 0, ChatRoom_id: 0, createdAt: 0 }
       );
       // "-컬럼" / 해당 컬럼 조회 결과에서 제외
       // _id는 몽고DB 특성상 자동 생성되기 때문에 해당 방법으로는 안된다고 함
@@ -118,5 +123,22 @@ exports.userDisconnection = async (roomId) => {
     return true;
   } catch (err) {
     console.log('userDisconnection Delete Err', err);
+  }
+};
+
+// 사용자 로그인 시 DB 정보 업데이트
+exports.socketUserLogin = async (userData, roomData) => {
+  try {
+    await ChatRoom.updateMany(
+      { clientSocketId: roomData.clientSocketId },
+      { clientUserId: userData.email }
+    );
+    await Chat.updateMany(
+      { socketId: roomData.clientSocketId },
+      { userId: userData.email }
+    );
+    return true;
+  } catch (err) {
+    console.log('socketUserLogin Update Err', err);
   }
 };

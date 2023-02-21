@@ -44,9 +44,9 @@ export default function Chatbot() {
   useEffect(() => {
     socket.on('welcome', (initSocketData) => {
       // console.log('initSocketData', initSocketData);
-      const defaultMsgTime =
-        date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
-      dispatch(socketInitMessageAdd({ initSocketData, defaultMsgTime }));
+      // const defaultMsgTime = date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
+
+      dispatch(socketInitMessageAdd({ initSocketData }));
       dispatch(
         socketRoomsAdd({
           roomId: initSocketData.roomId,
@@ -54,6 +54,16 @@ export default function Chatbot() {
           clientUserId: initSocketData.userId,
         })
       );
+
+      // dispatch(socketInitMessageAdd({ initSocketData, defaultMsgTime }));
+      // dispatch(socketInitMessageAdd({ initSocketData }));
+      // dispatch(
+      //   socketRoomsAdd({
+      //     roomId: initSocketData.roomId,
+      //     clientSocketId: initSocketData.socketId,
+      //     clientUserId: initSocketData.userId,
+      //   })
+      // );
       setMySocketId(initSocketData.socketId);
       setMyRoomId(initSocketData.roomId);
     });

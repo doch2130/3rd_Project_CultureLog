@@ -26,7 +26,7 @@ export default function socket_reducer(state = initState, action) {
       // console.log('payloadMsg2', payloadMsg2);
 
       const updatedMessage2 = state.message.map((el) => {
-        console.log('el[payloadRoomId2]', el[payloadRoomId2]);
+        // console.log('el[payloadRoomId2]', el[payloadRoomId2]);
         if (el[payloadRoomId2] != null) {
           // payloadMsg 개체의 데이터를 메시지 개체의 기존 데이터와 병합
           let baseData = Object.keys(payloadMsg2);
@@ -59,7 +59,7 @@ export default function socket_reducer(state = initState, action) {
           for (let i = 0; i < Object.keys(payloadMsg2).length; i++) {
             newRoomData[i] = payloadMsg2[i];
           }
-          console.log('newRoomData', newRoomData);
+          // console.log('newRoomData', newRoomData);
           // const newRoomId = Object.keys(payloadMsg2)[0];
           return {
             ...el,
@@ -143,7 +143,8 @@ export default function socket_reducer(state = initState, action) {
             0: {
               permission: action.payload.initSocketData.permission,
               content: action.payload.initSocketData.content,
-              time: action.payload.defaultMsgTime,
+              // time: action.payload.defaultMsgTime,
+              time: action.payload.initSocketData.time,
               socketId: action.payload.initSocketData.socketId,
               userId: action.payload.initSocketData.userId,
             },
