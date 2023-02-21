@@ -91,13 +91,6 @@ module.exports = (socketIO) => {
     // socketIO.emit('getRooms', rooms);
     // 자동 뿌리기 말고, 새로고침 버튼으로 요청 할때 주는 걸로 변경
     socket.on('getRoomsList', (myRoomId) => {
-      // console.log('rooms', rooms);
-      // for (let i = 0; i < rooms.length; i++) {
-      //   if (myRoomId === rooms[i].roomId) continue;
-      //   socket.join(rooms[i].roomId);
-      // }
-
-      // console.log('base rooms', rooms);
       dbChat.roomListCall(myRoomId).then((response) => {
         // console.log('roomListCall End', response);
         // console.log('rooms', rooms);
@@ -113,7 +106,7 @@ module.exports = (socketIO) => {
     });
 
     socket.on('message', (data) => {
-      // console.log('message', data);
+      console.log('message', data);
       const messageData = {
         ChatRoom_id: '',
         roomId: data.roomId,
@@ -138,9 +131,12 @@ module.exports = (socketIO) => {
 
     // 사용자 로그인 시 정보 업데이트
     socket.on('userLogin', (roomData, userData) => {
-      // console.log('userLogin userData', userData);
-      // console.log('userLogin roomData', roomData);
+      console.log('userLogin userData', userData);
+      console.log('userLogin roomData', roomData);
+      // 프론트로 업데이트 정보 전송, 이미 발송한 메시지는 유저 정보 업데이트 안됨
       socketIO.emit('userLoginUpdate', roomData, userData);
+      // DB 데이터 업데이트
+      dbChat.socketUserLogin(userData, roomData);
     });
 
     // 사용자 연결 종료

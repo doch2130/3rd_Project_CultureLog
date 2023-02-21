@@ -14,6 +14,13 @@ const chatRoomSchema = mongoose.Schema({
   clientUserId: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    expires: '1d',
+    default: Date.now,
+  },
+  // socket 특성으로 바로 삭제 안되는 경우도 있기 때문에 만료 설정
+  // 1일 후에 삭제되도록 설정
 });
 
 const ChatRoom = mongoose.model('ChatRoom', chatRoomSchema);
@@ -47,6 +54,13 @@ const chatSchema = mongoose.Schema({
     type: String,
     default: 'default',
   },
+  createdAt: {
+    type: Date,
+    expires: '1d',
+    default: Date.now,
+  },
+  // socket 특성으로 바로 삭제 안되는 경우도 있기 때문에 만료 설정
+  // 1일 후에 삭제되도록 설정
 });
 
 const Chat = mongoose.model('Chats', chatSchema);
