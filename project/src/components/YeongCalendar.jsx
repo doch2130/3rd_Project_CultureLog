@@ -62,13 +62,8 @@ export default function YeongCalendar(props) {
       params: { date: clickedDate, user: user.email },
     }).then((response) => {
       console.log('data', response.data);
-      const data2 = response.data;
-      if (Object.keys(data2[0]).length === 0) {
-        setModalShow(!modalShow);
-      } else {
-        alert(data2[0].title);
-        setData(data2);
-      }
+      setData(response.data);
+      setModalShow(!modalShow);
     });
   };
 
@@ -111,11 +106,21 @@ export default function YeongCalendar(props) {
       <div className="text-gray-500 mt-4">
         선택한 날짜: {moment(value).format('YYYY년 MM월 DD일')}
         <div>
-          {/* <b>{data[0].title}</b>
-          <span>{data[0].hall}</span>
-          <br />
-          <b>{data[1].title}</b>
-          <span>{data[1].actor}</span> */}
+          {data.length > 0
+            ? data[0].map((el) => {
+                return <p>{el.title}</p>;
+              })
+            : 'perfo default'}
+          {data.length > 0
+            ? data[1].map((el) => {
+                return <p>{el.title}</p>;
+              })
+            : 'book default'}
+          {data.length > 0
+            ? data[2].map((el) => {
+                return <p>{el.title}</p>;
+              })
+            : 'movie default'}
         </div>
       </div>
     </div>
