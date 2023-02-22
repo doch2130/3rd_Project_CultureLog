@@ -120,14 +120,20 @@ export default function YeongCalendar(props) {
     }
   }, [user]);
 
-  const deletePerfo = () => {
+  const deletePerfo = (e) => {
+    console.log(e);
     axios({
       method: 'delete',
-      url: axiosurl.fromDB,
-      params: { user: user.email },
-    }).then((response) => {});
+      url: axiosurl.DBdelete,
+      params: { _id: e },
+    })
+      .then((response) => {
+        console.log('성공');
+      })
+      .catch(() => {
+        console.log('실패');
+      });
   };
-
   return (
     <div>
       <Calendar
@@ -263,7 +269,10 @@ export default function YeongCalendar(props) {
                   Close
                 </Button>
 
-                <Button variant="primary" onClick={deletePerfo}>
+                <Button
+                  variant="primary"
+                  onClick={deletePerfo(selectPerformance)}
+                >
                   delete
                 </Button>
               </Modal.Footer>

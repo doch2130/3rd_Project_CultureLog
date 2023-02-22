@@ -16,5 +16,6 @@ router.get('/fromDB', controller3.fromDB);
 router.get('/fromDBAll', controller3.fromDBAll);
 router.get('/logOfyear', controller3.logOfyear);
 router.get('/DBAll', controller3.DBAll);
+router.delete('/DBdelete', controller3.DBdelete);
 
 module.exports = router;
