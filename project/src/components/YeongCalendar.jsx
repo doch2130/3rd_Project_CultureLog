@@ -14,32 +14,60 @@ import { Toast } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+const Div5 = styled.div`
+  margin-left: 10px;
+`;
+
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
   const [modalShow, setModalShow] = useState(false);
 
   const [data, setData] = useState([]);
+  const P = useSelector((state) => state.date.date);
 
   //타이틀 눌렀을 때 누른 게시글 보게끔
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [show3, setShow3] = useState(false);
+
+  const handleClose1 = () => setShow1(false);
+  const handleShow1 = () => setShow1(true);
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => setShow2(true);
+  const handleClose3 = () => setShow3(false);
+  const handleShow3 = () => setShow3(true);
 
   const [marks, setMarks] = useState([]);
-
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
 
-  // useEffect(() => {
-  //   axios.get('/data').then((response) => {});
-  // }, []);
+  useEffect(() => {
+    axios({
+      method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
+      url: axiosurl.fromDBAll,
+      params: { user: user.email },
+    }).then((rep) => {
+      console.log('------------');
+      console.log(rep);
+      // setMarks(rep.data.date);
+    });
 
+    // axios.get(axiosurl.fromDB).then((response) => {
+    //   const data = response.data;
+    //   console.log('data', response.data);
+    //   const marks = response.data.marks;
+    //   setData(data);
+    //   setMarks();
+    // });
+  }, []);
+  if (marks) {
+  }
   // axios({ method: 'get', url: 'axiosurl.fromDBperfo', timeout: 5000 })
   //   .then((response) => {
   //     const data = response.data.data;
   //     const marks = response.data.marks;
   //     setData(data);
   //     setMarks(marks);
-  //   })
+  //   }).0
   //   .catch((error) => {
   //     if (error.response) {
   //       console.log(error.response.data);
@@ -56,7 +84,7 @@ export default function YeongCalendar(props) {
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
   const dispatch = useDispatch();
-  const P = useSelector((state) => state.date.date);
+  // const P = useSelector((state) => state.date.date);
   // const marks = [{ P }];
   //const marks = [moment(P).format('DD-MM-YYYY')];
   //const marks = data.map((item) => new Date(item.date));
@@ -66,23 +94,20 @@ export default function YeongCalendar(props) {
   const handleDayClick = (value, event) => {
     //console.log('user', user);
     const clickedDate = moment(value).format('YYYY년 MM월 DD일');
-
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.fromDB,
       params: { date: clickedDate, user: user.email },
     }).then((response) => {
-      // console.log('data', response.data);
-      // console.log('공연리뷰', data[0][1]);
+      console.log('data', response.data); //전체 대왕데이터
+      //console.log('data', response.data.date); //전체 대왕데이터
+      // console.log('공연', response.data[0][0].date); //날짜값
+      // console.log('공연', response.data[0][0]);
 
       setData(response.data);
       setModalShow(!modalShow);
     });
   };
-
-  const Div5 = styled.div`
-    margin-left: 10px;
-  `;
 
   const allReview = () => {
     alert(data[2][0].review);
@@ -121,10 +146,15 @@ export default function YeongCalendar(props) {
 
         tileClassName={({ date, view }) => {
           if (marks.find((x) => x === moment(date).format('DD-MM-YYYY'))) {
-            return 'highlight';
+            return 'highlightBook';
           }
         }}
       />
+      `
+      <div
+        style={{ width: '5px', borderRadius: '50%', backgroundColor: 'blue' }}
+      ></div>
+      `
       {modalShow && (
         <Pop show={modalShow} date={value} onHide={() => setModalShow(false)} />
       )}
@@ -161,16 +191,16 @@ export default function YeongCalendar(props) {
 
           <span>
             {data.length > 0 ? (
-              data[0].map((el) => {
+              data[0].map((el, index) => {
                 return (
-                  <p>
+                  <p key={index}>
                     <h3> 🎼 공연 </h3>
                     제목 : {el.title}
                     <br /> 극장 : {el.hall}
-                    <Button variant="primary" onClick={handleShow}>
+                    <Button variant="primary" onClick={handleShow1}>
                       상세보기
                     </Button>
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show1} onHide={handleClose1}>
                       <Modal.Header closeButton>
                         <Modal.Title>기록 상세보기</Modal.Title>
                       </Modal.Header>
@@ -181,10 +211,10 @@ export default function YeongCalendar(props) {
                         💭 후기 : {el.review}
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={handleClose1}>
                           Close
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={handleClose1}>
                           Save Changes
                         </Button>
                       </Modal.Footer>
@@ -200,17 +230,17 @@ export default function YeongCalendar(props) {
 
           <span>
             {data.length > 0 ? (
-              data[1].map((el) => {
+              data[1].map((el, index) => {
                 return (
-                  <>
+                  <p key={index}>
                     <h3> 📚 책</h3>
                     제목 :{el.title}
                     <br />
                     저자: {el.author}
-                    <Button variant="primary" onClick={handleShow}>
+                    <Button variant="primary" onClick={handleShow2}>
                       상세보기
                     </Button>
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show2} onHide={handleClose2}>
                       <Modal.Header closeButton>
                         <Modal.Title>기록 상세보기</Modal.Title>
                       </Modal.Header>
@@ -221,16 +251,16 @@ export default function YeongCalendar(props) {
                         💭 후기 : {el.review}
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={handleClose2}>
                           Close
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={handleClose2}>
                           Save Changes
                         </Button>
                       </Modal.Footer>
                     </Modal>
                     <hr style={{ marginTop: '30px' }} />
-                  </>
+                  </p>
                 );
 
                 // (
@@ -249,20 +279,20 @@ export default function YeongCalendar(props) {
 
           <span>
             {data.length > 0 ? (
-              data[2].map((el) => {
+              data[2].map((el, index) => {
                 return (
-                  <p>
+                  <p key={index}>
                     <h3> 🎬 영화</h3>
                     제목 : {el.title} <br />
                     감독 : {el.director}
                     <Button
                       variant="primary"
-                      onClick={handleShow}
+                      onClick={handleShow3}
                       style={{ marginLeft: 'auto' }}
                     >
                       상세보기
                     </Button>
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show3} onHide={handleClose3}>
                       <Modal.Header closeButton>
                         <Modal.Title>기록 상세보기</Modal.Title>
                       </Modal.Header>
@@ -273,10 +303,10 @@ export default function YeongCalendar(props) {
                         💭 후기 : {el.review}
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={handleClose3}>
                           Close
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={handleClose3}>
                           Save Changes
                         </Button>
                       </Modal.Footer>

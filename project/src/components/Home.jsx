@@ -13,7 +13,21 @@ import axiosurl from '../axiosurl';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-
+const P = styled.p`
+  display: flex;
+  font-size: 13.9px;
+  margin-top: 50px;
+  color: #3c5087;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 550px;
+  @media screen and (max-width: 880px) {
+    overflow: scroll;
+    height: 250px;
+    display: flex;
+    margin-bottom: 400px;
+  }
+`;
 // Main Page
 function Home() {
   const navigate = useNavigate();
@@ -23,21 +37,6 @@ function Home() {
   // console.log('userId', loginInformation);]
   const user = useSelector((state) => state.user.loginSuccess);
   const [yearData, setYearData] = useState([]);
-  const P = styled.p`
-    display: flex;
-    font-size: 13.9px;
-    margin-top: 50px;
-    color: #3c5087;
-    text-align: center;
-    justify-content: center;
-    margin-bottom: 550px;
-    @media screen and (max-width: 880px) {
-      overflow: scroll;
-      height: 250px;
-      display: flex;
-      margin-bottom: 400px;
-    }
-  `;
 
   useEffect(() => {
     console.log(moment(new Date()).format('YYYY년'));
