@@ -141,19 +141,19 @@ export default function YeongCalendar(props) {
           const tempData = marks.find(
             (x) => x === moment(date).format('YYYY년 MM월 DD일')
           );
-          console.log('tempData', tempData);
+          // console.log('tempData', tempData);
           if (tempData) {
             temp += 'highlight ';
             if (markData[tempData].book) {
-              console.log('mark book');
+              // console.log('mark book');
               temp += 'highlightBook ';
             }
             if (markData[tempData].movie) {
-              console.log('mark movie');
+              // console.log('mark movie');
               temp += 'highlightMovie ';
             }
             if (markData[tempData].perfo) {
-              console.log('mark perfo');
+              // console.log('mark perfo');
               temp += 'highlightPerfo ';
             }
             return temp;
@@ -166,16 +166,16 @@ export default function YeongCalendar(props) {
           const tempDotData = marks.find(
             (x) => x === moment(date).format('YYYY년 MM월 DD일')
           );
-          console.log('tempDotData', tempDotData);
+          // console.log('tempDotData', tempDotData);
           if (tempDotData) {
             if (markData[tempDotData].book) {
-              temp.push(<div className="dot dotBook"></div>);
+              temp.push(<div className="dot dotBook" key={'dotBook'}></div>);
             }
             if (markData[tempDotData].movie) {
-              temp.push(<div className="dot dotMovie"></div>);
+              temp.push(<div className="dot dotMovie" key={'dotMovie'}></div>);
             }
             if (markData[tempDotData].perfo) {
-              temp.push(<div className="dot dotPerfo"></div>);
+              temp.push(<div className="dot dotPerfo" key={'dotPerfo'}></div>);
             }
             return (
               <>
