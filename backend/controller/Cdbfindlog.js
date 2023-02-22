@@ -28,40 +28,44 @@ exports.fromDB = async (req, res) => {
 };
 
 exports.fromDBAll = async (req, res) => {
-  console.log('fromperfo', req.query);
+  let findMylog = {};
   const findMyPerfo = await Performance.find({
     $and: [{ email: req.query.user }],
   });
+  findMyPerfo.map((perfo) => {
+    if (findMylog[perfo.date] == null) findMylog[perfo.date] = {};
+    if (findMylog[perfo.date]['perfo'] == null)
+      findMylog[perfo.date] = { ...findMylog[perfo.date], perfo: [] };
+
+    findMylog[perfo.date]['perfo'].push(perfo);
+  });
+
   const findMyMovie = await Movie.find({
     $and: [{ email: req.query.user }],
+  });
+  findMyMovie.map((movie) => {
+    if (findMylog[movie.date] == null) findMylog[movie.date] = {};
+    if (findMylog[movie.date]['movie'] == null)
+      findMylog[movie.date] = { ...findMylog[movie.date], movie: [] };
+
+    findMylog[movie.date]['movie'].push(movie);
   });
   const findMyBook = await Book.find({
     $and: [{ email: req.query.user }],
   });
-  console.log('find3', findMyPerfo, findMyBook, findMyMovie);
-  let findMylog = [];
-  findMylog.push(findMyPerfo, findMyBook, findMyMovie);
+  findMyBook.map((book) => {
+    if (findMylog[book.date] == null) findMylog[book.date] = {};
+    if (findMylog[book.date]['book'] == null)
+      findMylog[book.date] = { ...findMylog[book.date], book: [] };
+
+    findMylog[book.date]['book'].push(book);
+  });
+  // console.log('find34', findMyPerfo, findMyBook, findMyMovie);
+  // findMylog.push(findMyPerfo, findMyBook, findMyMovie);
   console.log('findMylog', findMylog);
   res.send(findMylog);
 };
 
-exports.DBAll = async (req, res) => {
-  console.log('fromperfo', req.query);
-  const findMyPerfo = await Performance.find({
-    $and: [{ email: req.query.user }],
-  });
-  const findMyMovie = await Movie.find({
-    $and: [{ email: req.query.user }],
-  });
-  const findMyBook = await Book.find({
-    $and: [{ email: req.query.user }],
-  });
-  console.log('find3', findMyPerfo, findMyBook, findMyMovie);
-  let findMylog = [];
-  findMylog.push(findMyPerfo, findMyBook, findMyMovie);
-  console.log('findMylog', findMylog);
-  res.send(findMylog);
-};
 
 exports.logOfyear = async (req, res) => {
   console.log('fromlogofyear', req.query);
