@@ -32,7 +32,6 @@ export default function YeongCalendar(props) {
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
 
-
   useEffect(() => {
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
@@ -92,9 +91,7 @@ export default function YeongCalendar(props) {
       setModalShow(!modalShow);
     });
   };
-  // const Div5 = styled.div`
-  //   margin-left: 10px;
-  // `;
+
   const allReview = () => {
     alert(data[2][0].review);
     console.log(data[2][0]);

@@ -42,10 +42,10 @@ function Home() {
 
   useEffect(() => {
     console.log(moment(new Date()).format('YYYY년'));
-
+    console.log('user', user);
     console.log('공연:', yearData[0]);
     console.log('책:', yearData[1]);
-    console.log('영화:', yearData[2]); //현재 영화만 값이 들어옴.
+    console.log('영화:', yearData[2]);
 
     axios({
       method: 'get',
@@ -55,15 +55,17 @@ function Home() {
       console.log('year', re.data);
       setYearData(re.data);
     });
-    axios.get('/api/hello').then((response) => console.log(response));
   }, [user]);
+  // useEffect(() => {
+  //   axios.get('/api/hello').then((response) => console.log('test', response));
 
-  useEffect(() => {
-    const cookies = new Cookies();
-    if (cookies.get('x_auth') != null) {
-      navigate('/home');
-    }
-  }, []);
+  //   // if (loginInformation.userId === '63ecad322ba25214448d088d') {
+  //   //   setIsManager(true);
+  //   // } else {
+  //   //   setIsManager(false);
+  //   // }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <Container fluid>
       <Row style={{ height: '77%', margin: '50px' }}>
