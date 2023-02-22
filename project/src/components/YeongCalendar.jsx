@@ -31,6 +31,21 @@ export default function YeongCalendar(props) {
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
+
+  //마크가져오기
+  useEffect(() => {
+    axios({
+      method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
+      url: axiosurl.fromDBAll,
+      params: { user: user.email },
+    }).then((rep) => {
+      console.log('------------');
+      console.log(rep.data);
+      console.log(rep);
+      // setMarks(rep.data.date);
+    });
+  });
+
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
   // useEffect(() => {
   //   axios.get('/data').then((response) => {});
@@ -353,4 +368,3 @@ export default function YeongCalendar(props) {
     </div>
   );
 }
-
