@@ -66,16 +66,18 @@ exports.fromDBAll = async (req, res) => {
   res.send(findMylog);
 };
 
+
 exports.logOfyear = async (req, res) => {
   console.log('fromlogofyear', req.query);
+  console.log('fromlogofyear user', req.query.user);
   const findMyPerfo = await Performance.find({
-    $and: [{ date: { $in: [req.query.date] } }, { email: req.query.user }],
+    $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   const findMyMovie = await Movie.find({
     $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   const findMyBook = await Book.find({
-    $and: [{ date: { $in: [req.query.date] } }, { email: req.query.user }],
+    $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   let findLogOfYear = [];
   findLogOfYear.push(findMyPerfo, findMyBook, findMyMovie);

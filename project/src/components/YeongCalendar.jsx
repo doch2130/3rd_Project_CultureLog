@@ -32,7 +32,7 @@ export default function YeongCalendar(props) {
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
 
-  //마크가져오기
+
   useEffect(() => {
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
@@ -40,7 +40,7 @@ export default function YeongCalendar(props) {
       params: { user: user.email },
     }).then((rep) => {
       console.log('------------');
-      console.log(rep.data);
+
       console.log(rep);
       // setMarks(rep.data.date);
     });

@@ -42,7 +42,6 @@ function Home() {
 
   useEffect(() => {
     console.log(moment(new Date()).format('YYYY년'));
-    console.log('user', user);
 
     console.log('공연:', yearData[0]);
     console.log('책:', yearData[1]);
@@ -56,16 +55,14 @@ function Home() {
       console.log('year', re.data);
       setYearData(re.data);
     });
-  }, []);
-  useEffect(() => {
     axios.get('/api/hello').then((response) => console.log(response));
+  }, [user]);
 
-    // if (loginInformation.userId === '63ecad322ba25214448d088d') {
-    //   setIsManager(true);
-    // } else {
-    //   setIsManager(false);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const cookies = new Cookies();
+    if (cookies.get('x_auth') != null) {
+      navigate('/home');
+    }
   }, []);
   return (
     <Container fluid>

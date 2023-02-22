@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import axiosurl from '../axiosurl';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -15,8 +16,15 @@ function LandingPage() {
     const cookies = new Cookies();
     if (cookies.get('x_auth') != null) {
       navigate('/home');
+    } else {
+      axios({
+        method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
+        url: axiosurl.DBAll,
+      }).then((response) => {
+        console.log('data', response);
+      });
     }
-  });
+  }, []);
   return (
     <>
       <div
