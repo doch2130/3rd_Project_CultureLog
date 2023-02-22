@@ -19,8 +19,7 @@ function LandingPage() {
     } else {
       axios({
         method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
-        url: axiosurl.logOfyear,
-        params: { date: new Date().getFullYear() },
+        url: axiosurl.DBAll,
       }).then((response) => {
         console.log('data', response);
       });

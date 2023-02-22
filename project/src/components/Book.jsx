@@ -32,7 +32,7 @@ function Book() {
     if (cookies.get('x_auth') == null) {
       navigate('/');
     }
-  });
+  }, []);
   const onKeyPress = (e) => {
     if (e.key == 'Enter') search();
   };
