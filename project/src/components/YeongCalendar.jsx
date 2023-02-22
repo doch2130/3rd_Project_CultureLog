@@ -56,6 +56,7 @@ export default function YeongCalendar(props) {
   //     }
   //     console.log(error.config);
   //   });
+
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ export default function YeongCalendar(props) {
   //const marks = data.map((item) => new Date(item.date));
   console.log('내가선택한날짜', value); // 내가 선택한 날짜
   const user = useSelector((state) => state.user.loginSuccess);
+
   const handleDayClick = (value, event) => {
     //console.log('user', user);
     const clickedDate = moment(value).format('YYYY년 MM월 DD일');
@@ -80,6 +82,7 @@ export default function YeongCalendar(props) {
     });
   };
 
+
   const allReview = () => {
     alert(data[2][0].review);
     console.log(data[2][0]);
@@ -88,6 +91,7 @@ export default function YeongCalendar(props) {
   //지금은 각 값이 들어오는지만 확인을 하였다. 몇 번째 배열의 값을 누를 지 모르기때문에 그에 따라 값을 가져와야함.
   //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
   // 날짜 클릭 이벤트핸들러
+
   // const handleDayClick = (value, event) => {
   //   //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
   //   axios({
@@ -101,6 +105,9 @@ export default function YeongCalendar(props) {
   //     } else alert(re.data);
   //   });
   // };
+
+
+  //마크가져오기
 
   useEffect(() => {
     if (user.userId) {
@@ -116,12 +123,23 @@ export default function YeongCalendar(props) {
     }
   }, [user]);
 
+  const deletePerfo = () => {
+    axios({
+      method: 'delete',
+      url: axiosurl.fromDB,
+      params: { user: user.email },
+    }).then((response) => {});
+  };
+
   return (
     <div>
       <Calendar
         onChange={setValue}
         value={value}
         onClickDay={handleDayClick}
+        // tileClassName={({ data }) =>
+        //   marks.includes(data) ? 'highlight' : null
+        // }
         tileClassName={({ date, view }) => {
           if (
             marks.find((x) => x === moment(date).format('YYYY년 MM월 DD일'))
@@ -205,7 +223,10 @@ export default function YeongCalendar(props) {
                 <Button variant="secondary" onClick={handlePerformanceClose}>
                   Close
                 </Button>
-                {/* <Button variant="primary" onClick={handleClose}>Save Changes</Button> */}
+
+                <Button variant="primary" onClick={deletePerfo}>
+                  delete
+                </Button>
               </Modal.Footer>
             </Modal>
             {data.length > 0 ? (

@@ -85,3 +85,14 @@ exports.logOfyear = async (req, res) => {
   // console.log('findLogOfYear', findLogOfYear);
   res.send(findLogOfYear);
 };
+
+exports.DBAll = async (req, res) => {
+  console.log('DBAll', req.query);
+  console.log('DBAll', req.query.user);
+  const findMyPerfo = await Performance.find();
+  const findMyMovie = await Movie.find();
+  const findMyBook = await Book.find();
+  let AllOfYear = [];
+  AllOfYear.push(findMyPerfo, findMyBook, findMyMovie);
+  res.send(AllOfYear);
+};

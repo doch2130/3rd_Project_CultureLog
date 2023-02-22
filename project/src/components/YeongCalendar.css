@@ -123,6 +123,12 @@
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
+  .highlight {
+    width: 5px;
+    border-radius: 15px;
+    border-color: #2f4c63;
+    background: #2f4c63;
+  }
   .highlightBook {
     width: 5px;
     border-radius: 15px;

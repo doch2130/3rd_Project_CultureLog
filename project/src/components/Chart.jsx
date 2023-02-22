@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+/* import React, { PureComponent } from 'react';
 import {
   LineChart,
   Line,
@@ -30,8 +30,7 @@ const data = [
   },
 ];
 
-export default class Chart extends PureComponent {
-  render() {
+export default Chart extends PureComponent() {
     return (
       <LineChart
         width={500}
@@ -52,5 +51,5 @@ export default class Chart extends PureComponent {
         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
       </LineChart>
     );
-  }
 }
+ */
