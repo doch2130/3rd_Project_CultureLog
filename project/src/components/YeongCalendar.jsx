@@ -29,6 +29,7 @@ export default function YeongCalendar(props) {
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
+  const [markData, setMarkData] = useState();
   // const [marks, setMarks] = useState(['2023년 02월 21일']);
 
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
@@ -114,6 +115,7 @@ export default function YeongCalendar(props) {
         // console.log('------------');
         console.log('rep.data', rep.data);
         setMarks(Object.keys(rep.data));
+        setMarkData(rep.data);
       });
     }
   }, [user]);
@@ -132,14 +134,56 @@ export default function YeongCalendar(props) {
         onChange={setValue}
         value={value}
         onClickDay={handleDayClick}
-        // tileClassName={({ data }) =>
-        //   marks.includes(data) ? 'highlight' : null
-        // }
+        // 날짜 및 데이터 여부 체크
+        // return되는 클래스 이름이 button에 들어감
         tileClassName={({ date, view }) => {
-          if (
-            marks.find((x) => x === moment(date).format('YYYY년 MM월 DD일'))
-          ) {
-            return 'highlight';
+          let temp = '';
+          const tempData = marks.find(
+            (x) => x === moment(date).format('YYYY년 MM월 DD일')
+          );
+          console.log('tempData', tempData);
+          if (tempData) {
+            temp += 'highlight ';
+            if (markData[tempData].book) {
+              console.log('mark book');
+              temp += 'highlightBook ';
+            }
+            if (markData[tempData].movie) {
+              console.log('mark movie');
+              temp += 'highlightMovie ';
+            }
+            if (markData[tempData].perfo) {
+              console.log('mark perfo');
+              temp += 'highlightPerfo ';
+            }
+            return temp;
+            // return 'highlight';
+          }
+        }}
+        // 점으로 표시되는 기능
+        tileContent={({ date, view }) => {
+          let temp = [];
+          const tempDotData = marks.find(
+            (x) => x === moment(date).format('YYYY년 MM월 DD일')
+          );
+          console.log('tempDotData', tempDotData);
+          if (tempDotData) {
+            if (markData[tempDotData].book) {
+              temp.push(<div className="dot dotBook"></div>);
+            }
+            if (markData[tempDotData].movie) {
+              temp.push(<div className="dot dotMovie"></div>);
+            }
+            if (markData[tempDotData].perfo) {
+              temp.push(<div className="dot dotPerfo"></div>);
+            }
+            return (
+              <>
+                <div className="flex justify-center items-center absoluteDiv">
+                  {temp}
+                </div>
+              </>
+            );
           }
         }}
       />
