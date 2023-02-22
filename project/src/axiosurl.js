@@ -7,5 +7,6 @@ module.exports = {
   toDBbook: 'http://localhost:5000/bookDB',
   fromDB: 'http://localhost:5000/fromDB',
   fromDBAll: 'http://localhost:5000/fromDBAll',
+  DBAll: 'http://localhost:5000/DBAll',
   logOfyear: 'http://localhost:5000/logOfyear',
 };
