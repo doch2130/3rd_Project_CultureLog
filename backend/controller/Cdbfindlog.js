@@ -27,16 +27,57 @@ exports.fromDB = async (req, res) => {
   res.send(findMylog);
 };
 
+exports.fromDBAll = async (req, res) => {
+  let findMylog = {};
+  const findMyPerfo = await Performance.find({
+    $and: [{ email: req.query.user }],
+  });
+  findMyPerfo.map((perfo) => {
+    if (findMylog[perfo.date] == null) findMylog[perfo.date] = {};
+    if (findMylog[perfo.date]['perfo'] == null)
+      findMylog[perfo.date] = { ...findMylog[perfo.date], perfo: [] };
+
+    findMylog[perfo.date]['perfo'].push(perfo);
+  });
+
+  const findMyMovie = await Movie.find({
+    $and: [{ email: req.query.user }],
+  });
+  findMyMovie.map((movie) => {
+    if (findMylog[movie.date] == null) findMylog[movie.date] = {};
+    if (findMylog[movie.date]['movie'] == null)
+      findMylog[movie.date] = { ...findMylog[movie.date], movie: [] };
+
+    findMylog[movie.date]['movie'].push(movie);
+  });
+  const findMyBook = await Book.find({
+    $and: [{ email: req.query.user }],
+  });
+  findMyBook.map((book) => {
+    if (findMylog[book.date] == null) findMylog[book.date] = {};
+    if (findMylog[book.date]['book'] == null)
+      findMylog[book.date] = { ...findMylog[book.date], book: [] };
+
+    findMylog[book.date]['book'].push(book);
+  });
+  // console.log('find34', findMyPerfo, findMyBook, findMyMovie);
+  // findMylog.push(findMyPerfo, findMyBook, findMyMovie);
+  console.log('findMylog', findMylog);
+  res.send(findMylog);
+};
+
+
 exports.logOfyear = async (req, res) => {
   console.log('fromlogofyear', req.query);
+  console.log('fromlogofyear user', req.query.user);
   const findMyPerfo = await Performance.find({
-    $and: [{ date: { $in: [req.query.date] } }, { email: req.query.user }],
+    $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   const findMyMovie = await Movie.find({
     $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   const findMyBook = await Book.find({
-    $and: [{ date: { $in: [req.query.date] } }, { email: req.query.user }],
+    $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
   let findLogOfYear = [];
   findLogOfYear.push(findMyPerfo, findMyBook, findMyMovie);
