@@ -13,39 +13,28 @@ import styled from 'styled-components';
 import { Toast } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
 const Div5 = styled.div`
   margin-left: 10px;
 `;
-
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
   const [modalShow, setModalShow] = useState(false);
-
   const [data, setData] = useState([]);
-
   //타이틀 눌렀을 때 누른 게시글 보게끔
   const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [selectPerformance, setSelectPerformance] = useState(null);
   const handlePerformanceClose = () => setSelectPerformance(null);
-
   const [selectBook, setSelectBook] = useState(null);
   const handleBookClose = () => setSelectBook(null);
-
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
-
   const [marks, setMarks] = useState([]);
-
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
-
   // useEffect(() => {
   //   axios.get('/data').then((response) => {});
   // }, []);
-
   // axios({ method: 'get', url: 'axiosurl.fromDBperfo', timeout: 5000 })
   //   .then((response) => {
   //     const data = response.data.data;
@@ -65,7 +54,6 @@ export default function YeongCalendar(props) {
   //     }
   //     console.log(error.config);
   //   });
-
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
   const dispatch = useDispatch();
@@ -74,12 +62,10 @@ export default function YeongCalendar(props) {
   //const marks = [moment(P).format('DD-MM-YYYY')];
   //const marks = data.map((item) => new Date(item.date));
   console.log('내가선택한날짜', value); // 내가 선택한 날짜
-
   const user = useSelector((state) => state.user.loginSuccess);
   const handleDayClick = (value, event) => {
     //console.log('user', user);
     const clickedDate = moment(value).format('YYYY년 MM월 DD일');
-
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.fromDB,
@@ -87,26 +73,20 @@ export default function YeongCalendar(props) {
     }).then((response) => {
       // console.log('data', response.data);
       // console.log('공연리뷰', data[0][1]);
-
       setData(response.data);
       setModalShow(!modalShow);
     });
   };
-
   // const Div5 = styled.div`
   //   margin-left: 10px;
   // `;
-
   const allReview = () => {
     alert(data[2][0].review);
     console.log(data[2][0]);
   };
-
   //그치만 alert로 띄우면 삭제가 안되니까 다른 방식으로 해야한다.
-
   //지금은 각 값이 들어오는지만 확인을 하였다. 몇 번째 배열의 값을 누를 지 모르기때문에 그에 따라 값을 가져와야함.
   //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
-
   // 날짜 클릭 이벤트핸들러
   // const handleDayClick = (value, event) => {
   //   //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
@@ -121,7 +101,6 @@ export default function YeongCalendar(props) {
   //     } else alert(re.data);
   //   });
   // };
-
   return (
     <div>
       <Calendar
@@ -131,7 +110,6 @@ export default function YeongCalendar(props) {
         // tileClassName={({ date }) =>
         //   marks.includes(moment(date).format('DD-MM-YYYY')) ? 'highlight' : null
         // }
-
         tileClassName={({ date, view }) => {
           if (marks.find((x) => x === moment(date).format('DD-MM-YYYY'))) {
             return 'highlight';
@@ -145,7 +123,7 @@ export default function YeongCalendar(props) {
         <Div5>
           <h4
             style={{
-              backgroundColor: '	#96C7ED',
+              backgroundColor: '    #96C7ED',
               borderRadius: '20px',
               width: '190px',
               height: '40px',
@@ -171,7 +149,6 @@ export default function YeongCalendar(props) {
             {moment(value).format('YYYY년 MM월 DD일')}
           </h2>
           <p> 날짜를 클릭하면 나의 기록을 볼 수 있습니다 '◡' </p>
-
           <span>
             <Modal
               show={selectPerformance !== null}
@@ -217,7 +194,6 @@ export default function YeongCalendar(props) {
                 {/* <Button variant="primary" onClick={handleClose}>Save Changes</Button> */}
               </Modal.Footer>
             </Modal>
-
             {data.length > 0 ? (
               data[0].map((el, index) => {
                 // console.log('el', el);
@@ -243,7 +219,6 @@ export default function YeongCalendar(props) {
               <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
             )}
           </span>
-
           <span>
             <Modal show={selectBook !== null} onHide={handleBookClose}>
               <Modal.Header closeButton>
@@ -309,7 +284,6 @@ export default function YeongCalendar(props) {
               <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
             )}
           </span>
-
           <span>
             <Modal show={selectMovie !== null} onHide={handleMovieClose}>
               <Modal.Header closeButton>
@@ -379,3 +353,4 @@ export default function YeongCalendar(props) {
     </div>
   );
 }
+
