@@ -13,6 +13,7 @@ router.post('/movieDB', controller2.MovieDB);
 router.post('/bookDB', controller2.BookDB);
 
 router.get('/fromDB', controller3.fromDB);
+router.get('/fromDBAll', controller3.fromDBAll);
 router.get('/logOfyear', controller3.logOfyear);
 
 module.exports = router;
