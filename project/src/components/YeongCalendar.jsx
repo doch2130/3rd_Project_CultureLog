@@ -5,25 +5,23 @@ import 'react-calendar/dist/Calendar.css';
 import './YeongCalendar.css';
 import moment from 'moment';
 import Pop from './Pop';
-import { dateData } from '../actions/date_action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import axiosurl from '../axiosurl';
 import styled from 'styled-components';
-import { Toast } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { dateData } from '../actions/date_action';
+import { Toast } from 'react-bootstrap';
+
 const Div5 = styled.div`
   margin-left: 10px;
 `;
+
 export default function YeongCalendar(props) {
   const [value, setValue] = useState(new Date());
   const [modalShow, setModalShow] = useState(false);
   const [data, setData] = useState([]);
-  //타이틀 눌렀을 때 누른 게시글 보게끔
-  const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [selectPerformance, setSelectPerformance] = useState(null);
   const handlePerformanceClose = () => setSelectPerformance(null);
   const [selectBook, setSelectBook] = useState(null);
@@ -64,7 +62,7 @@ export default function YeongCalendar(props) {
   // const marks = [{ P }];
   //const marks = [moment(P).format('DD-MM-YYYY')];
   //const marks = data.map((item) => new Date(item.date));
-  console.log('내가선택한날짜', value); // 내가 선택한 날짜
+  // console.log('내가선택한날짜', value); // 내가 선택한 날짜
   const user = useSelector((state) => state.user.loginSuccess);
 
   const handleDayClick = (value, event) => {
@@ -81,7 +79,6 @@ export default function YeongCalendar(props) {
       setModalShow(!modalShow);
     });
   };
-
 
   const allReview = () => {
     alert(data[2][0].review);
@@ -106,9 +103,7 @@ export default function YeongCalendar(props) {
   //   });
   // };
 
-
-  //마크가져오기
-
+  // 마크가져오기
   useEffect(() => {
     if (user.userId) {
       axios({
@@ -116,7 +111,7 @@ export default function YeongCalendar(props) {
         url: axiosurl.fromDBAll,
         params: { user: user.email },
       }).then((rep) => {
-        console.log('------------');
+        // console.log('------------');
         console.log('rep.data', rep.data);
         setMarks(Object.keys(rep.data));
       });

@@ -41,18 +41,18 @@ function Home() {
   const [yearData, setYearData] = useState([]);
 
   useEffect(() => {
-    console.log(moment(new Date()).format('YYYY년'));
-    console.log('user', user);
-    console.log('공연:', yearData[0]);
-    console.log('책:', yearData[1]);
-    console.log('영화:', yearData[2]);
+    // console.log(moment(new Date()).format('YYYY년'));
+    // console.log('user', user);
+    // console.log('공연:', yearData[0]);
+    // console.log('책:', yearData[1]);
+    // console.log('영화:', yearData[2]);
 
     axios({
       method: 'get',
       url: axiosurl.logOfyear,
       params: { date: moment(new Date()).format('YYYY년'), user: user.email },
     }).then((re) => {
-      console.log('year', re.data);
+      // console.log('year', re.data);
       setYearData(re.data);
     });
   }, [user]);
