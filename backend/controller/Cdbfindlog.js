@@ -32,12 +32,15 @@ exports.fromDBAll = async (req, res) => {
   const findMyPerfo = await Performance.find({
     $and: [{ email: req.query.user }],
   });
+
   findMyPerfo.map((perfo) => {
     if (findMylog[perfo.date] == null) findMylog[perfo.date] = {};
     if (findMylog[perfo.date]['perfo'] == null)
       findMylog[perfo.date] = { ...findMylog[perfo.date], perfo: [] };
 
     findMylog[perfo.date]['perfo'].push(perfo);
+
+    // temp.push(findMylog);
   });
 
   const findMyMovie = await Movie.find({
@@ -60,15 +63,14 @@ exports.fromDBAll = async (req, res) => {
 
     findMylog[book.date]['book'].push(book);
   });
-  // console.log('find34', findMyPerfo, findMyBook, findMyMovie);
-  // findMylog.push(findMyPerfo, findMyBook, findMyMovie);
+
   console.log('findMylog', findMylog);
   res.send(findMylog);
 };
 
 exports.logOfyear = async (req, res) => {
-  console.log('fromlogofyear', req.query);
-  console.log('fromlogofyear user', req.query.user);
+  // console.log('fromlogofyear', req.query);
+  // console.log('fromlogofyear user', req.query.user);
   const findMyPerfo = await Performance.find({
     $and: [{ date: { $regex: req.query.date } }, { email: req.query.user }],
   });
@@ -80,7 +82,7 @@ exports.logOfyear = async (req, res) => {
   });
   let findLogOfYear = [];
   findLogOfYear.push(findMyPerfo, findMyBook, findMyMovie);
-  console.log('findLogOfYear', findLogOfYear);
+  // console.log('findLogOfYear', findLogOfYear);
   res.send(findLogOfYear);
 };
 

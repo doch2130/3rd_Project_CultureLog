@@ -31,8 +31,7 @@ export default function YeongCalendar(props) {
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
-  //const marking = [rep.data];
-
+  // const [marks, setMarks] = useState(['2023년 02월 21일']);
 
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
   // useEffect(() => {
@@ -118,8 +117,8 @@ export default function YeongCalendar(props) {
         params: { user: user.email },
       }).then((rep) => {
         console.log('------------');
-        console.log(rep.data);
-        //setMarks([rep.data]);
+        console.log('rep.data', rep.data);
+        setMarks(Object.keys(rep.data));
       });
     }
   }, [user]);
@@ -141,7 +140,6 @@ export default function YeongCalendar(props) {
         // tileClassName={({ data }) =>
         //   marks.includes(data) ? 'highlight' : null
         // }
-
         tileClassName={({ date, view }) => {
           if (
             marks.find((x) => x === moment(date).format('YYYY년 MM월 DD일'))
