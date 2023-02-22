@@ -109,7 +109,8 @@ export default function YeongCalendar(props) {
     }).then((rep) => {
       console.log('------------');
 
-      console.log(rep);
+      console.log(rep.data);
+
       // setMarks(rep.data.date);
     });
   }, [user]);
