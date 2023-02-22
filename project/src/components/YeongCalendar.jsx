@@ -31,44 +31,8 @@ export default function YeongCalendar(props) {
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
+  //const marking = [rep.data];
 
-  //마크가져오기
-  useEffect(() => {
-    axios({
-      method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
-      url: axiosurl.fromDBAll,
-      params: { user: user.email },
-    }).then((rep) => {
-      console.log('------------');
-      console.log(rep.data);
-      console.log(rep);
-      // setMarks(rep.data.date);
-    });
-  });
-
-  // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
-  // useEffect(() => {
-  //   axios.get('/data').then((response) => {});
-  // }, []);
-  // axios({ method: 'get', url: 'axiosurl.fromDBperfo', timeout: 5000 })
-  //   .then((response) => {
-  //     const data = response.data.data;
-  //     const marks = response.data.marks;
-  //     setData(data);
-  //     setMarks(marks);
-  //   })
-  //   .catch((error) => {
-  //     if (error.response) {
-  //       console.log(error.response.data);
-  //       console.log(error.response.status);
-  //       console.log(error.response.headers);
-  //     } else if (error.request) {
-  //       console.log(error.request);
-  //     } else {
-  //       console.log('Error', error.message);
-  //     }
-  //     console.log(error.config);
-  //   });
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
   const dispatch = useDispatch();
@@ -78,6 +42,7 @@ export default function YeongCalendar(props) {
   //const marks = data.map((item) => new Date(item.date));
   console.log('내가선택한날짜', value); // 내가 선택한 날짜
   const user = useSelector((state) => state.user.loginSuccess);
+
   const handleDayClick = (value, event) => {
     //console.log('user', user);
     const clickedDate = moment(value).format('YYYY년 MM월 DD일');
@@ -95,14 +60,6 @@ export default function YeongCalendar(props) {
   // const Div5 = styled.div`
   //   margin-left: 10px;
   // `;
-  const allReview = () => {
-    alert(data[2][0].review);
-    console.log(data[2][0]);
-  };
-  //그치만 alert로 띄우면 삭제가 안되니까 다른 방식으로 해야한다.
-  //지금은 각 값이 들어오는지만 확인을 하였다. 몇 번째 배열의 값을 누를 지 모르기때문에 그에 따라 값을 가져와야함.
-  //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
-  // 날짜 클릭 이벤트핸들러
   // const handleDayClick = (value, event) => {
   //   //console.log('target', moment(value).format('YYYY년 MM월 DD일'));
   //   axios({
@@ -116,17 +73,45 @@ export default function YeongCalendar(props) {
   //     } else alert(re.data);
   //   });
   // };
+
+  //마크가져오기
+
+  useEffect(() => {
+    if (user.userId) {
+      axios({
+        method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
+        url: axiosurl.fromDBAll,
+        params: { user: user.email },
+      }).then((rep) => {
+        console.log('------------');
+        console.log(rep.data);
+        //setMarks([rep.data]);
+      });
+    }
+  }, [user]);
+
+  const deletePerfo = () => {
+    axios({
+      method: 'delete',
+      url: axiosurl.fromDB,
+      params: { user: user.email },
+    }).then((response) => {});
+  };
+
   return (
     <div>
       <Calendar
         onChange={setValue}
         value={value}
         onClickDay={handleDayClick}
-        // tileClassName={({ date }) =>
-        //   marks.includes(moment(date).format('DD-MM-YYYY')) ? 'highlight' : null
+        // tileClassName={({ data }) =>
+        //   marks.includes(data) ? 'highlight' : null
         // }
+
         tileClassName={({ date, view }) => {
-          if (marks.find((x) => x === moment(date).format('DD-MM-YYYY'))) {
+          if (
+            marks.find((x) => x === moment(date).format('YYYY년 MM월 DD일'))
+          ) {
             return 'highlight';
           }
         }}
@@ -206,7 +191,10 @@ export default function YeongCalendar(props) {
                 <Button variant="secondary" onClick={handlePerformanceClose}>
                   Close
                 </Button>
-                {/* <Button variant="primary" onClick={handleClose}>Save Changes</Button> */}
+
+                <Button variant="primary" onClick={deletePerfo}>
+                  delete
+                </Button>
               </Modal.Footer>
             </Modal>
             {data.length > 0 ? (
