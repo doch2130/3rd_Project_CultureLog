@@ -109,10 +109,6 @@ exports.roomListCall = async (myRoomId) => {
   }
 };
 
-// 특정 컬렉션의 데이터 전부 삭제
-// db.chatrooms.deleteMany({});
-// db.chats.deleteMany({});
-
 exports.userDisconnection = async (roomId) => {
   try {
     // 사용자 로그아웃 또는 브라우저 종료 시 실행
@@ -142,3 +138,8 @@ exports.socketUserLogin = async (userData, roomData) => {
     console.log('socketUserLogin Update Err', err);
   }
 };
+
+
+// 특정 컬렉션의 데이터 전부 삭제
+// db.chatrooms.deleteMany({});
+// db.chats.deleteMany({});

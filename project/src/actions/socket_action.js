@@ -9,6 +9,7 @@ import {
   SOCKET_LOGIN_UPDATE,
   // SOCKET_LOGOUT,
   SOCKET_ROOM_REFRESH_UPATE,
+  SOCKET_PAGE_REFRESH,
 } from './types';
 
 export function socketInit(socket) {
@@ -89,6 +90,16 @@ export function socketUserLogin(roomData, userData) {
   // console.log('userData action', userData);
   return {
     type: SOCKET_LOGIN_UPDATE,
+    payload: { roomData, userData },
+  };
+}
+
+export function socketPageRefresh(roomData, userData) {
+  // console.log('asdasdasdasdssa');
+  console.log('roomData', roomData);
+  console.log('userData', userData);
+  return {
+    type: SOCKET_PAGE_REFRESH,
     payload: { roomData, userData },
   };
 }
