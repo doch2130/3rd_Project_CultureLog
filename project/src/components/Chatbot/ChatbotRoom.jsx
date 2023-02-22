@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './ChatbotRoom.css';
-import { socketMessageAdd } from '../../actions/socket_action';
+// import { socketMessageAdd } from '../../actions/socket_action';
 
 export default function ChatbotRoom({
   mySocketId,
@@ -10,7 +10,6 @@ export default function ChatbotRoom({
   userInfo,
   message,
 }) {
-  const dispatch = useDispatch();
   const socket = useSelector((state) => state.socket.socket);
   // const messageRoom = useSelector((state) => state.socket.message[0][myRoomId]);
   // const messageRoom = message[0][myRoomId];

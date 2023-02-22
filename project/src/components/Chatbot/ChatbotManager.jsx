@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Offcanvas } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import './ChatbotManager.css';
@@ -9,6 +9,29 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   const message = useSelector((state) => state.socket.message);
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
+  // const [roomMessageCount, setRoomMessageCount] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('myRoomId', myRoomId);
+  //   console.log('message', message[0]);
+  //   // console.log('Object message', Object.keys(message[0]));
+  //   const messageList = Object.keys(message[0]);
+  //   console.log('messageList', messageList);
+  //   let temp = [];
+  //   messageList.forEach((el) => {
+  //     // console.log('el', el);
+  //     // console.log('message[0][el] length', Object.keys(message[0][el]).length);
+  //     if (el !== myRoomId) {
+  //       const data = {
+  //         roomId: el,
+  //         msgCount: Object.keys(message[0][el]).length,
+  //       };
+  //       temp.push(data);
+  //     }
+  //   });
+  //   console.log('temp', temp);
+  //   setRoomMessageCount(temp);
+  // }, []);
 
   return (
     <>
@@ -149,6 +172,15 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
                         }}
                       >
                         알람
+                        {/* {roomMessageCount.map((elCount) => {
+                          if (elCount.roomId === el.roomId) {
+                            // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
+                            const tempCount =
+                              Object.keys(message[0][el.roomId]).length -
+                              elCount.msgCount;
+                            return tempCount;
+                          }
+                        })} */}
                       </span>
                     </Col>
                   </Row>

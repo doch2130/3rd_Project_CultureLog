@@ -46,6 +46,7 @@ export default function Chatbot() {
       // console.log('initSocketData', initSocketData);
       // const defaultMsgTime = date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
 
+      // console.log('userInfo', userInfo);
       dispatch(socketInitMessageAdd({ initSocketData }));
       dispatch(
         socketRoomsAdd({
@@ -76,9 +77,7 @@ export default function Chatbot() {
 
       // console.log('getRooms', roomsData);
       for (let i = 0; i < roomsData.length; i++) {
-        // console.log('oomsData[i].msg', roomsData[i].msg);
-        // dispatch(socketRooms(roomsData[i]));
-        // dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
+        // console.log('roomsData[i].msg', roomsData[i].msg);
         dispatch(socketRoomsRefreshUpdate(roomsData[i]));
       }
 

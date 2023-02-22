@@ -26,7 +26,12 @@ export default function (SpecificComponent, option, adminRoute = null) {
       dispatch(auth()).then((response) => {
         // 페이지 새로고침 후 socket 데이터 업데이트용 (관리자의 본인 방 삭제)
         if (response.payload.permission === 'manager') {
-          dispatch(socketPageRefresh(tempRoomId, response.payload));
+          // console.log('tempRoomId', tempRoomId);
+          // dispatch 순서가 먼저 실행이 되서, 문제가 발생
+          // 나중으로 미루기 위해 setTimeout으로 지연
+          setTimeout(() => {
+            dispatch(socketPageRefresh(tempRoomId, response.payload));
+          }, 5000);
         }
 
         /* console.log(response);
