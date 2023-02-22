@@ -39,6 +39,7 @@ function Performance(props) {
     }
   });
   const onKeyPress = (e) => {
+    // eslint-disable-next-line eqeqeq
     if (e.key == 'Enter') search();
   };
 
@@ -102,7 +103,8 @@ function Performance(props) {
                 ? '공연을 찾을 수 없습니다'
                 : clientTitle.map((el, index) => (
                     <p
-                      key={el.img}
+                      key={index}
+                      // key={el.img}
                       className={index}
                       dangerouslySetInnerHTML={{
                         __html: `[${el.genre}]-${el.title},${el.hall}`,
@@ -116,7 +118,7 @@ function Performance(props) {
           <Input
             type="text"
             ref={logDate}
-            value={moment(P).format('YYYY년 MM월 DD일')}
+            defaultValue={moment(P).format('YYYY년 MM월 DD일')}
           />
 
           <Input

@@ -295,14 +295,14 @@ export default function socket_reducer(state = initState, action) {
       }
     // 새로고침 후 auth 정보 불러올 때 사용 (관리자인 경우 본인 방 안가져오도록 설정)
     case SOCKET_PAGE_REFRESH:
-      console.log('action.payload', action.payload);
-      console.log('state.roomList', state.roomList);
+      // console.log('action.payload', action.payload);
+      // console.log('state.roomList', state.roomList);
       if (action.payload.userData.permission === 'manager') {
         // 관리자인 경우 관리자 roomList 삭제
         const updateRoomList = state.roomList.filter(
           (el) => el.roomId !== action.payload.roomData
         );
-        console.log('updateRoomList', updateRoomList);
+        // console.log('updateRoomList', updateRoomList);
         return {
           ...state,
           roomList: updateRoomList,
