@@ -64,7 +64,7 @@ exports.fromDBAll = async (req, res) => {
     findMylog[book.date]['book'].push(book);
   });
 
-  console.log('findMylog', findMylog);
+  // console.log('findMylog', findMylog);
   res.send(findMylog);
 };
 
