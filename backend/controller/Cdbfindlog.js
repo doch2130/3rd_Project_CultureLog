@@ -27,6 +27,24 @@ exports.fromDB = async (req, res) => {
   res.send(findMylog);
 };
 
+exports.fromDBAll = async (req, res) => {
+  console.log('fromperfo', req.query);
+  const findMyPerfo = await Performance.find({
+    $and: [{ email: req.query.user }],
+  });
+  const findMyMovie = await Movie.find({
+    $and: [{ email: req.query.user }],
+  });
+  const findMyBook = await Book.find({
+    $and: [{ email: req.query.user }],
+  });
+  console.log('find3', findMyPerfo, findMyBook, findMyMovie);
+  let findMylog = [];
+  findMylog.push(findMyPerfo, findMyBook, findMyMovie);
+  console.log('findMylog', findMylog);
+  res.send(findMylog);
+};
+
 exports.logOfyear = async (req, res) => {
   console.log('fromlogofyear', req.query);
   const findMyPerfo = await Performance.find({
