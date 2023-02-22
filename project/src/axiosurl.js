@@ -8,5 +8,6 @@ module.exports = {
   fromDB: 'http://localhost:5000/fromDB',
   fromDBAll: 'http://localhost:5000/fromDBAll',
   DBAll: 'http://localhost:5000/DBAll',
+  DBdelete: 'http://localhost:5000/DBdelete',
   logOfyear: 'http://localhost:5000/logOfyear',
 };

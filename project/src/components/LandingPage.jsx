@@ -33,11 +33,7 @@ function LandingPage() {
       });
     }
   }, []);
-  let body = {
-    movie,
-    book,
-    perfo,
-  };
+
   return (
     <>
       <div
@@ -57,7 +53,7 @@ function LandingPage() {
           <br />
           <br />
           <br />
-          {/* <Chart props={body} /> */}
+          <Chart movie={movie} book={book} perfo={perfo} />
           <div
             style={{
               display: 'flex',
