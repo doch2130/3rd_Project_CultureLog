@@ -271,7 +271,7 @@ export default function YeongCalendar(props) {
 
                 <Button
                   variant="primary"
-                  onClick={deletePerfo(selectPerformance)}
+                  onClick={() => {deletePerfo(selectPerformance)}}
                 >
                   delete
                 </Button>

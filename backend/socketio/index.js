@@ -59,7 +59,7 @@ module.exports = (socketIO) => {
         permission: 'server',
         content: '문의 사항이 있으시면 메시지 남겨주세요.',
         time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
-        userId: 'System Server',
+        userId: '사용자' + response.clientSocketId.slice(2, 7),
       };
       dbChat.messageSave(welcomeData).then((response) => {
         // console.log('dbChat.messageSave response', response);

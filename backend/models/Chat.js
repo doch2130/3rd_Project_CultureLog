@@ -40,19 +40,19 @@ const chatSchema = mongoose.Schema({
   },
   content: {
     type: String,
-    default: 'default',
+    required: true,
+    default: ' ',
   },
   time: {
     type: String,
-    default: 'default',
+    required: true,
   },
   socketId: {
     type: String,
-    default: 'default',
+    required: true,
   },
   userId: {
     type: String,
-    default: 'default',
   },
   createdAt: {
     type: Date,
@@ -64,4 +64,36 @@ const chatSchema = mongoose.Schema({
 });
 
 const Chat = mongoose.model('Chats', chatSchema);
-module.exports = { ChatRoom, Chat };
+
+const chatMessageCountSchema = mongoose.Schema({
+  roomId: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  checkMessageCount: {
+    type: Number,
+    default: 0,
+  },
+  connectionTime: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    expires: '1d',
+    default: Date.now,
+  },
+  // socket 특성으로 바로 삭제 안되는 경우도 있기 때문에 만료 설정
+  // 1일 후에 삭제되도록 설정
+});
+
+const ChatMessageCount = mongoose.model(
+  'ChatMessageCount',
+  chatMessageCountSchema
+);
+
+module.exports = { ChatRoom, Chat, ChatMessageCount };
