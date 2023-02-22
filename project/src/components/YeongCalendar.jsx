@@ -31,6 +31,7 @@ export default function YeongCalendar(props) {
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
   const [marks, setMarks] = useState([]);
+
   // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
   // useEffect(() => {
   //   axios.get('/data').then((response) => {});
@@ -77,9 +78,7 @@ export default function YeongCalendar(props) {
       setModalShow(!modalShow);
     });
   };
-  // const Div5 = styled.div`
-  //   margin-left: 10px;
-  // `;
+
   const allReview = () => {
     alert(data[2][0].review);
     console.log(data[2][0]);
@@ -353,4 +352,3 @@ export default function YeongCalendar(props) {
     </div>
   );
 }
-
