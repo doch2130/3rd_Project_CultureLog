@@ -57,7 +57,7 @@ function LandingPage() {
           <br />
           <br />
           <br />
-          <Chart props={body} />
+          {/* <Chart props={body} /> */}
           <div
             style={{
               display: 'flex',
