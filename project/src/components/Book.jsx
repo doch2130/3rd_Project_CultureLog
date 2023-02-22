@@ -108,7 +108,8 @@ function Book() {
                 ? '책을 찾을 수 없습니다'
                 : clientTitle.map((el, index) => (
                     <p
-                      key={el.img}
+                      key={index}
+                      // key={el.img}
                       className={index}
                       dangerouslySetInnerHTML={{
                         __html: `${el.title},${el.author},${el.publisher}`,
@@ -122,7 +123,7 @@ function Book() {
           <Input
             type="text"
             ref={logDate}
-            value={moment(P).format('YYYY년 MM월 DD일')}
+            defaultValue={moment(P).format('YYYY년 MM월 DD일')}
           />
 
           <Input ref={titleNyear} type="text" placeholder="제목" />

@@ -38,6 +38,7 @@ function Movie(props) {
   });
 
   const onKeyPress = (e) => {
+    // eslint-disable-next-line eqeqeq
     if (e.key == 'Enter') search();
   };
 
@@ -109,7 +110,8 @@ function Movie(props) {
                 ? '영화를 찾을 수 없습니다'
                 : clientTitle.map((el, index) => (
                     <p
-                      key={el.img}
+                      // key={el.img}
+                      key={index}
                       className={index}
                       dangerouslySetInnerHTML={{
                         __html: `${el.title},${el.pubDate},${el.director}`,
@@ -123,7 +125,7 @@ function Movie(props) {
           <Input
             type="text"
             ref={logDate}
-            value={moment(P).format('YYYY년 MM월 DD일')}
+            defaultValue={moment(P).format('YYYY년 MM월 DD일')}
           />
           <Input ref={titleNyear} type="text" placeholder="제목(개봉년도)" />
           <Input type="text" ref={director} placeholder="감독" />

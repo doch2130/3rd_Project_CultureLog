@@ -139,6 +139,9 @@ module.exports = (socketIO) => {
       dbChat.socketUserLogin(userData, roomData);
     });
 
+    // 페이지 새로고침 시 roomId 요청 (관리자 전용)
+    socket.emit('pageRefreshRoomIdReceive', roomUid);
+
     // 사용자 연결 종료
     socket.on('disconnect', () => {
       console.log(socket.id + ' Exit');

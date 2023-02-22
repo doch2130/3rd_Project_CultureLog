@@ -13,6 +13,7 @@ import axiosurl from '../axiosurl';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 const P = styled.p`
   display: flex;
   font-size: 13.9px;
@@ -28,6 +29,7 @@ const P = styled.p`
     margin-bottom: 400px;
   }
 `;
+
 // Main Page
 function Home() {
   const navigate = useNavigate();
