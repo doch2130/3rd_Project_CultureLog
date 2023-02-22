@@ -8,6 +8,7 @@ import {
   SOCKET_ROOM_REFRESH,
   SOCKET_LOGIN_UPDATE,
   SOCKET_ROOM_REFRESH_UPATE,
+  SOCKET_PAGE_REFRESH,
 } from '../actions/types';
 
 const initState = {
@@ -19,6 +20,7 @@ export default function socket_reducer(state = initState, action) {
   switch (action.type) {
     case SOCKET_INIT:
       return { ...state, socket: action.payload };
+    // 방 새로고침 클릭
     case SOCKET_ROOM_REFRESH_UPATE:
       const payloadRoomId2 = action.payload.room.roomId;
       const payloadMsg2 = action.payload.roomMsg;
@@ -290,6 +292,23 @@ export default function socket_reducer(state = initState, action) {
           ...state,
           roomList: updateRoomList,
         };
+      }
+    // 새로고침 후 auth 정보 불러올 때 사용 (관리자인 경우 본인 방 안가져오도록 설정)
+    case SOCKET_PAGE_REFRESH:
+      console.log('action.payload', action.payload);
+      console.log('state.roomList', state.roomList);
+      if (action.payload.userData.permission === 'manager') {
+        // 관리자인 경우 관리자 roomList 삭제
+        const updateRoomList = state.roomList.filter(
+          (el) => el.roomId !== action.payload.roomData
+        );
+        console.log('updateRoomList', updateRoomList);
+        return {
+          ...state,
+          roomList: updateRoomList,
+        };
+      } else {
+        return { ...state };
       }
     default:
       return state;
