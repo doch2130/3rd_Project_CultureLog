@@ -47,19 +47,50 @@ function Pop(props) {
             display: 'flex',
           }}
         >
-          <Button variant="outline-warning" size="lg" onClick={moveToMovie}>
-            영화
+          <Button
+            style={{
+              backgroundColor: 'rgb(238, 224, 154)',
+              borderColor: 'white',
+            }}
+            size="lg"
+            onClick={moveToMovie}
+          >
+            🎞️ 영화
           </Button>
-          <Button variant="outline-primary" size="lg" onClick={moveToBook}>
-            책
+          <Button
+            style={{
+              backgroundColor: 'rgb(138, 181, 216)',
+              borderColor: 'white',
+              width: '110px',
+            }}
+            size="lg"
+            onClick={moveToBook}
+          >
+            📚 책
           </Button>
-          <Button variant="outline-danger" size="lg" onClick={moveToPer}>
-            공연
+          <Button
+            style={{
+              backgroundColor: 'rgb(230, 100, 169)',
+              borderColor: 'white',
+            }}
+            size="lg"
+            onClick={moveToPer}
+          >
+            🎪 공연
           </Button>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>
+        <Button
+          style={{
+            marginLeft: 'auto',
+            backgroundColor: 'rgb(204, 193, 193)',
+            borderColor: 'white',
+            display: 'inline-flex',
+            float: 'right',
+          }}
+          onClick={props.onHide}
+        >
           Close
         </Button>
       </Modal.Footer>

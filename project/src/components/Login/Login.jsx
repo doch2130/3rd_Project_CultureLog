@@ -20,7 +20,8 @@ const Div1 = styled.div`
   h1 {
     font-weight: 700;
     font-size: 40px;
-    color: #572b2b;
+    color: #cecc7f;
+    margin-bottom: 50px;
   }
 `;
 const Input = styled.input`
@@ -42,10 +43,11 @@ const Div2 = styled.div`
   width: 100%;
   align-items: center;
   button {
-    background-color: #d2b6a9;
+    background-color: #cecc7f;
     color: #f3e9e9;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(230, 115, 53, 0.25);
+    border-color: #cecc7f;
+    box-shadow: 0 2px 8px rgba(140, 218, 161, 0.25);
     display: inline-block;
     margin-right: 10px;
   }

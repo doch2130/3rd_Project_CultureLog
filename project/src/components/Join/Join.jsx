@@ -9,14 +9,16 @@ import Auth from '../../hoc/auth';
 const Div2 = styled.div`
   margin: auto;
   width: 500px;
-  /* padding: 300px; */
+  padding: 300px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -200px;
   input {
     width: 350px;
     height: 60px;
+
     border-top: none;
     border-left: none;
     border-right: none;
@@ -26,11 +28,13 @@ const Div2 = styled.div`
   h1 {
     font-weight: 700;
     font-size: 40px;
-    color: #d2b6a9;
+    color: #cecc7f;
+    margin-bottom: 50px;
   }
   button {
-    background-color: #d2b6a9;
-    color: #f3e9e9;
+    background-color: #cecc7f;
+    color: #ffffff;
+    border-color: #cecc7f;
     border-radius: 4px;
     margin-top: 20px;
     width: 100px;

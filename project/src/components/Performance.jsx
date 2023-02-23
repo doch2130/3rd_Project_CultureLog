@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import musicalImg from '../musical.jpeg';
+import musicalImg from '../musical.png';
 // import YeongCalendar from './YeongCalendar';
 // import moment from 'moment';
 // import Calendar from 'react-calendar';
@@ -169,6 +169,7 @@ function Performance(props) {
 const Div6 = styled.div`
   margin: auto;
   margin-top: 70px;
+  margin-bottom: 70px;
   height: 1200px;
   width: 1300px;
   padding: 180px;
@@ -176,7 +177,7 @@ const Div6 = styled.div`
   display: flex;
   background-color: #d0d6c3;
   border-radius: 50px;
-
+  box-shadow: rgba(223, 231, 136, 0.56) 0px 22px 70px 4px;
   @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;
