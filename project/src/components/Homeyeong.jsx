@@ -12,7 +12,9 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/api/hello').then((response) => console.log(response));
+    axios
+      .get(`${process.env.REACT_APP_BACK}/api/hello`)
+      .then((response) => console.log(response));
   }, []);
   return (
     <Container fluid>

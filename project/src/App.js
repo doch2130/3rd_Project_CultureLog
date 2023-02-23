@@ -13,6 +13,7 @@ import { socketInit } from './actions/socket_action';
 import './App.css';
 import Header from './components/Header';
 import Chatbot from './components/Chatbot/Chatbot';
+import axios from 'axios';
 
 import Home from './components/Home';
 import { Cookies } from 'react-cookie';
@@ -22,9 +23,9 @@ function App() {
   // 이후 axios 요청 시 기본 url은 빼고 작성하면 된다.
   // axios.defaults.baseURL = 'http://127.0.0.1:5500';
   // true로 설정해야 Server와 Cookie를 주고 받을 수 있다.
-  // axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   const dispatch = useDispatch();
-  const socket = io.connect('http://localhost:5000');
+  const socket = io.connect(`${process.env.REACT_APP_BACK}`);
   dispatch(socketInit(socket));
 
   return (
