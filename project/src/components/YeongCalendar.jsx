@@ -113,7 +113,7 @@ export default function YeongCalendar(props) {
         params: { user: user.email },
       }).then((rep) => {
         // console.log('------------');
-        console.log('rep.data', rep.data);
+        // console.log('rep.data', rep.data);
         setMarks(Object.keys(rep.data));
         setMarkData(rep.data);
       });
@@ -271,7 +271,9 @@ export default function YeongCalendar(props) {
 
                 <Button
                   variant="primary"
-                  onClick={() => {deletePerfo(selectPerformance)}}
+                  onClick={() => {
+                    deletePerfo(selectPerformance);
+                  }}
                 >
                   delete
                 </Button>
