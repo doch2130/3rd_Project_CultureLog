@@ -62,13 +62,13 @@ function Home() {
       setPerfo(re.data[0].length);
       setBook(re.data[1].length);
       setMovie(re.data[2].length);
-      console.log(re);
+      // console.log(re);
     });
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.DBAll,
     }).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setAllPerfo(response.data[0].length);
       setAllBook(response.data[1].length);
       setAllMovie(response.data[2].length);

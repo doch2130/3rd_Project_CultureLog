@@ -52,7 +52,7 @@ export default function ChartPerson({
       User: perfo,
     },
   ];
-  console.log(movie);
+  // console.log(movie);
   return (
     <>
       <Div1>
