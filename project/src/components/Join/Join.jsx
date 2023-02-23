@@ -109,7 +109,11 @@ function Join() {
     };
     //리덕스를 쓰지 않을 경우
     //axios.post('/api/users/register', body)
-
+    if (!Email) {
+      return alert('아이디를 입력해주세요');
+    } else if (!Password) {
+      return alert('비밀번호를 입력해주세요');
+    }
     dispatch(registerUser(body))
       //랜딩페이지(초기페이지로 렌딩)
       //회원가입 성공시 '/login'로 이동.

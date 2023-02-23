@@ -87,8 +87,6 @@ exports.logOfyear = async (req, res) => {
 };
 
 exports.DBAll = async (req, res) => {
-  console.log('DBAll', req.query);
-  console.log('DBAll', req.query.user);
   const findMyPerfo = await Performance.find();
   const findMyMovie = await Movie.find();
   const findMyBook = await Book.find();
@@ -98,14 +96,7 @@ exports.DBAll = async (req, res) => {
 };
 
 exports.DBdelete = async (req, res) => {
-  console.log('DBdelete', req.query);
   Performance.deleteOne(req.query._id, function (err, result) {
     res.status(200).send('성공');
   });
-  // Movie.deleteOne(req.body._id, function (err, result) {
-  //   res.status(200).send('성공');
-  // });
-  // Book.deleteOne(req.body._id, function (err, result) {
-  //   res.status(200).send('성공');
-  // });
 };
