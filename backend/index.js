@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
+const dotenv = require('dotenv').config();
 const io = require('socket.io')(http, {
   cors: {
     origin: [process.env.NODE_ENV],
@@ -10,7 +11,6 @@ const socket = require('./socketio/index');
 const port = 5000;
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-// const dotenv = require('dotenv');
 const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
@@ -19,9 +19,9 @@ const { Book } = require('./models/Book');
 const { Performance } = require('./models/Performance');
 
 let corsOption = {
+  // origin: process.env.NODE_ENV, // 허락하는 요청 주소
   origin: process.env.NODE_ENV, // 허락하는 요청 주소
   credentials: true,
-  // methods: '*'
   optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 };
 app.use(cors(corsOption));
@@ -129,4 +129,7 @@ app.get('*', (req, res) => {
 // 소켓 객체 전달
 socket(io);
 // app.listen(port, () => console.log(`server port: ${port}!`));
-http.listen(port, () => console.log(`server port: ${port}!`));
+http.listen(port, () => {
+  console.log(`server port: ${port}!`);
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+});

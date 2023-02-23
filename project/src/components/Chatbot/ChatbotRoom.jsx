@@ -32,6 +32,10 @@ export default function ChatbotRoom({
 
   function messageSend() {
     // console.log('chatInput: ', chatInput.current.value);
+    if (chatInput.current.value === '') {
+      chatInput.current.placeholder = '내용을 입력해주세요';
+      return false;
+    }
 
     if (!userInfo.email) {
       userInfo.email = '사용자' + mySocketId.slice(2, 7);

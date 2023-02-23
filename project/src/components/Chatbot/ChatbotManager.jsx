@@ -40,7 +40,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   // 방에서 마우스 우클릭 시 설정
   const roomMouseRightClick = (e, el) => {
     // 방 나가기 위한 우클릭 클릭할 때 데이터 받아와서 저장
-    console.log('el', el);
+    // console.log('el', el);
     setRoomExitData(el);
     // 기본 메뉴 나오지 않게 설정
     e.preventDefault();
@@ -53,7 +53,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
       : 'notRoomMouseRightClickWrap';
 
     if (roomMouseRightClickWrap !== 'notRoomMouseRightClickWrap') {
-      console.log('roomMouseRightClick', roomMouseRightClickWrap);
+      // console.log('roomMouseRightClick', roomMouseRightClickWrap);
       roomMouseRightClickWrap.style.display = 'flex';
       roomMouseRightClickWrap.style.left = x;
       roomMouseRightClickWrap.style.top = y;
