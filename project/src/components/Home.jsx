@@ -38,6 +38,13 @@ function Home() {
   const user = useSelector((state) => state.user.loginSuccess);
   const [yearData, setYearData] = useState([]);
   const [yearAllData, setYearAllData] = useState([]);
+  const [movie, setMovie] = useState('');
+  const [book, setBook] = useState('');
+  const [perfo, setPerfo] = useState('');
+  const [Allmovie, setAllMovie] = useState('');
+  const [Allbook, setAllBook] = useState('');
+  const [Allperfo, setAllPerfo] = useState('');
+
   useEffect(() => {
     axios({
       method: 'get',
@@ -46,13 +53,19 @@ function Home() {
     }).then((re) => {
       // console.log('year', re.data);
       setYearData(re.data);
+      setPerfo(re.data[0].length);
+      setBook(re.data[1].length);
+      setMovie(re.data[2].length);
+      console.log(re);
     });
     axios({
       method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
       url: axiosurl.DBAll,
     }).then((response) => {
       console.log(response.data);
-      setYearAllData(response.data);
+      setAllPerfo(response.data[0].length);
+      setAllBook(response.data[1].length);
+      setAllMovie(response.data[2].length);
     });
   }, [user]);
   // useEffect(() => {
@@ -107,12 +120,12 @@ function Home() {
 
                 {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
                 <ChartPerson
-                  movie={yearData[2]}
-                  book={yearData[1]}
-                  perfo={yearData[0]}
-                  Allmovie={yearAllData[2]}
-                  Allbook={yearAllData[1]}
-                  Allperfo={yearAllData[0]}
+                  movie={movie}
+                  book={book}
+                  perfo={perfo}
+                  Allmovie={Allmovie}
+                  Allbook={Allbook}
+                  Allperfo={Allperfo}
                 />
                 <Col xs={12} style={{ height: '70%', paddingTop: '10px' }}>
                   <div className="recordYear">
