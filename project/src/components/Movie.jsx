@@ -31,11 +31,15 @@ function Movie(props) {
   const review = useRef();
 
   useEffect(() => {
+    if (logDate.current.value === 'Invalid date') {
+      alert('잘못된 접근입니다');
+      navigate('/');
+    }
     const cookies = new Cookies();
     if (cookies.get('x_auth') == null) {
       navigate('/');
     }
-  });
+  }, []);
 
   const onKeyPress = (e) => {
     // eslint-disable-next-line eqeqeq
@@ -43,14 +47,17 @@ function Movie(props) {
   };
 
   const search = async () => {
-    const result = await callMovieAPI({
-      title: movieSearch.current.value,
-    });
-    console.log('component', result);
-    dispatch(result);
-    setSearchClass('searchBoard');
-    movieSearch.current.value = '';
-    setOpen(true);
+    if (movieSearch.current.value === '') alert('검색어를 입력하세요');
+    else {
+      const result = await callMovieAPI({
+        title: movieSearch.current.value,
+      });
+      console.log('component', result);
+      dispatch(result);
+      setSearchClass('searchBoard');
+      movieSearch.current.value = '';
+      setOpen(true);
+    }
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
 
@@ -71,22 +78,36 @@ function Movie(props) {
 
   const user = useSelector((state) => state.user.loginSuccess);
   function submit() {
-    axios({
-      method: 'post',
-      url: axiosurl.toDBmovie,
-      data: {
-        email: user.email,
-        date: logDate.current.value,
-        title: titleNyear.current.value,
-        director: director.current.value,
-        actor: actor.current.value,
-        review: review.current.value,
-      },
-    }).then(() => {
-      //console.log('todb', res.data);
-      console.log(alert('게시물이 등록되었습니다'));
-      navigate('/home');
-    });
+    if (
+      titleNyear.current.value === '' ||
+      actor.current.value === '' ||
+      review.current.value === ''
+    )
+      alert('정보를 모두 입력하세요');
+    else {
+      if (
+        window.confirm(
+          '한번 등록된 로그는 수정할 수 없습니다. 이대로 올릴까요?'
+        ) === true
+      ) {
+        axios({
+          method: 'post',
+          url: axiosurl.toDBmovie,
+          data: {
+            email: user.email,
+            date: logDate.current.value,
+            title: titleNyear.current.value,
+            director: director.current.value,
+            actor: actor.current.value,
+            review: review.current.value,
+          },
+        }).then(() => {
+          //console.log('todb', res.data);
+          console.log(alert('게시물이 등록되었습니다'));
+          navigate('/home');
+        });
+      }
+    }
   }
 
   return (
