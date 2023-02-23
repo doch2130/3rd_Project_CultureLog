@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
-  cors: { origin: ['http://localhost:3000', 'http://127.0.0.1:3000'] },
+  cors: {
+    origin: [process.env.NODE_ENV],
+  },
 });
 const socket = require('./socketio/index');
 const port = 5000;
@@ -17,40 +19,15 @@ const { Book } = require('./models/Book');
 const { Performance } = require('./models/Performance');
 
 let corsOption = {
-  origin: 'http://localhost:3000', // 허락하는 요청 주소
+  origin: process.env.NODE_ENV, // 허락하는 요청 주소
   credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  // methods: '*'
   optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 };
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-// app.use((req, res, next) => {
-//   return Movie.find()
-//     .populate('email')
-//     .then((moviesArray) => {
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
-// app.use((req, res, next) => {
-//   return Book.find()
-//     .populate('email')
-//     .then((booksArray) => {
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
-// app.use((req, res, next) => {
-//   return Performance.find()
-//     .populate('email')
-//     .then((performancesArray) => {
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
 
 const mongoose = require('mongoose');
 mongoose

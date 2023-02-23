@@ -14,10 +14,6 @@ export function monthData(month) {
   };
 }
 export async function dateData(date) {
-  // const request = await axios
-  //   .post('/api/date', { date })
-  //   .then((response) => response.data);
-  // console.log(request);
   return {
     type: DATE,
     payload: date,
