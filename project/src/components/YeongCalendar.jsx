@@ -1,5 +1,6 @@
 /* eslint-disable no-sequences */
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './YeongCalendar.css';
@@ -28,33 +29,11 @@ export default function YeongCalendar(props) {
   const handleBookClose = () => setSelectBook(null);
   const [selectMovie, setSelectMovie] = useState(null);
   const handleMovieClose = () => setSelectMovie(null);
+  const navigate = useNavigate();
+
   const [marks, setMarks] = useState([]);
   const [markData, setMarkData] = useState();
   // const [marks, setMarks] = useState(['2023년 02월 21일']);
-
-  // 클라이언트에서 marks 배열을 유지하기 위해서는, useState 훅을 이용하여 marks 배열을 상태값으로 유지
-  // useEffect(() => {
-  //   axios.get('/data').then((response) => {});
-  // }, []);
-  // axios({ method: 'get', url: 'axiosurl.fromDBperfo', timeout: 5000 })
-  //   .then((response) => {
-  //     const data = response.data.data;
-  //     const marks = response.data.marks;
-  //     setData(data);
-  //     setMarks(marks);
-  //   })
-  //   .catch((error) => {
-  //     if (error.response) {
-  //       console.log(error.response.data);
-  //       console.log(error.response.status);
-  //       console.log(error.response.headers);
-  //     } else if (error.request) {
-  //       console.log(error.request);
-  //     } else {
-  //       console.log('Error', error.message);
-  //     }
-  //     console.log(error.config);
-  //   });
 
   // // 하이라이트 표시를 위한 배열
   const fromDBdate = () => {};
@@ -81,10 +60,10 @@ export default function YeongCalendar(props) {
     });
   };
 
-  const allReview = () => {
-    alert(data[2][0].review);
-    console.log(data[2][0]);
-  };
+  // const allReview = () => {
+  //   alert(data[2][0].review);
+  //   console.log(data[2][0]);
+  // };
   //그치만 alert로 띄우면 삭제가 안되니까 다른 방식으로 해야한다.
   //지금은 각 값이 들어오는지만 확인을 하였다. 몇 번째 배열의 값을 누를 지 모르기때문에 그에 따라 값을 가져와야함.
   //서버에서는 데이터가 있는 경우에는 해당 데이터를 JSON 형태로 응답하고, 데이터가 없는 경우에는 빈 JSON 객체 {}를 응답
@@ -120,15 +99,47 @@ export default function YeongCalendar(props) {
     }
   }, [user]);
 
-  const deletePerfo = (e) => {
+  const deleteLog = (e, category) => {
     console.log(e);
+    console.log('category', category);
     axios({
       method: 'delete',
       url: axiosurl.DBdelete,
-      params: { _id: e },
+      params: { _id: e, category: category },
     })
       .then((response) => {
         console.log('성공');
+        setSelectPerformance(null);
+        setSelectBook(null);
+        setSelectMovie(null);
+        console.log('data', data);
+        if (category === '공연') {
+          // data[0]
+          const updatedData = [
+            data[0].filter((el) => el._id !== e._id),
+            data[1],
+            data[2],
+          ];
+          setData(updatedData);
+        } else if (category === '책') {
+          // data[1]
+          const updatedData = [
+            data[0],
+            data[1].filter((el) => el._id !== e._id),
+            data[2],
+          ];
+          setData(updatedData);
+        } else if (category === '영화') {
+          // data[2]
+          const updatedData = [
+            data[0],
+            data[1],
+            data[2].filter((el) => el._id !== e._id),
+          ];
+          setData(updatedData);
+        }
+
+        //작업진행하기(삭제)모달창닫으삼
       })
       .catch(() => {
         console.log('실패');
@@ -150,18 +161,18 @@ export default function YeongCalendar(props) {
           // console.log('tempData', tempData);
           if (tempData) {
             temp += 'highlight ';
-            if (markData[tempData].book) {
-              // console.log('mark book');
-              temp += 'highlightBook ';
-            }
-            if (markData[tempData].movie) {
-              // console.log('mark movie');
-              temp += 'highlightMovie ';
-            }
-            if (markData[tempData].perfo) {
-              // console.log('mark perfo');
-              temp += 'highlightPerfo ';
-            }
+            // if (markData[tempData].book) {
+            //   // console.log('mark book');
+            //   temp += 'highlightBook ';
+            // }
+            // if (markData[tempData].movie) {
+            //   // console.log('mark movie');
+            //   temp += 'highlightMovie ';
+            // }
+            // if (markData[tempData].perfo) {
+            //   // console.log('mark perfo');
+            //   temp += 'highlightPerfo ';
+            // }
             return temp;
             // return 'highlight';
           }
@@ -243,7 +254,7 @@ export default function YeongCalendar(props) {
                     : ''
                   : ''}
                 <br />
-                🪩 극장 :
+                🎪 극장 :
                 {selectPerformance !== null
                   ? selectPerformance.hall !== null
                     ? selectPerformance.hall
@@ -265,17 +276,16 @@ export default function YeongCalendar(props) {
                   : ''}
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handlePerformanceClose}>
-                  Close
-                </Button>
-
                 <Button
                   variant="primary"
                   onClick={() => {
-                    deletePerfo(selectPerformance);
+                    deleteLog(selectPerformance, '공연');
                   }}
                 >
                   delete
+                </Button>
+                <Button variant="secondary" onClick={handlePerformanceClose}>
+                  Close
                 </Button>
               </Modal.Footer>
             </Modal>
@@ -339,6 +349,14 @@ export default function YeongCalendar(props) {
                   : ''}
               </Modal.Body>
               <Modal.Footer>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    deleteLog(selectBook, '책');
+                  }}
+                >
+                  delete
+                </Button>
                 <Button variant="secondary" onClick={handleBookClose}>
                   Close
                 </Button>
@@ -404,6 +422,14 @@ export default function YeongCalendar(props) {
                   : ''}
               </Modal.Body>
               <Modal.Footer>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    deleteLog(selectMovie, '영화');
+                  }}
+                >
+                  delete
+                </Button>
                 <Button variant="secondary" onClick={handleMovieClose}>
                   Close
                 </Button>
@@ -426,6 +452,7 @@ export default function YeongCalendar(props) {
                     >
                       상세보기
                     </Button>
+                    <hr style={{ marginTop: '30px' }} />
                   </div>
                 );
               })
