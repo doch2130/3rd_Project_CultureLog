@@ -126,8 +126,8 @@
   .highlight {
     width: 5px;
     border-radius: 15px;
-    border-color: #2f4c63;
-    background: #2f4c63;
+    border-color: #cce9b8;
+    background: #cce9b8;
   }
   .highlightBook {
     width: 5px;
@@ -153,7 +153,7 @@
     width: 8px;
     /* background-color: #f87171; */
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     margin-left: 1px;
   }
   .dotBook {
