@@ -14,11 +14,11 @@ const Nav = styled.nav`
   text-align: center;
   li {
     list-style: none;
-    height: 70px;
+    height: 80px;
   }
   p {
     color: '#b1bd96';
-    margin-top: 20px;
+    margin-top: 30px;
   }
 `;
 

@@ -17,17 +17,23 @@ import ChartPerson from './ChartPerson';
 
 const P = styled.p`
   display: flex;
-  font-size: 13.9px;
-  margin-top: 50px;
+  font-size: 16px;
+  margin-top: 80px;
   color: #3c5087;
   text-align: center;
   justify-content: center;
-  margin-bottom: 550px;
+  margin-bottom: 345px;
   @media screen and (max-width: 880px) {
-    overflow: scroll;
-    height: 250px;
+    height: 300px;
     display: flex;
-    margin-bottom: 400px;
+    margin-bottom: 300px;
+  }
+`;
+const Div8 = styled.div`
+  @media screen and (max-width: 900px) {
+    display: flex;
+    margin-left: -170px;
+    font-size: x-small;
   }
 `;
 
@@ -96,14 +102,17 @@ function Home() {
                     // justifyContent: 'center',
                   }}
                 >
-                  <ReactTypingEffect
-                    text={['고스란히 기록하는 나의 문화생활']}
-                    style={{
-                      backgroundColor: '#FFC6C3	',
-                      fontSize: '33px',
-                      fontWeight: '600',
-                    }}
-                  />
+                  <Div8>
+                    <ReactTypingEffect
+                      text={['고스란히 기록하는 나의 문화생활']}
+                      style={{
+                        backgroundColor: '#e1e0c8	',
+                        fontSize: '25px',
+                        fontWeight: '500',
+                        marginLeft: '250px',
+                      }}
+                    />{' '}
+                  </Div8>
                   <P>
                     모든 것이 바쁘게 흘러가는 요즘, 문화생활까지 덧없이 자연스레
                     지나쳐버리게 되는 날이 많아집니다. <br /> CultureLog는 내가
@@ -115,21 +124,28 @@ function Home() {
                     남길 수 있는 작성창으로 이동합니다.
                   </P>
                 </Col>
-
-                <hr />
-
                 {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
-                <ChartPerson
-                  movie={movie}
-                  book={book}
-                  perfo={perfo}
-                  Allmovie={Allmovie}
-                  Allbook={Allbook}
-                  Allperfo={Allperfo}
-                />
-                <Col xs={12} style={{ height: '70%', paddingTop: '10px' }}>
+                <Col xs={12}>
+                  <ChartPerson
+                    movie={movie}
+                    book={book}
+                    perfo={perfo}
+                    Allmovie={Allmovie}
+                    Allbook={Allbook}
+                    Allperfo={Allperfo}
+                  />
+                </Col>
+                <br />
+                <Col
+                  xs={12}
+                  style={{
+                    height: '70%',
+                    paddingTop: '10px',
+                    marginLeft: '50px',
+                  }}
+                >
                   <div className="recordYear">
-                    <div className="recordYearTitle">올해의 기록</div>
+                    <div className="recordYearTitle">올해의 기록 </div>
                     <div className="recordYearSubTitle">
                       올해 나는 얼마나 채웠을까?
                     </div>
@@ -158,7 +174,7 @@ function Home() {
                 </Col>
               </Row>
             </Col>
-          </Row>
+          </Row>{' '}
         </Col>
       </Row>
     </Container>

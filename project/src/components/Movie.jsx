@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Auth from '../../src/hoc/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import examimg from '../movie.jpeg';
+import examimg from '../movie.png';
 import './Movie.css';
 import { callMovieAPI } from '../actions/logdata_action';
 import { dateData } from '../actions/date_action';
@@ -163,6 +163,7 @@ function Movie(props) {
 const Div6 = styled.div`
   margin: auto;
   margin-top: 70px;
+  margin-bottom: 70px;
   height: 1200px;
   width: 1300px;
   padding: 180px;
@@ -170,7 +171,7 @@ const Div6 = styled.div`
   display: flex;
   background-color: #d0d6c3;
   border-radius: 50px;
-
+  box-shadow: rgba(223, 231, 136, 0.56) 0px 22px 70px 4px;
   @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;
@@ -218,10 +219,10 @@ const RegisterBtn = styled.button`
   }
 `;
 const SearchBtn = styled.button`
-  width: 80px;
+  width: 100px;
   height: 50px;
-  margin-top: 0px;
-  margin-left: 600px;
+  margin-top: -46px;
+  margin-left: 490px;
   text-align: center;
   box-sizing: border-box;
   border: 2px solid white;
@@ -246,12 +247,12 @@ const SearchBtn = styled.button`
   }
   @media screen and (max-width: 700px) {
     flex-direction: column;
-    margin-top: 60px;
-    margin-left: -10px;
+    margin-top: -61px;
+    margin-left: 150px;
     align-items: center;
-    width: 200px;
+    width: 80px;
     display: flex;
-    padding-top: 11px;
+    padding-top: 16px;
   }
 `;
 const Div7 = styled.div`

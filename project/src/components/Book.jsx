@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Auth from '../../src/hoc/auth';
 import styled from 'styled-components';
 import Star from './Star';
-import examImg from '../book.jpeg';
+import examImg from '../book.png';
 import { callBookAPI } from '../actions/logdata_action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -162,6 +162,7 @@ function Book() {
 const Div6 = styled.div`
   margin: auto;
   margin-top: 70px;
+  margin-bottom: 70px;
   height: 1200px;
   width: 1300px;
   padding: 180px;
@@ -169,7 +170,7 @@ const Div6 = styled.div`
   display: flex;
   background-color: #d0d6c3;
   border-radius: 50px;
-
+  box-shadow: rgba(223, 231, 136, 0.56) 0px 22px 70px 4px;
   @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;

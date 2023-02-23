@@ -17,6 +17,17 @@ import { Toast } from 'react-bootstrap';
 
 const Div5 = styled.div`
   margin-left: 10px;
+  margin-top: 100px;
+`;
+
+const Div7 = styled.div`
+  // margin-right: 70px;
+  margin-top: -40px;
+  text-align: right;
+  display: flex-end;
+  p {
+    margin-right: 20px;
+  }
 `;
 
 export default function YeongCalendar(props) {
@@ -211,21 +222,26 @@ export default function YeongCalendar(props) {
         <Div5>
           <h4
             style={{
-              backgroundColor: '    #96C7ED',
-              borderRadius: '20px',
+              backgroundColor: '    #bbd2e3',
               width: '190px',
               height: '40px',
               textAlign: 'center',
               justifyContent: 'center',
               paddingTop: '5px',
+              fontWeight: '600',
             }}
           >
             {' '}
             그 날의 기록
-          </h4>
+          </h4>{' '}
+          <Div7>
+            <p className="dot dotBook"> 　책 </p>
+            <p className="dot dotMovie"> 　영화 </p>
+            <p className="dot dotPerfo"> 　공연 </p>
+          </Div7>
           <h2
             style={{
-              backgroundColor: '#FFC6C3',
+              backgroundColor: 'rgb(241, 188, 188)',
               width: '190px',
               fontSize: '20px',
               borderRadius: '20px',
@@ -252,7 +268,8 @@ export default function YeongCalendar(props) {
                   ? selectPerformance.title !== null
                     ? selectPerformance.title
                     : ''
-                  : ''}
+                  : ''}{' '}
+                <br />
                 <br />
                 🎪 극장 :
                 {selectPerformance !== null
@@ -261,13 +278,14 @@ export default function YeongCalendar(props) {
                     : ''
                   : ''}
                 <br />
+                <br />
                 🎤 배우 :
                 {selectPerformance !== null
                   ? selectPerformance.mainroll !== null
                     ? selectPerformance.mainroll
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 💭 후기 :
                 {selectPerformance !== null
                   ? selectPerformance.review !== null
@@ -277,15 +295,24 @@ export default function YeongCalendar(props) {
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                  variant="primary"
+                  style={{
+                    backgroundColor: 'rgb(171, 131, 131)',
+                    borderColor: 'white',
+                  }}
                   onClick={() => {
                     deleteLog(selectPerformance, '공연');
                   }}
                 >
-                  delete
+                  기록 삭제
                 </Button>
-                <Button variant="secondary" onClick={handlePerformanceClose}>
-                  Close
+                <Button
+                  style={{
+                    backgroundColor: 'rgb(204, 193, 193)',
+                    borderColor: 'white',
+                  }}
+                  onClick={handlePerformanceClose}
+                >
+                  창닫기
                 </Button>
               </Modal.Footer>
             </Modal>
@@ -299,7 +326,13 @@ export default function YeongCalendar(props) {
                     <br /> 극장 : {el.hall}
                     {/* <Button variant="primary" onClick={handleShow}> */}
                     <Button
-                      variant="primary"
+                      style={{
+                        marginLeft: 'auto',
+                        backgroundColor: 'rgb(204, 193, 193)',
+                        borderColor: 'white',
+                        display: 'inline-flex',
+                        float: 'right',
+                      }}
                       onClick={() => {
                         setSelectPerformance(el);
                       }}
@@ -326,21 +359,21 @@ export default function YeongCalendar(props) {
                     ? selectBook.title
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 📝 저자 :{' '}
                 {selectBook !== null
                   ? selectBook.author !== null
                     ? selectBook.author
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 📖 장르 :{' '}
                 {selectBook !== null
                   ? selectBook.genre !== null
                     ? selectBook.genre
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 💭 후기 :{' '}
                 {selectBook !== null
                   ? selectBook.review !== null
@@ -350,15 +383,24 @@ export default function YeongCalendar(props) {
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                  variant="primary"
+                  style={{
+                    backgroundColor: 'rgb(171, 131, 131)',
+                    borderColor: 'white',
+                  }}
                   onClick={() => {
                     deleteLog(selectBook, '책');
                   }}
                 >
-                  delete
+                  기록 삭제
                 </Button>
-                <Button variant="secondary" onClick={handleBookClose}>
-                  Close
+                <Button
+                  style={{
+                    backgroundColor: 'rgb(204, 193, 193)',
+                    borderColor: 'white',
+                  }}
+                  onClick={handleBookClose}
+                >
+                  창닫기
                 </Button>
                 {/* <Button variant="primary" onClick={handleClose}>Save Changes</Button> */}
               </Modal.Footer>
@@ -372,7 +414,13 @@ export default function YeongCalendar(props) {
                     <br />
                     저자: {el.author}
                     <Button
-                      variant="primary"
+                      style={{
+                        marginLeft: 'auto',
+                        backgroundColor: 'rgb(204, 193, 193)',
+                        borderColor: 'white',
+                        display: 'inline-flex',
+                        float: 'right',
+                      }}
                       onClick={() => {
                         setSelectBook(el);
                       }}
@@ -399,21 +447,21 @@ export default function YeongCalendar(props) {
                     ? selectMovie.title
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 🎬 감독 :{' '}
                 {selectMovie !== null
                   ? selectMovie.director !== null
                     ? selectMovie.director
                     : ''
                   : ''}
-                <br />
+                <br /> <br />
                 💃🏻 배우 :{' '}
                 {selectMovie !== null
                   ? selectMovie.actor !== null
                     ? selectMovie.actor
                     : ''
                   : ''}{' '}
-                <br />
+                <br /> <br />
                 💭 후기 :{' '}
                 {selectMovie !== null
                   ? selectMovie.review !== null
@@ -423,15 +471,24 @@ export default function YeongCalendar(props) {
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                  variant="primary"
+                  style={{
+                    backgroundColor: 'rgb(171, 131, 131)',
+                    borderColor: 'white',
+                  }}
                   onClick={() => {
                     deleteLog(selectMovie, '영화');
                   }}
                 >
-                  delete
+                  기록 삭제
                 </Button>
-                <Button variant="secondary" onClick={handleMovieClose}>
-                  Close
+                <Button
+                  style={{
+                    backgroundColor: 'rgb(204, 193, 193)',
+                    borderColor: 'white',
+                  }}
+                  onClick={handleMovieClose}
+                >
+                  창닫기
                 </Button>
                 {/* <Button variant="primary" onClick={handleMovieClose}>Save Changes</Button> */}
               </Modal.Footer>
@@ -444,8 +501,13 @@ export default function YeongCalendar(props) {
                     제목 : {el.title} <br />
                     감독 : {el.director}
                     <Button
-                      variant="primary"
-                      style={{ marginLeft: 'auto' }}
+                      style={{
+                        marginLeft: 'auto',
+                        backgroundColor: 'rgb(204, 193, 193)',
+                        borderColor: 'white',
+                        display: 'inline-flex',
+                        float: 'right',
+                      }}
                       onClick={() => {
                         setSelectMovie(el);
                       }}
