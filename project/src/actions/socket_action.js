@@ -7,6 +7,7 @@ import {
   SOCKET_LOGIN_UPDATE,
   SOCKET_ROOM_REFRESH_UPATE,
   SOCKET_PAGE_REFRESH,
+  SOCKET_ROOM_MANAGER_LEAVE,
 } from './types';
 
 export function socketInit(socket) {
@@ -70,5 +71,13 @@ export function socketPageRefresh(roomData, userData) {
   return {
     type: SOCKET_PAGE_REFRESH,
     payload: { roomData, userData },
+  };
+}
+
+export function socketManagerRoomLeave(roomId) {
+  // console.log('socketManagerRoomLeave', roomId);
+  return {
+    type: SOCKET_ROOM_MANAGER_LEAVE,
+    payload: roomId,
   };
 }

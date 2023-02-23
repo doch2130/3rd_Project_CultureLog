@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Row, Col, Offcanvas } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './ChatbotManager.css';
 import ChatbotRoom from './ChatbotRoom';
+import { socketManagerRoomLeave } from '../../actions/socket_action';
 
 export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   const roomList = useSelector((state) => state.socket.roomList);
   const message = useSelector((state) => state.socket.message);
+  const socket = useSelector((state) => state.socket.socket);
+  const dispatch = useDispatch();
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
+  const [roomExitData, setRoomExitData] = useState();
   // const [roomMessageCount, setRoomMessageCount] = useState([]);
 
   // useEffect(() => {
@@ -33,8 +37,54 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   //   setRoomMessageCount(temp);
   // }, []);
 
+  // 방에서 마우스 우클릭 시 설정
+  const roomMouseRightClick = (e, el) => {
+    // 방 나가기 위한 우클릭 클릭할 때 데이터 받아와서 저장
+    console.log('el', el);
+    setRoomExitData(el);
+    // 기본 메뉴 나오지 않게 설정
+    e.preventDefault();
+    const x = e.pageX - 100 + 'px'; // 현재 마우스의 X좌표
+    const y = e.pageY + 'px'; // 현재 마우스의 Y좌표
+    const roomMouseRightClickWrap = document.getElementById(
+      'roomMouseRightClickWrap'
+    )
+      ? document.getElementById('roomMouseRightClickWrap')
+      : 'notRoomMouseRightClickWrap';
+
+    if (roomMouseRightClickWrap !== 'notRoomMouseRightClickWrap') {
+      console.log('roomMouseRightClick', roomMouseRightClickWrap);
+      roomMouseRightClickWrap.style.display = 'flex';
+      roomMouseRightClickWrap.style.left = x;
+      roomMouseRightClickWrap.style.top = y;
+    }
+  };
+  // 다른 곳 클릭 시 사라지게 설정
+  document.addEventListener('click', function (e) {
+    // 방 마우스 우클릭 용 변수 설정
+    const roomMouseRightClickWrap = document.getElementById(
+      'roomMouseRightClickWrap'
+    )
+      ? document.getElementById('roomMouseRightClickWrap')
+      : 'notRoomMouseRightClickWrap';
+    if (roomMouseRightClickWrap !== 'notRoomMouseRightClickWrap') {
+      roomMouseRightClickWrap.style.display = 'none';
+    }
+  });
+
+  // 방 나가기
+  const roomExit = () => {
+    if (roomExitData) {
+      // 서버에 방 나가기 클릭 시 DB 데이터 삭제
+      socket.emit('leaveRoom', roomExitData.roomId);
+      // 리듀서에서 해당 방 정보 삭제
+      dispatch(socketManagerRoomLeave(roomExitData.roomId));
+    }
+  };
+
   return (
     <>
+      {/* 방 출력용 */}
       <Offcanvas
         show={selectRoom !== null}
         onHide={handleClose}
@@ -51,6 +101,20 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
           />
         </Offcanvas.Body>
       </Offcanvas>
+
+      {/* 마우스 오른쪽 이벤트 */}
+      <div
+        id="roomMouseRightClickWrap"
+        style={{
+          display: 'none',
+        }}
+      >
+        <ul type="none" style={{ margin: '0px', padding: '0px' }}>
+          <li style={{ cursor: 'pointer' }} onClick={() => roomExit()}>
+            방 나가기
+          </li>
+        </ul>
+      </div>
 
       {/* 채팅방 리스트 */}
       <Row className="chatRoomWindowAreaWrap">
@@ -72,6 +136,9 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
                 onClick={() => {
                   setSelectRoom(el);
                   // console.log('el', el);
+                }}
+                onContextMenu={(e) => {
+                  roomMouseRightClick(e, el);
                 }}
               >
                 <Col xs={12}>
