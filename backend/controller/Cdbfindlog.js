@@ -96,7 +96,20 @@ exports.DBAll = async (req, res) => {
 };
 
 exports.DBdelete = async (req, res) => {
-  Performance.deleteOne(req.query._id, function (err, result) {
-    res.status(200).send('성공');
-  });
+
+  console.log('DBdelete', req.query);
+  if (req.query.category === '공연') {
+    Performance.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  } else if (req.query.category === '책') {
+    Book.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  } else if (req.query.category === '영화') {
+    Movie.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  }
+
 };
