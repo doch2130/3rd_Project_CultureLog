@@ -19,21 +19,21 @@ export default function ChartPerson({
   const data = [
     {
       name: 'BOOK',
-      AllUser: Allbook.length,
-      User: book.length,
+      AllUser: Allbook,
+      User: book,
     },
     {
       name: 'MOVIE',
-      AllUser: Allmovie.length,
-      User: movie.length,
+      AllUser: Allmovie,
+      User: movie,
     },
     {
       name: 'PERFOMANCE',
-      AllUser: Allperfo.length,
-      User: perfo.length,
+      AllUser: Allperfo,
+      User: perfo,
     },
   ];
-
+  console.log(movie);
   return (
     <div>
       <LineChart
