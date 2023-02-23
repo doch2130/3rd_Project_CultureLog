@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import './ChatbotRoom.css';
-// import { socketMessageAdd } from '../../actions/socket_action';
 
 export default function ChatbotRoom({
   mySocketId,
@@ -11,8 +10,6 @@ export default function ChatbotRoom({
   message,
 }) {
   const socket = useSelector((state) => state.socket.socket);
-  // const messageRoom = useSelector((state) => state.socket.message[0][myRoomId]);
-  // const messageRoom = message[0][myRoomId];
 
   // 관리자가 방을 나갈 때 messageRoom의 데이터가 초기화가 되서
   // 밑의 코드에서 Error가 발생한다.
@@ -63,50 +60,6 @@ export default function ChatbotRoom({
       chatWindowAreaScroll.scrollTop = chatWindowAreaScroll.scrollHeight + 39;
     }, 5);
   }
-
-  // function messageRecive() {
-  //   // console.log('asdasdas');
-  //   socket.on('receiveMessage', (data) => {
-  //     console.log('qweqwe');
-  //     // console.log(data);
-  //     // if (data.socketId === mySocketId) {
-  //     const messageTempData = {
-  //       permission: userInfo.permission,
-  //       content: data.content,
-  //       time: data.time,
-  //     };
-  //     const messageLength = Object.keys(message).length;
-  //     console.log('messageLength', messageLength);
-  //     const newMessage = {
-  //       roomId: myRoomId,
-  //       messageLength: messageLength,
-  //       msg: messageTempData,
-  //       msg2: { [messageLength]: messageTempData },
-  //     };
-
-  //     dispatch(socketMessageAdd(newMessage));
-
-  //     // console.log('message', message);
-  //     // const newMessage = { [messageLength]: messageTempData };
-  //     // const temp = (message[messageLength] = newMessage);
-  //     // console.log('temp', temp);
-  //     // const newArray = [ ...message, newMessage ];
-  //     // dispatch(socketMessageAdd(newArray));
-
-  //     // const messageLength = Object.keys(messageData).length;
-  //     // const newMessage = { [messageLength]: messageTempData };
-  //     // const newArray = [...messageData, newMessage];
-  //     // // console.log('newMessage', newMessage);
-  //     // // console.log('Object.keys(messageData)', Object.keys(messageData));
-  //     // // console.log('messageLength', messageLength);
-  //     // // newMessage.push({ [messageLength]: messageTempData });
-  //     // // console.log('newMessage222', newMessage);
-  //     // // setMessageData(newMessage);
-  //     // setMessageData(newArray);
-  //     // console.log('newArray', newArray);
-  //     // }
-  //   });
-  // }
 
   useEffect(() => {
     // 처음 접속 시 채팅방 스크롤 아래로 내리기

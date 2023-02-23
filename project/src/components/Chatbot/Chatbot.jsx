@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  socketRooms,
   socketRoomsAdd,
   socketInitMessageAdd,
-  socketMessage,
   socketRoomsRefresh,
   socketMessageAdd,
   socketUserLogin,
@@ -56,15 +54,6 @@ export default function Chatbot() {
         })
       );
 
-      // dispatch(socketInitMessageAdd({ initSocketData, defaultMsgTime }));
-      // dispatch(socketInitMessageAdd({ initSocketData }));
-      // dispatch(
-      //   socketRoomsAdd({
-      //     roomId: initSocketData.roomId,
-      //     clientSocketId: initSocketData.socketId,
-      //     clientUserId: initSocketData.userId,
-      //   })
-      // );
       setMySocketId(initSocketData.socketId);
       setMyRoomId(initSocketData.roomId);
     });
