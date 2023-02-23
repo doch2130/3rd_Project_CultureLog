@@ -175,3 +175,16 @@ exports.socketUserLogin = async (userData, roomData) => {
 // 상대방이 메시지를 보냈을 때 해당 방의 메시지 총 카운트를 보내주기
 
 // 1번 관리자가 읽으면 1번 관리자 + 해당 방의 카운트를 업데이트 해주기
+
+exports.managerRoomLeave = async (roomId) => {
+  try {
+    // 관리자가 수동으로 방 나가기 클릭 시 실행
+    // roomID 값을 기준으로 데이터 삭제
+    // deleteMany 다수 데이터 삭제
+    await ChatRoom.deleteMany({ roomId: roomId });
+    await Chat.deleteMany({ roomId: roomId });
+    return true;
+  } catch (err) {
+    console.log('managerRoomLeave Delete Err', err);
+  }
+};

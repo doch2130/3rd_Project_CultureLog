@@ -7,6 +7,7 @@ import {
   SOCKET_LOGIN_UPDATE,
   SOCKET_ROOM_REFRESH_UPATE,
   SOCKET_PAGE_REFRESH,
+  SOCKET_ROOM_MANAGER_LEAVE,
 } from '../actions/types';
 
 const initState = {
@@ -197,6 +198,16 @@ export default function socket_reducer(state = initState, action) {
       } else {
         return { ...state };
       }
+    // 관리자가 방 나가기를 수동으로 진행한 경우
+    case SOCKET_ROOM_MANAGER_LEAVE:
+      // console.log('action.payload', action.payload);
+      const updateRoomList = state.roomList.filter(
+        (el) => el.roomId !== action.payload
+      );
+      return {
+        ...state,
+        roomList: updateRoomList,
+      };
     default:
       return state;
   }
