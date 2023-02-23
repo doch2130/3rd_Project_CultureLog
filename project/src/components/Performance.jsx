@@ -33,25 +33,32 @@ function Performance(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (logDate.current.value === 'Invalid date') {
+      alert('잘못된 접근입니다');
+      navigate('/');
+    }
     const cookies = new Cookies();
     if (cookies.get('x_auth') == null) {
       navigate('/');
     }
-  });
+  }, []);
   const onKeyPress = (e) => {
     // eslint-disable-next-line eqeqeq
     if (e.key == 'Enter') search();
   };
 
   const search = async () => {
-    const result = await callPerfoAPI({
-      title: perfoSearch.current.value,
-    });
-    console.log('component', result);
-    setOpen(true);
-    dispatch(result);
-    setSearchClass('searchBoard');
-    perfoSearch.current.value = '';
+    if (perfoSearch.current.value === '') alert('검색어를 입력하세요');
+    else {
+      const result = await callPerfoAPI({
+        title: perfoSearch.current.value,
+      });
+      console.log('component', result);
+      setOpen(true);
+      dispatch(result);
+      setSearchClass('searchBoard');
+      perfoSearch.current.value = '';
+    }
     // dispatch를 실행할 때는 action을 보내야 한다. action은 객체형태 즉, {} 형태여야 한다.
   };
   function titleconfirm(e) {
@@ -63,22 +70,36 @@ function Performance(props) {
   }
   const user = useSelector((state) => state.user.loginSuccess);
   const submit = () => {
-    axios({
-      method: 'post',
-      url: axiosurl.toDBperfo,
-      data: {
-        email: user.email,
-        date: logDate.current.value,
-        title: titleNyear.current.value,
-        hall: hall.current.value,
-        mainroll: mainroll.current.value,
-        review: review.current.value,
-      },
-    }).then(() => {
-      //console.log('todb', res.data);
-      console.log(alert('게시물이 등록되었습니다'));
-      navigate('/home');
-    });
+    if (
+      titleNyear.current.value === '' ||
+      mainroll.current.value === '' ||
+      review.current.value === ''
+    )
+      alert('정보를 모두 입력하세요');
+    else {
+      if (
+        window.confirm(
+          '한번 등록된 로그는 수정할 수 없습니다. 이대로 올릴까요?'
+        ) === true
+      ) {
+        axios({
+          method: 'post',
+          url: axiosurl.toDBperfo,
+          data: {
+            email: user.email,
+            date: logDate.current.value,
+            title: titleNyear.current.value,
+            hall: hall.current.value,
+            mainroll: mainroll.current.value,
+            review: review.current.value,
+          },
+        }).then(() => {
+          //console.log('todb', res.data);
+          console.log(alert('게시물이 등록되었습니다'));
+          navigate('/home');
+        });
+      }
+    }
   };
   //const [value, setValue] = useState();
   //<Calendar onChange={() => setValue} value={value} />

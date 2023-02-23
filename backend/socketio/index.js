@@ -142,6 +142,13 @@ module.exports = (socketIO) => {
     // 페이지 새로고침 시 roomId 요청 (관리자 전용)
     socket.emit('pageRefreshRoomIdReceive', roomUid);
 
+    // 관리자 방 나가기 클릭
+    socket.on('leaveRoom', (roomIdData) => {
+      // console.log('roomIdData', roomIdData);
+      socket.leave(roomIdData);
+      dbChat.managerRoomLeave(roomIdData);
+    });
+
     // 사용자 연결 종료
     socket.on('disconnect', () => {
       console.log(socket.id + ' Exit');

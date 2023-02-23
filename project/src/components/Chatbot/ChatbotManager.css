@@ -88,3 +88,21 @@
 .roomEmptyMessage {
   text-align: center;
 }
+
+#roomMouseRightClickWrap {
+  position: fixed;
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+  background-color: #d3d3d3;
+  font-size: 0.85rem;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  font-weight: 700;
+}
+
+#roomMouseRightClickWrap > ul > li:hover {
+  color: white; 
+  background-color: #6e6e6e;
+}

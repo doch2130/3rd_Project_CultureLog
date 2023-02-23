@@ -28,7 +28,9 @@ export const SOCKET_ROOM_ADD = 'socket/rooms/add';
 export const SOCKET_ROOM_REFRESH = 'socket/rooms/refresh';
 // 로그인 시 SOCKET쪽의 userID 업데이트
 export const SOCKET_LOGIN_UPDATE = 'socket/user/login';
-// 방 새로고침 - 테스트(이걸로 변경 예정)
+// 방 새로고침
 export const SOCKET_ROOM_REFRESH_UPATE = 'socket/rooms/refresh/update';
 // 페이지 새로고침 후 관리자 방 출력 안되게 설정
 export const SOCKET_PAGE_REFRESH = 'socket/page/refresh';
+// 관리자 방 나가기
+export const SOCKET_ROOM_MANAGER_LEAVE = 'socket/room/manager/leave';
