@@ -1,13 +1,10 @@
 import {
   SOCKET_INIT,
-  SOCKET_ROOMS,
-  SOCKET_MESSAGE,
   SOCKET_ROOM_ADD,
   SOCKET_INIT_MESSAGE_ADD,
   SOCKET_MESSAGE_ADD,
   SOCKET_ROOM_REFRESH,
   SOCKET_LOGIN_UPDATE,
-  // SOCKET_LOGOUT,
   SOCKET_ROOM_REFRESH_UPATE,
   SOCKET_PAGE_REFRESH,
 } from './types';
@@ -31,25 +28,6 @@ export function socketRoomsRefreshUpdate(roomData) {
   };
 }
 
-export function socketRooms(rooms) {
-  return {
-    type: SOCKET_ROOMS,
-    payload: rooms,
-  };
-}
-
-export function socketMessage(roomId, msg) {
-  const tempMsg = [];
-  for (let i = 0; i < msg.length; i++) {
-    tempMsg.push(msg[i]);
-  }
-  return {
-    type: SOCKET_MESSAGE,
-    payload: roomId,
-    payloadMsg: tempMsg,
-  };
-}
-
 export function socketInitMessageAdd(msg) {
   return {
     type: SOCKET_INIT_MESSAGE_ADD,
@@ -70,14 +48,6 @@ export function socketMessageAdd(msg) {
     payload: msg,
   };
 }
-
-// 필요 없을 것 같음 (보류)
-// export function socketLogout(dieSocketId) {
-//   return {
-//     type: SOCKET_LOGOUT,
-//     payload: dieSocketId,
-//   };
-// }
 
 export function socketRoomsRefresh() {
   return {

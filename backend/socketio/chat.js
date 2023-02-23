@@ -1,4 +1,3 @@
-// const mongoose = require('mongoose');
 const { ChatRoom, Chat } = require('../models/Chat');
 
 // 처음 접속 시 방 정보 저장
@@ -138,7 +137,6 @@ exports.socketUserLogin = async (userData, roomData) => {
     console.log('socketUserLogin Update Err', err);
   }
 };
-
 
 // 특정 컬렉션의 데이터 전부 삭제
 // db.chatrooms.deleteMany({});
