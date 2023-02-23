@@ -115,31 +115,28 @@ export default function YeongCalendar(props) {
         console.log('data', data);
         if (category === '공연') {
           // data[0]
-          const updatePerfo = data[0].filter((el) => el._id !== e._id);
-          console.log('updatePerfo', updatePerfo);
-          setData([
-            (data[0] = updatePerfo),
-            (data[1] = data[1]),
-            (data[2] = data[2]),
-          ]);
+          const updatedData = [
+            data[0].filter((el) => el._id !== e._id),
+            data[1],
+            data[2],
+          ];
+          setData(updatedData);
         } else if (category === '책') {
           // data[1]
-          const updateBook = data[1].filter((el) => el._id !== e._id);
-          console.log('updateBook', updateBook);
-          setData([
-            (data[0] = data[0]),
-            (data[1] = updateBook),
-            (data[2] = data[2]),
-          ]);
+          const updatedData = [
+            data[0],
+            data[1].filter((el) => el._id !== e._id),
+            data[2],
+          ];
+          setData(updatedData);
         } else if (category === '영화') {
           // data[2]
-          const updateMovie = data[2].filter((el) => el._id !== e._id);
-          console.log('updateMovie', updateMovie);
-          setData([
-            (data[0] = data[0]),
-            (data[1] = data[1]),
-            (data[2] = updateMovie),
-          ]);
+          const updatedData = [
+            data[0],
+            data[1],
+            data[2].filter((el) => el._id !== e._id),
+          ];
+          setData(updatedData);
         }
 
         //작업진행하기(삭제)모달창닫으삼
