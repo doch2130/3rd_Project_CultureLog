@@ -10,4 +10,5 @@ module.exports = {
   DBAll: 'http://localhost:5000/DBAll',
   DBdelete: 'http://localhost:5000/DBdelete',
   logOfyear: 'http://localhost:5000/logOfyear',
+  chatMessageAlarm: 'http://localhost:5000/chatMessageAlarm',
 };

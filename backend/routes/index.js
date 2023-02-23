@@ -2,6 +2,7 @@ const express = require('express');
 const controller = require('../controller/Clogdata');
 const controller2 = require('../controller/Cdbregister');
 const controller3 = require('../controller/Cdbfindlog');
+const controller4 = require('../socketio/chat');
 const router = express.Router();
 
 router.get('/movieAPI', controller.Naver);
@@ -18,4 +19,6 @@ router.get('/logOfyear', controller3.logOfyear);
 router.get('/DBAll', controller3.DBAll);
 router.delete('/DBdelete', controller3.DBdelete);
 
+// router.get('/chatMessageAlarm', controller4.socketMessageAlarmCheck);
+// router.patch('/chatMessageAlarm', controller4.socketMessageAlarmCheck);
 module.exports = router;

@@ -81,6 +81,7 @@ const chatMessageCountSchema = mongoose.Schema({
   connectionTime: {
     type: String,
     required: true,
+    default: Date.now,
   },
   createdAt: {
     type: Date,

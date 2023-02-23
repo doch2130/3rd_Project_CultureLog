@@ -12,6 +12,8 @@ import {
 import ChatbotManager from './ChatbotManager';
 import ChatbotRoom from './ChatbotRoom';
 import './Chatbot.css';
+import axios from 'axios';
+import axiosurl from '../../axiosurl';
 
 export default function Chatbot() {
   const date = new Date();
@@ -26,6 +28,8 @@ export default function Chatbot() {
 
   const [mySocketId, setMySocketId] = useState('');
   const [myRoomId, setMyRoomId] = useState('');
+  const [roomMessageCount, setRoomMessageCount] = useState([]);
+  const [totalRoomMessageCount, setTotalRoomMessageCount] = useState([]);
 
   const messageRoomDefaultData = {
     0: {
@@ -42,8 +46,6 @@ export default function Chatbot() {
   useEffect(() => {
     socket.on('welcome', (initSocketData) => {
       // console.log('initSocketData', initSocketData);
-      // const defaultMsgTime = date.toLocaleDateString() + ' ' + date.toString().slice(16, 24);
-
       // console.log('userInfo', userInfo);
       dispatch(socketInitMessageAdd({ initSocketData }));
       dispatch(
@@ -61,22 +63,13 @@ export default function Chatbot() {
     socket.on('getRooms', (roomsData) => {
       // 따로 설정을 안해도 socketInitMessageAdd() 함수가 먼저 실행이 되지만,
       // 혹시 모를 안전을 위해서 1초 후 실행되도록 설정
-
-      console.log('roomsData', roomsData);
-
-      // console.log('getRooms', roomsData);
+      // console.log('roomsData', roomsData);
       for (let i = 0; i < roomsData.length; i++) {
         // console.log('roomsData[i].msg', roomsData[i].msg);
         dispatch(socketRoomsRefreshUpdate(roomsData[i]));
       }
-
-      // setTimeout(() => {
-      //   for (let i = 0; i < roomsData.length; i++) {
-      //     // console.log('oomsData[i].msg', roomsData[i].msg);
-      //     dispatch(socketMessage(roomsData[i].roomId, roomsData[i].msg));
-      //   }
-      // }, 3000);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 메시지 받기
@@ -85,7 +78,8 @@ export default function Chatbot() {
       // 방 존재 여부 체크용 변수
       let isExistRoom = false;
       // 방 있는지 검사
-      // roomList.map((el) => {
+      // map 함수에서 forEach 함수로 변경
+      // map에서는 위의 코드에서는 return문이 필요한데 굳이 필요가 없다고 함
       roomList.forEach((el) => {
         // 방이 있으면, 메시지 전송 함수 실행 (일반, 관리자)
         if (el.roomId === data.roomId) {
@@ -102,7 +96,6 @@ export default function Chatbot() {
           // console.log('messageLength', messageLength);
           const newMessage = {
             roomId: data.roomId,
-            // roomId: myRoomId,
             messageLength: messageLength,
             msg: messageTempData,
           };
@@ -110,10 +103,7 @@ export default function Chatbot() {
           return dispatch(socketMessageAdd(newMessage));
         }
       });
-
-      // map 함수에서 forEach 함수로 변경
-      // map에서는 위의 코드에서는 return문이 필요한데 굳이 필요가 없다고 함
-      // map 함수에서 방이 있으면 True, 없으면 False
+      // forEacth 함수에서 방이 있으면 True, 없으면 False
       // False인 경우 실행
       if (!isExistRoom) {
         // 방이 없는 경우 관리자인 경우만 실행
@@ -131,14 +121,12 @@ export default function Chatbot() {
             time: data.time,
             socketId: data.socketId,
             userId: data.userId,
-            // roomId: data.roomId,
           };
 
+          // 방이 없으면 기본 length는 0을 가지게 되므로 0 고정 값 설정
           const messageLength = 0;
-          // console.log('messageLength', messageLength);
           const newMessage = {
             roomId: data.roomId,
-            // roomId: myRoomId,
             messageLength: messageLength,
             msg: messageTempData,
           };
@@ -191,7 +179,6 @@ export default function Chatbot() {
             // console.log('messageLength', messageLength);
             const newMessage = {
               roomId: data.roomId,
-              // roomId: myRoomId,
               messageLength: messageLength,
               msg: messageTempData,
             };
@@ -211,10 +198,65 @@ export default function Chatbot() {
 
   // 관리자 - 방 - 새로고침 (DB정보 불러오기)
   const roomRefrsh = () => {
-    socket.emit('getRoomsList', myRoomId);
-    dispatch(socketRoomsRefresh());
-    alert('새로고침');
+    const chooseMsg = window.confirm('새로고침으로 방 목록을 갱신하겠습니까?');
+    if (chooseMsg) {
+      socket.emit('getRoomsList', myRoomId);
+      dispatch(socketRoomsRefresh());
+      alert('방 목록을 갱신하였습니다.');
+    }
   };
+
+  // useEffect(() => {
+  //   // 관리자 전용 방 알림 (처음 실행 시 기본 값 설정)
+  //   if (userInfo.permission === 'manager') {
+  //     // console.log('myRoomId', myRoomId);
+  //     // console.log('mySocketId', mySocketId);
+  //     // console.log('roomList', roomList);
+  //     // console.log('message[0]', message[0]);
+  //     // console.log('object.key', Object.keys(message[0]));
+  //     // console.log('user', userInfo);
+
+  //     const messageRoomList = message[0] ? Object.keys(message[0]) : '';
+  //     // console.log('messageRoomList', messageRoomList);
+  //     let tempMessageCount = [];
+  //     for (let i = 0; i < messageRoomList.length; i++) {
+  //       const data = {
+  //         roomId: messageRoomList[i],
+  //         userId: userInfo.email,
+  //         checkMessageCount: 0,
+  //         // 기본 값은 0이지만, 서버 메시지 1개가 있어서 1로 변경 후 설정해봄
+  //         // checkMessageCount: 1,
+  //       };
+  //       tempMessageCount.push(data);
+  //     }
+  //     console.log('temp', tempMessageCount);
+  //     setRoomMessageCount(tempMessageCount);
+
+  //     if (tempMessageCount) {
+  //       // console.log('axios userInfo', userInfo);
+  //       console.log('roomMessageCount', roomMessageCount);
+  //       axios({
+  //         method: 'get',
+  //         url: axiosurl.chatMessageAlarm,
+  //         // data: {
+  //         //   user: userInfo.email,
+  //         //   roomIdList: tempMessageCount
+  //         // },
+  //         // data: roomMessageCount,
+  //         params: tempMessageCount,
+  //       }).then((response) => {
+  //         console.log('response', response);
+  //         // setTotalRoomMessageCount();
+  //       });
+  //     }
+  //     // console.log('message 0', Object.keys(message[0])[0]);
+  //     // console.log('message length', messageRoomList[0].length);
+  //     // console.log('message length', Object.keys(messageRoomList[0]));
+  //     // console.log('asdasd', message[0][messageRoomList[0]]);
+  //     // 메시지 개수 구하는 방법
+  //     // console.log('asdasd', Object.keys(message[0][messageRoomList[0]]).length);
+  //   }
+  // }, [message, userInfo]);
 
   return (
     <div>
