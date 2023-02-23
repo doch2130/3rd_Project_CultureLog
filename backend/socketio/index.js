@@ -107,6 +107,9 @@ module.exports = (socketIO) => {
 
     socket.on('message', (data) => {
       console.log('message', data);
+      if (data.content === '') {
+        data.content === ' ';
+      }
       const messageData = {
         ChatRoom_id: '',
         roomId: data.roomId,
