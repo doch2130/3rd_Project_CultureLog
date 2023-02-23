@@ -97,7 +97,7 @@
   
   /*오늘의 날짜*/
   .react-calendar__tile--now {
-    background: #f5cbb9;
+    background: #f2d6ca;
     border-radius: 19px;
   }
   .react-calendar__tile--now:enabled:hover,
