@@ -23,9 +23,12 @@ function App() {
   // 이후 axios 요청 시 기본 url은 빼고 작성하면 된다.
   // axios.defaults.baseURL = 'http://127.0.0.1:5500';
   // true로 설정해야 Server와 Cookie를 주고 받을 수 있다.
+  // console.log('process.env.REACT_APP_BACK', process.env.REACT_APP_BACK);
+  // console.log('process.env.REACT_APP_BACK_SOCKET',process.env.REACT_APP_BACK_SOCKET);
+  // console.log('process.env.REACT_APP_BACK_AXIOS',process.env.REACT_APP_BACK_AXIOS);
   axios.defaults.withCredentials = true;
   const dispatch = useDispatch();
-  const socket = io.connect(`${process.env.REACT_APP_BACK}`);
+  const socket = io.connect(`${process.env.REACT_APP_BACK_SOCKET}`);
   dispatch(socketInit(socket));
 
   return (
