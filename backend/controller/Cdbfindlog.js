@@ -99,13 +99,17 @@ exports.DBAll = async (req, res) => {
 
 exports.DBdelete = async (req, res) => {
   console.log('DBdelete', req.query);
-  Performance.deleteOne(req.query._id, function (err, result) {
-    res.status(200).send('성공');
-  });
-  // Movie.deleteOne(req.body._id, function (err, result) {
-  //   res.status(200).send('성공');
-  // });
-  // Book.deleteOne(req.body._id, function (err, result) {
-  //   res.status(200).send('성공');
-  // });
+  if (req.query.category === '공연') {
+    Performance.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  } else if (req.query.category === '책') {
+    Book.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  } else if (req.query.category === '영화') {
+    Movie.deleteOne(req.query._id, function (err, result) {
+      res.status(200).send('성공');
+    });
+  }
 };
