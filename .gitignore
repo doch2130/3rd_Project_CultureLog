@@ -4,3 +4,4 @@
 **/.env
 **/dev.js
 **/apikeys.js
+**/.env.production
