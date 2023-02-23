@@ -85,25 +85,44 @@ exports.Kopis = (req, res) => {
     method: 'get',
     url: `http://www.kopis.or.kr/openApi/restful/pblprfr?service=${SeriveKey}&stdate=${stdate}&eddate=${eddate}&cpage=1&rows=10&shprfnm=${req.query.title}`,
   }).then((result) => {
-    console.log(`result.data => ${result.data}`);
-    const xmlToJson = JSON.parse(
-      parseXML.xml2json(result.data, {
-        compact: true,
-        spaces: 2,
-      })
-    ).dbs.db;
-    let perfoClientTitle = xmlToJson.map((el) => {
-      return {
-        title: el.prfnm._text,
-        startDate: el.prfpdfrom._text,
-        endDate: el.prfpdto._text,
-        hall: el.fcltynm._text,
-        img: el.poster._text,
-        genre: el.genrenm._text,
-        prfstate: el.prfstate._text,
-      };
-    });
-    console.log('clienttitle', perfoClientTitle);
-    res.send(perfoClientTitle);
+    console.log(`result.data : ${result.data}`);
+    if (result.data.indexOf('mt20id') == -1) res.send([]);
+    else {
+      const xmlToJson = JSON.parse(
+        parseXML.xml2json(result.data, {
+          compact: true,
+          spaces: 2,
+        })
+      ).dbs.db;
+      console.log(xmlToJson.length);
+      let perfoClientTitle;
+      if (typeof xmlToJson.length === 'undefined') {
+        perfoClientTitle = [
+          {
+            title: xmlToJson.prfnm._text,
+            startDate: xmlToJson.prfpdfrom._text,
+            endDate: xmlToJson.prfpdto._text,
+            hall: xmlToJson.fcltynm._text,
+            img: xmlToJson.poster._text,
+            genre: xmlToJson.genrenm._text,
+            prfstate: xmlToJson.prfstate._text,
+          },
+        ];
+      } else {
+        perfoClientTitle = xmlToJson.map((el) => {
+          return {
+            title: el.prfnm._text,
+            startDate: el.prfpdfrom._text,
+            endDate: el.prfpdto._text,
+            hall: el.fcltynm._text,
+            img: el.poster._text,
+            genre: el.genrenm._text,
+            prfstate: el.prfstate._text,
+          };
+        });
+      }
+      console.log('clienttitle', perfoClientTitle);
+      res.send(perfoClientTitle);
+    }
   });
 };
