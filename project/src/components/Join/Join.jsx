@@ -9,7 +9,12 @@ import Auth from '../../hoc/auth';
 const Div2 = styled.div`
   margin: auto;
   width: 500px;
-  padding: 300px;
+  /* 이거 원래 padding으로 설정 되어 있었는데
+  먼가 이상한거 같아서 일단 height로 변경하였습니다.
+  확인이 필요할 것 같습니다.
+  변경날짜: 2023-02-24 03:00 */
+  /* padding: 300px; */
+  height: 300px;
   text-align: center;
   display: flex;
   flex-direction: column;

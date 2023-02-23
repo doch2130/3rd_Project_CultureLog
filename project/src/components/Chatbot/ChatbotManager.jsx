@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Offcanvas } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import './ChatbotManager.css';
 import ChatbotRoom from './ChatbotRoom';
 import { socketManagerRoomLeave } from '../../actions/socket_action';
 
-export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
+export default function ChatbotManager({
+  mySocketId,
+  myRoomId,
+  userInfo,
+  sortRoomList,
+}) {
   const roomList = useSelector((state) => state.socket.roomList);
   const message = useSelector((state) => state.socket.message);
   const socket = useSelector((state) => state.socket.socket);
@@ -13,6 +18,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
   const [selectRoom, setSelectRoom] = useState(null);
   const handleClose = () => setSelectRoom(null);
   const [roomExitData, setRoomExitData] = useState();
+  // const [sortRoomList, setSortRoomList] = useState([]);
   // const [roomMessageCount, setRoomMessageCount] = useState([]);
 
   // useEffect(() => {
@@ -82,6 +88,57 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
     }
   };
 
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   if (userInfo.permission === 'manager') {
+  //     if (roomList.length > 0) {
+  //       // const testRoomList = roomList;
+  //       // const testMessage = message[0];
+  //       // const testObjectMessage = Object.keys(testMessage);
+  //       // for(let i = 0; i < testObjectMessage.length; i++) {
+  //       //   const roomMessageLength = message[0][testObjectMessage[i]].length;
+  //       // }
+  //       console.log('roomList[0]', roomList[0]);
+  //       console.log('roomList[0] roomId', roomList[0].roomId);
+  //       console.log('message[0]', message[0]);
+  //       // console.log('message[0][roomList[0]]', message[0]);
+  //       let temp = [];
+  //       roomList.forEach((el) => {
+  //         console.log('myRoomId', myRoomId);
+  //         console.log('el.roomId', el.roomId);
+  //         if (myRoomId === el.roomId) {
+  //           return;
+  //         }
+
+  //         console.log('message[0][el.roomId]', message[0][el.roomId]);
+  //         console.log(
+  //           'Object.keys(message[0][el.roomId]).length',
+  //           Object.keys(message[0][el.roomId]).length
+  //         );
+  //         const roomMessageLength = {
+  //           roomId: el.roomId,
+  //           msgLength: Object.keys(message[0][el.roomId]).length,
+  //           msgLastTime:
+  //             message[0][el.roomId][
+  //               Object.keys(message[0][el.roomId]).length - 1
+  //             ].time,
+  //           clientUserId: el.clientUserId,
+  //         };
+  //         temp.push(roomMessageLength);
+  //       });
+  //       console.log('temp', temp);
+  //       // a-b로 하면 오름차순 정렬, 나중 시간이 뒤로 밀림
+  //       // b-a로 하면 내림차순 정렬, 나중 시간이 앞으로 옴
+  //       const sortDataTemp = temp.sort(
+  //         (a, b) => new Date(b.msgLastTime) - new Date(a.msgLastTime)
+  //       );
+  //       console.log('sortDataTemp', sortDataTemp);
+  //       setSortRoomList(sortDataTemp);
+  //     }
+  //   }
+  //   // }, 6000);
+  // }, [message, myRoomId, roomList, userInfo]);
+
   return (
     <>
       {/* 방 출력용 */}
@@ -127,8 +184,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
             <span></span>
           )}
           {/* 방 목록 */}
-          {roomList.map((el) => {
-            // console.log('el', el);
+          {sortRoomList.map((el) => {
             return (
               <Row
                 className="chatRoomList"
@@ -155,7 +211,7 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
                         }}
                       >
                         {/* 상대방 아이디 */}
-                        {el.clientUserId.slice(0, 7)}
+                        {el.clientUserId}
                       </span>
                     </Col>
                     <Col
@@ -240,14 +296,14 @@ export default function ChatbotManager({ mySocketId, myRoomId, userInfo }) {
                       >
                         알람
                         {/* {roomMessageCount.map((elCount) => {
-                          if (elCount.roomId === el.roomId) {
-                            // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
-                            const tempCount =
-                              Object.keys(message[0][el.roomId]).length -
-                              elCount.msgCount;
-                            return tempCount;
-                          }
-                        })} */}
+                        if (elCount.roomId === el.roomId) {
+                          // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
+                          const tempCount =
+                            Object.keys(message[0][el.roomId]).length -
+                            elCount.msgCount;
+                          return tempCount;
+                        }
+                      })} */}
                       </span>
                     </Col>
                   </Row>
