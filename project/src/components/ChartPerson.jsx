@@ -8,33 +8,42 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-
-export default function Chart({ movie, book, perfo }) {
+export default function ChartPerson({
+  movie,
+  book,
+  perfo,
+  Allmovie,
+  Allbook,
+  Allperfo,
+}) {
   const data = [
     {
       name: 'BOOK',
-      AllUser: book,
+      AllUser: Allbook.length,
+      User: book.length,
     },
     {
       name: 'MOVIE',
-      AllUser: movie,
+      AllUser: Allmovie.length,
+      User: movie.length,
     },
     {
       name: 'PERFOMANCE',
-      AllUser: perfo,
+      AllUser: Allperfo.length,
+      User: perfo.length,
     },
   ];
 
   return (
-    <div style={{ margin: '10px' }}>
+    <div>
       <LineChart
-        width={1000}
-        height={300}
+        width={800}
+        height={200}
         data={data}
         margin={{
           top: 5,
-          right: 30,
-          left: 20,
+          right: 10,
+          left: 10,
           bottom: 5,
         }}
       >
@@ -44,6 +53,7 @@ export default function Chart({ movie, book, perfo }) {
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="AllUser" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="User" stroke="#00471b" />
       </LineChart>
     </div>
   );

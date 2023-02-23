@@ -13,6 +13,7 @@ import axiosurl from '../axiosurl';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import ChartPerson from './ChartPerson';
 
 const P = styled.p`
   display: flex;
@@ -33,20 +34,11 @@ const P = styled.p`
 // Main Page
 function Home() {
   const navigate = useNavigate();
-  // const loginInformation = useSelector((state) => state.user.loginSuccess);
   // const [isManager, setIsManager] = useState(false);
-
-  // console.log('userId', loginInformation);]
   const user = useSelector((state) => state.user.loginSuccess);
   const [yearData, setYearData] = useState([]);
-
+  const [yearAllData, setYearAllData] = useState([]);
   useEffect(() => {
-    // console.log(moment(new Date()).format('YYYY년'));
-    // console.log('user', user);
-    // console.log('공연:', yearData[0]);
-    // console.log('책:', yearData[1]);
-    // console.log('영화:', yearData[2]);
-
     axios({
       method: 'get',
       url: axiosurl.logOfyear,
@@ -54,6 +46,13 @@ function Home() {
     }).then((re) => {
       // console.log('year', re.data);
       setYearData(re.data);
+    });
+    axios({
+      method: 'get', //데이터가 없어도 비동기 처리가 되기때문에 then()메서드가 항상 실행된다.
+      url: axiosurl.DBAll,
+    }).then((response) => {
+      console.log(response.data);
+      setYearAllData(response.data);
     });
   }, [user]);
   // useEffect(() => {
@@ -107,7 +106,14 @@ function Home() {
                 <hr />
 
                 {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
-
+                <ChartPerson
+                  movie={yearData[2]}
+                  book={yearData[1]}
+                  perfo={yearData[0]}
+                  Allmovie={yearAllData[2]}
+                  Allbook={yearAllData[1]}
+                  Allperfo={yearAllData[0]}
+                />
                 <Col xs={12} style={{ height: '70%', paddingTop: '10px' }}>
                   <div className="recordYear">
                     <div className="recordYearTitle">올해의 기록</div>
