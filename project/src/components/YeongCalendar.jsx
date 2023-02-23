@@ -99,19 +99,49 @@ export default function YeongCalendar(props) {
     }
   }, [user]);
 
-  const deletePerfo = (e) => {
+  const deleteLog = (e, category) => {
     console.log(e);
+    console.log('category', category);
     axios({
       method: 'delete',
       url: axiosurl.DBdelete,
-      params: { _id: e },
+      params: { _id: e, category: category },
     })
       .then((response) => {
         console.log('성공');
         setSelectPerformance(null);
         setSelectBook(null);
         setSelectMovie(null);
-        navigate('/home');
+        console.log('data', data);
+        if (category === '공연') {
+          // data[0]
+          const updatePerfo = data[0].filter((el) => el._id !== e._id);
+          console.log('updatePerfo', updatePerfo);
+          setData([
+            (data[0] = updatePerfo),
+            (data[1] = data[1]),
+            (data[2] = data[2]),
+          ]);
+        } else if (category === '책') {
+          // data[1]
+          const updateBook = data[1].filter((el) => el._id !== e._id);
+          console.log('updateBook', updateBook);
+          setData([
+            (data[0] = data[0]),
+            (data[1] = updateBook),
+            (data[2] = data[2]),
+          ]);
+        } else if (category === '영화') {
+          // data[2]
+          const updateMovie = data[2].filter((el) => el._id !== e._id);
+          console.log('updateMovie', updateMovie);
+          setData([
+            (data[0] = data[0]),
+            (data[1] = data[1]),
+            (data[2] = updateMovie),
+          ]);
+        }
+
         //작업진행하기(삭제)모달창닫으삼
       })
       .catch(() => {
@@ -134,18 +164,18 @@ export default function YeongCalendar(props) {
           // console.log('tempData', tempData);
           if (tempData) {
             temp += 'highlight ';
-            if (markData[tempData].book) {
-              // console.log('mark book');
-              temp += 'highlightBook ';
-            }
-            if (markData[tempData].movie) {
-              // console.log('mark movie');
-              temp += 'highlightMovie ';
-            }
-            if (markData[tempData].perfo) {
-              // console.log('mark perfo');
-              temp += 'highlightPerfo ';
-            }
+            // if (markData[tempData].book) {
+            //   // console.log('mark book');
+            //   temp += 'highlightBook ';
+            // }
+            // if (markData[tempData].movie) {
+            //   // console.log('mark movie');
+            //   temp += 'highlightMovie ';
+            // }
+            // if (markData[tempData].perfo) {
+            //   // console.log('mark perfo');
+            //   temp += 'highlightPerfo ';
+            // }
             return temp;
             // return 'highlight';
           }
@@ -252,7 +282,7 @@ export default function YeongCalendar(props) {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    deletePerfo(selectPerformance);
+                    deleteLog(selectPerformance, '공연');
                   }}
                 >
                   delete
@@ -325,7 +355,7 @@ export default function YeongCalendar(props) {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    deletePerfo(selectBook);
+                    deleteLog(selectBook, '책');
                   }}
                 >
                   delete
@@ -398,7 +428,7 @@ export default function YeongCalendar(props) {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    deletePerfo(selectMovie);
+                    deleteLog(selectMovie, '영화');
                   }}
                 >
                   delete
