@@ -104,6 +104,7 @@ export default function YeongCalendar(props) {
       }).then((rep) => {
         // console.log('------------');
         // console.log('rep.data', rep.data);
+        // console.log('Object.keys(rep.data', Object.keys(rep.data));
         setMarks(Object.keys(rep.data));
         setMarkData(rep.data);
       });
@@ -111,19 +112,19 @@ export default function YeongCalendar(props) {
   }, [user]);
 
   const deleteLog = (e, category) => {
-    console.log(e);
-    console.log('category', category);
+    // console.log(e);
+    // console.log('category', category);
     axios({
       method: 'delete',
       url: axiosurl.DBdelete,
       params: { _id: e, category: category },
     })
       .then((response) => {
-        console.log('성공');
+        // console.log('성공');
         setSelectPerformance(null);
         setSelectBook(null);
         setSelectMovie(null);
-        console.log('data', data);
+        // console.log('data', data);
         if (category === '공연') {
           // data[0]
           const updatedData = [
@@ -150,7 +151,18 @@ export default function YeongCalendar(props) {
           setData(updatedData);
         }
 
-        //작업진행하기(삭제)모달창닫으삼
+        // useState에서 설정을 하는 것보다 한 번 요청하고 받는게
+        // 더 효율적일 것 같아서 삭제 이후 Mark 데이터 갱신을 위해 서버 재요청
+        if (user.userId) {
+          axios({
+            method: 'get',
+            url: axiosurl.fromDBAll,
+            params: { user: user.email },
+          }).then((rep) => {
+            setMarks(Object.keys(rep.data));
+            setMarkData(rep.data);
+          });
+        }
       })
       .catch(() => {
         console.log('실패');
@@ -165,13 +177,13 @@ export default function YeongCalendar(props) {
         // 날짜 및 데이터 여부 체크
         // return되는 클래스 이름이 button에 들어감
         tileClassName={({ date, view }) => {
-          let temp = '';
+          // let temp = '';
           const tempData = marks.find(
             (x) => x === moment(date).format('YYYY년 MM월 DD일')
           );
           // console.log('tempData', tempData);
           if (tempData) {
-            temp += 'highlight ';
+            // temp += 'highlight ';
             // if (markData[tempData].book) {
             //   // console.log('mark book');
             //   temp += 'highlightBook ';
@@ -184,31 +196,37 @@ export default function YeongCalendar(props) {
             //   // console.log('mark perfo');
             //   temp += 'highlightPerfo ';
             // }
-            return temp;
-            // return 'highlight';
+            // return temp;
+            return 'highlight ';
           }
         }}
         // 점으로 표시되는 기능
         tileContent={({ date, view }) => {
-          let temp = [];
+          let tempTileContent = [];
           const tempDotData = marks.find(
             (x) => x === moment(date).format('YYYY년 MM월 DD일')
           );
           // console.log('tempDotData', tempDotData);
           if (tempDotData) {
             if (markData[tempDotData].book) {
-              temp.push(<div className="dot dotBook" key={'dotBook'}></div>);
+              tempTileContent.push(
+                <div className="dot dotBook" key={'dotBook'}></div>
+              );
             }
             if (markData[tempDotData].movie) {
-              temp.push(<div className="dot dotMovie" key={'dotMovie'}></div>);
+              tempTileContent.push(
+                <div className="dot dotMovie" key={'dotMovie'}></div>
+              );
             }
             if (markData[tempDotData].perfo) {
-              temp.push(<div className="dot dotPerfo" key={'dotPerfo'}></div>);
+              tempTileContent.push(
+                <div className="dot dotPerfo" key={'dotPerfo'}></div>
+              );
             }
             return (
               <>
                 <div className="flex justify-center items-center absoluteDiv">
-                  {temp}
+                  {tempTileContent}
                 </div>
               </>
             );
