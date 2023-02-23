@@ -21,51 +21,51 @@ export default function socket_reducer(state = initState, action) {
       return { ...state, socket: action.payload };
     // 방 새로고침 클릭
     case SOCKET_ROOM_REFRESH_UPATE:
-      const payloadRoomId2 = action.payload.room.roomId;
-      const payloadMsg2 = action.payload.roomMsg;
+      const payloadRoomId = action.payload.room.roomId;
+      const payloadMsg = action.payload.roomMsg;
       // console.log('payloadRoomId2', payloadRoomId2);
       // console.log('payloadMsg2', payloadMsg2);
 
-      const updatedMessage2 = state.message.map((el) => {
+      const updatedMessage = state.message.map((el) => {
         // console.log('el[payloadRoomId2]', el[payloadRoomId2]);
-        if (el[payloadRoomId2] != null) {
+        if (el[payloadRoomId] != null) {
           // payloadMsg 개체의 데이터를 메시지 개체의 기존 데이터와 병합
-          let baseData = Object.keys(payloadMsg2);
-          if (baseData.length >= Object.keys(el[payloadRoomId2]).length) {
+          let baseData = Object.keys(payloadMsg);
+          if (baseData.length >= Object.keys(el[payloadRoomId]).length) {
             for (let i = 0; i < baseData.length; i++) {
-              if (el[payloadRoomId2][i]) {
+              if (el[payloadRoomId][i]) {
                 // console.log('data 있');
-                payloadMsg2[i] = el[payloadRoomId2][i];
+                payloadMsg[i] = el[payloadRoomId][i];
               }
             }
           } else {
             // else 부분은 아직 정확하게 테스트를 못해봤습니다.
-            for (let i = 0; i < Object.keys(el[payloadRoomId2]).length; i++) {
-              if (el[payloadRoomId2][i]) {
+            for (let i = 0; i < Object.keys(el[payloadRoomId]).length; i++) {
+              if (el[payloadRoomId][i]) {
                 console.log('data 있2');
-                payloadMsg2[i] = el[payloadRoomId2][i];
+                payloadMsg[i] = el[payloadRoomId][i];
               }
             }
           }
           return {
             ...el,
-            [payloadRoomId2]: {
-              ...payloadMsg2,
+            [payloadRoomId]: {
+              ...payloadMsg,
             },
           };
         } else {
           // console.log('test Object.keys(payloadMsg2).length',Object.keys(payloadMsg2).length);
           // console.log('Object.keys(payloadMsg2)[0]', Object.keys(payloadMsg2)[0]);
           let newRoomData = {};
-          for (let i = 0; i < Object.keys(payloadMsg2).length; i++) {
-            newRoomData[i] = payloadMsg2[i];
+          for (let i = 0; i < Object.keys(payloadMsg).length; i++) {
+            newRoomData[i] = payloadMsg[i];
           }
           // console.log('newRoomData', newRoomData);
           // const newRoomId = Object.keys(payloadMsg2)[0];
           return {
             ...el,
             // [payloadRoomId2]: {[newRoomId]: payloadMsg2[newRoomId],},
-            [payloadRoomId2]: newRoomData,
+            [payloadRoomId]: newRoomData,
           };
         }
       });
@@ -77,7 +77,7 @@ export default function socket_reducer(state = initState, action) {
           clientSocketId: action.payload.room.clientSocketId,
           clientUserId: action.payload.room.clientUserId,
         }),
-        message: updatedMessage2,
+        message: updatedMessage,
       };
     case SOCKET_INIT_MESSAGE_ADD:
       // console.log('action.payload.initSocketData', action.payload.initSocketData);

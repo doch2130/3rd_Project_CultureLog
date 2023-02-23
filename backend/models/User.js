@@ -20,6 +20,12 @@ const userSchema = mongoose.Schema({
   },
   token: {
     type: String,
+    // 임시 default 값 설정
+    // 회원가입 후 로그인을 안하면, 비어 있는 값으로 설정이 되어버리는데,
+    // 여기서 문제가 발생한다.
+    // 쿠키가 없을 때 새로고침을 하면, 로그인을 안한(쿠키가 없는) 유저가
+    // auth.js의 DB에서 조회가 되서 기능에 문제가 발생한다.
+    default: 'Be3$2R/BzW$Wl0EBB/oO',
   },
   tokenExp: {
     type: Number,

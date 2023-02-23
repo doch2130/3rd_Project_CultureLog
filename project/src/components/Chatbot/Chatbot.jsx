@@ -30,6 +30,7 @@ export default function Chatbot() {
   const [myRoomId, setMyRoomId] = useState('');
   const [roomMessageCount, setRoomMessageCount] = useState([]);
   const [totalRoomMessageCount, setTotalRoomMessageCount] = useState([]);
+  const [sortRoomList, setSortRoomList] = useState([]);
 
   const messageRoomDefaultData = {
     0: {
@@ -68,6 +69,57 @@ export default function Chatbot() {
         // console.log('roomsData[i].msg', roomsData[i].msg);
         dispatch(socketRoomsRefreshUpdate(roomsData[i]));
       }
+
+      // 방 새로고침 후 다시 실행 (원본은 311줄)
+      // 보여주기를 위해 3초 지연 설정
+      setTimeout(() => {
+        if (userInfo.permission === 'manager') {
+          if (roomList.length > 0) {
+            // const testRoomList = roomList;
+            // const testMessage = message[0];
+            // const testObjectMessage = Object.keys(testMessage);
+            // for(let i = 0; i < testObjectMessage.length; i++) {
+            //   const roomMessageLength = message[0][testObjectMessage[i]].length;
+            // }
+            console.log('roomList[0]', roomList[0]);
+            console.log('roomList[0] roomId', roomList[0].roomId);
+            console.log('message[0]', message[0]);
+            // console.log('message[0][roomList[0]]', message[0]);
+            let temp = [];
+            roomList.forEach((el) => {
+              console.log('myRoomId', myRoomId);
+              console.log('el.roomId', el.roomId);
+              if (myRoomId === el.roomId) {
+                return;
+              }
+
+              console.log('message[0][el.roomId]', message[0][el.roomId]);
+              console.log(
+                'Object.keys(message[0][el.roomId]).length',
+                Object.keys(message[0][el.roomId]).length
+              );
+              const roomMessageLength = {
+                roomId: el.roomId,
+                msgLength: Object.keys(message[0][el.roomId]).length,
+                msgLastTime:
+                  message[0][el.roomId][
+                    Object.keys(message[0][el.roomId]).length - 1
+                  ].time,
+                clientUserId: el.clientUserId,
+              };
+              temp.push(roomMessageLength);
+            });
+            console.log('temp', temp);
+            // a-b로 하면 오름차순 정렬, 나중 시간이 뒤로 밀림
+            // b-a로 하면 내림차순 정렬, 나중 시간이 앞으로 옴
+            const sortDataTemp = temp.sort(
+              (a, b) => new Date(b.msgLastTime) - new Date(a.msgLastTime)
+            );
+            console.log('sortDataTemp', sortDataTemp);
+            setSortRoomList(sortDataTemp);
+          }
+        }
+      }, 3000);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -202,7 +254,8 @@ export default function Chatbot() {
     if (chooseMsg) {
       socket.emit('getRoomsList', myRoomId);
       dispatch(socketRoomsRefresh());
-      alert('방 목록을 갱신하였습니다.');
+      setSortRoomList([]);
+      alert('방 목록을 갱신 중 입니다. 잠시만 기다려주세요.');
     }
   };
 
@@ -257,6 +310,54 @@ export default function Chatbot() {
   //     // console.log('asdasd', Object.keys(message[0][messageRoomList[0]]).length);
   //   }
   // }, [message, userInfo]);
+
+  useEffect(() => {
+    // 처음 방 리스트 시간으로 다시 정렬하기
+    if (userInfo.permission === 'manager') {
+      if (roomList.length > 0) {
+        // const testRoomList = roomList;
+        // const testMessage = message[0];
+        // const testObjectMessage = Object.keys(testMessage);
+        // for(let i = 0; i < testObjectMessage.length; i++) {
+        //   const roomMessageLength = message[0][testObjectMessage[i]].length;
+        // }
+        // console.log('roomList[0]', roomList[0]);
+        // console.log('roomList[0] roomId', roomList[0].roomId);
+        // console.log('message[0]', message[0]);
+        // console.log('message[0][roomList[0]]', message[0]);
+        let temp = [];
+        roomList.forEach((el) => {
+          // console.log('myRoomId', myRoomId);
+          // console.log('el.roomId', el.roomId);
+          if (myRoomId === el.roomId) {
+            return;
+          }
+
+          // console.log('message[0][el.roomId]', message[0][el.roomId]);
+          // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
+          console.log('el.clientUserId', el.clientUserId);
+          const roomMessageLength = {
+            roomId: el.roomId,
+            msgLength: Object.keys(message[0][el.roomId]).length,
+            msgLastTime:
+              message[0][el.roomId][
+                Object.keys(message[0][el.roomId]).length - 1
+              ].time,
+            clientUserId: el.clientUserId,
+          };
+          temp.push(roomMessageLength);
+        });
+        console.log('temp', temp);
+        // a-b로 하면 오름차순 정렬, 나중 시간이 뒤로 밀림
+        // b-a로 하면 내림차순 정렬, 나중 시간이 앞으로 옴
+        const sortDataTemp = temp.sort(
+          (a, b) => new Date(b.msgLastTime) - new Date(a.msgLastTime)
+        );
+        console.log('sortDataTemp', sortDataTemp);
+        setSortRoomList(sortDataTemp);
+      }
+    }
+  }, [message, myRoomId, roomList, userInfo]);
 
   return (
     <div>
@@ -323,6 +424,7 @@ export default function Chatbot() {
               mySocketId={mySocketId}
               myRoomId={myRoomId}
               userInfo={userInfo}
+              sortRoomList={sortRoomList}
             />
           ) : (
             <ChatbotRoom
