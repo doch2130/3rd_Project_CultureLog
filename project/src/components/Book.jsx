@@ -171,6 +171,18 @@ const Div6 = styled.div`
   background-color: #d0d6c3;
   border-radius: 50px;
   box-shadow: rgba(223, 231, 136, 0.56) 0px 22px 70px 4px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 0px;
+    padding-top: 180px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    height: 1250px;
+  }
   /* @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;
@@ -179,22 +191,6 @@ const Div6 = styled.div`
     height: 1610px;
     display: flex;
   } */
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    /* margin-top: 0px; */
-    /* margin-left: 30px; */
-    /* width: 500px; */
-    /* height: 1610px; */
-    /* display: flex; */
-    padding: 0px;
-    padding-top: 120px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-radius: 50px 50px 0px 0px;
-    margin-top: 30px;
-    margin-bottom: 0px;
-  }
 `;
 const Button = styled.button`
   width: 150px;
@@ -249,6 +245,7 @@ const Div7 = styled.div`
   @media screen and (max-width: 768px) {
     width: 100%;
     margin: 0px;
+    margin-top: 30px;
     align-items: center;
     max-width: 400px;
   }
@@ -274,7 +271,6 @@ const Div7 = styled.div`
       margin-left: 0px;
       margin-top: 30px;
       align-items: center;
-      /* width: 407px; */
       display: flex;
       padding-top: 11px;
       scroll-behavior: smooth;
@@ -305,7 +301,6 @@ const Div8 = styled.div`
   @media screen and (max-width: 768px) {
     width: 100%;
     max-width: 400px;
-    /* width: 400px; */
     margin-left: 0px;
     top: 47rem;
   }
@@ -328,7 +323,6 @@ const SearchInput = styled.input`
   display: inline-block;
   flex-wrap: wrap;
   @media screen and (max-width: 768px) {
-    /* width: 300px; */
     width: 75%;
     max-width: 300px;
     margin-top: 0px;
@@ -405,7 +399,6 @@ const Input = styled.input`
   display: inline-block;
   flex-wrap: wrap;
   @media screen and (max-width: 768px) {
-    /* width: 400px; */
     width: 95%;
     margin-left: 0px;
     margin-top: 20px;
@@ -423,17 +416,18 @@ const Img = styled.img`
   width: 400px;
   height: 500px;
   border-radius: 20px;
+  @media screen and (max-width: 768px) {
+    margin-top: -130px;
+    margin-left: 0px;
+    width: 95%;
+    max-width: 400px;
+    max-height: 450px;
+  }
   /* @media screen and (max-width: 700px) {
     text-align: center;
     margin-top: -130px;
     margin-left: -126px;
   } */
-  @media screen and (max-width: 768px) {
-    margin-top: -130px;
-    margin-left: 0px;
-    width: 100%;
-    max-width: 400px;
-  }
 `;
 
 export default Auth(Book, true);
