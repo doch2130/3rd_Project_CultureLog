@@ -35,7 +35,7 @@ function LandingPage() {
   }, []);
 
   return (
-    <>
+    <div>
       <div
         style={{
           display: 'flex',
@@ -44,7 +44,14 @@ function LandingPage() {
           justifyContent: 'center',
         }}
       >
-        <div style={{ width: '2000px', margin: 'auto' }}>
+        <div
+          style={{
+            width: '2000px',
+            margin: 'auto',
+            paddingLeft: '200px',
+            paddingRight: '200px',
+          }}
+        >
           <span style={{ color: '#545d42', fontSize: '4rem' }}>
             나만의 문화 기록, Culture Log
           </span>
@@ -96,7 +103,7 @@ function LandingPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
