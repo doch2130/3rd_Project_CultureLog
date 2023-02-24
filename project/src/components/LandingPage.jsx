@@ -24,7 +24,15 @@ const TitleSpan = styled.span`
     font-size: 2rem !important;
   }
   @media screen and (max-width: 550px) {
-    font-size: 1.5rem !important;
+    font-size: 1.3rem !important;
+  }
+`;
+
+const SubTitleSpan = styled.span`
+  color: #545d42;
+  margin-left: '60px';
+  @media screen and (max-width: 550px) {
+    margin-left: 10px !important;
   }
 `;
 
@@ -33,6 +41,7 @@ function LandingPage() {
   const [movie, setMovie] = useState('');
   const [book, setBook] = useState('');
   const [perfo, setPerfo] = useState('');
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -52,7 +61,6 @@ function LandingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   useEffect(() => {
     const resizeListener = () => {
       // console.log('window.innerWidth', window.innerWidth);
@@ -65,6 +73,11 @@ function LandingPage() {
       }
     };
     window.addEventListener('resize', resizeListener);
+
+    if (innerWidth <= 750) {
+      setInnerWidth(window.innerWidth + 150);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // console.log('innerWidth', innerWidth);
 
@@ -87,9 +100,7 @@ function LandingPage() {
           }}
         >
           <div>
-            <span style={{ color: '#545d42', marginLeft: '60px' }}>
-              전체 사용자 문화 기록 현황
-            </span>
+            <SubTitleSpan>전체 사용자 문화 기록 현황</SubTitleSpan>
 
             <Chart
               movie={movie}

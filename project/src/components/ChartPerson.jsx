@@ -12,10 +12,14 @@ import styled from 'styled-components';
 
 const Div1 = styled.div`
   display: flex;
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
 `;
+
+// const Div1 = styled.div`
+//   display: flex;
+//   @media screen and (max-width: 900px) {
+//     display: none;
+//   }
+// `;
 
 const Div2 = styled.div`
   display: none;
@@ -34,6 +38,7 @@ export default function ChartPerson({
   Allmovie,
   Allbook,
   Allperfo,
+  innerWidth,
 }) {
   const data = [
     {
@@ -57,8 +62,8 @@ export default function ChartPerson({
     <>
       <Div1>
         <LineChart
-          width={1000}
-          height={250}
+          width={innerWidth - 100}
+          height={300}
           data={data}
           margin={{
             right: 10,
@@ -76,7 +81,7 @@ export default function ChartPerson({
         </LineChart>
       </Div1>
 
-      <Div2>
+      {/* <Div2>
         <LineChart
           width={570}
           height={200}
@@ -95,7 +100,7 @@ export default function ChartPerson({
           <Line type="monotone" dataKey="AllUser" stroke="#82ca9d" />
           <Line type="monotone" dataKey="User" stroke="#00471b" />
         </LineChart>
-      </Div2>
+      </Div2> */}
     </>
   );
 }

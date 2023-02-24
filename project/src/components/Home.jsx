@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import './Homeyeong.css';
+import axios from 'axios';
+import axiosurl from '../axiosurl';
+import Auth from '../hoc/auth';
 import ReactTypingEffect from 'react-typing-effect';
 import HomeCalendar from './HomeCalendar';
-import './Home.css';
-import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-import Auth from '../hoc/auth';
 import YeongCalendar from './YeongCalendar';
-import axiosurl from '../axiosurl';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ChartPerson from './ChartPerson';
+import './Homeyeong.css';
+import './Home.css';
 
 const P = styled.p`
   display: flex;
   font-size: 16px;
-  margin-top: 80px;
+  /* margin-top: 80px; */
+  /* margin-bottom: 345px; */
+  margin-top: 60px;
   color: #3c5087;
   text-align: center;
   justify-content: center;
-  margin-bottom: 345px;
+  padding-left: 50px;
+  @media screen and (max-width: 1070px) {
+    font-size: 14px;
+    margin-top: 25px;
+    padding-left: 20px;
+  }
   @media screen and (max-width: 880px) {
     height: 300px;
     display: flex;
@@ -74,6 +81,7 @@ function Home() {
       setAllMovie(response.data[2].length);
     });
   }, [user]);
+
   // useEffect(() => {
   //   axios.get('/api/hello').then((response) => console.log('test', response));
 
@@ -84,35 +92,56 @@ function Home() {
   //   // }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const resizeListener = () => {
+      console.log('window.innerWidth', window.innerWidth);
+      if (window.innerWidth > 2000) {
+        setInnerWidth(2000 / 2);
+      } else if (window.innerWidth > 768) {
+        setInnerWidth(window.innerWidth / 2);
+      } else {
+        setInnerWidth(window.innerWidth + 50);
+      }
+    };
+    window.addEventListener('resize', resizeListener);
+
+    if (innerWidth < 768) {
+      setInnerWidth(window.innerWidth + 50);
+    } else {
+      setInnerWidth(window.innerWidth / 2);
+    }
+  }, []);
+  console.log('innerWidth', innerWidth);
+
+  const typingText = '고스란히 기록하는 나의 문화생활';
+
   return (
     <Container fluid>
-      <Row style={{ height: '77%', margin: '50px' }}>
+      <Row style={{ margin: '50px', marginBottom: '0px' }}>
         <Col xs={12} style={{ padding: '0px', margin: 'auto' }}>
           <Row style={{ maxWidth: '2000px', margin: 'auto' }}>
             <Col xs={12} md={6}>
               <YeongCalendar />
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={6} style={{ maxHeight: '1000px' }}>
               <Row style={{ height: '100%' }}>
-                <Col
-                  xs={12}
-                  style={{
-                    height: '33%',
-                    // textAlign: 'center',
-                    // justifyContent: 'center',
-                  }}
-                >
-                  <Div8>
+                <Col xs={12} className="secondTitle">
+                  {/* <Div8> */}
+                  <div style={{ paddingLeft: '50px' }}>
                     <ReactTypingEffect
-                      text={['고스란히 기록하는 나의 문화생활']}
+                      // text={['고스란히 기록하는 나의 문화생활']}
+                      text={typingText}
                       style={{
                         backgroundColor: '#e1e0c8	',
-                        fontSize: '25px',
+                        fontSize: '23px',
                         fontWeight: '500',
-                        marginLeft: '250px',
+                        // marginLeft: '250px',
                       }}
-                    />{' '}
-                  </Div8>
+                    />
+                  </div>
+                  {/* </Div8> */}
                   <P>
                     모든 것이 바쁘게 흘러가는 요즘, 문화생활까지 덧없이 자연스레
                     지나쳐버리게 되는 날이 많아집니다. <br /> CultureLog는 내가
@@ -124,8 +153,7 @@ function Home() {
                     남길 수 있는 작성창으로 이동합니다.
                   </P>
                 </Col>
-                {/* <hr style={{ borderTop: '1px dashed #7f3333' }} /> */}
-                <Col xs={12}>
+                <Col xs={12} style={{ padding: '0px' }}>
                   <ChartPerson
                     movie={movie}
                     book={book}
@@ -133,17 +161,11 @@ function Home() {
                     Allmovie={Allmovie}
                     Allbook={Allbook}
                     Allperfo={Allperfo}
+                    innerWidth={innerWidth}
                   />
                 </Col>
-                <br />
-                <Col
-                  xs={12}
-                  style={{
-                    height: '70%',
-                    paddingTop: '10px',
-                    marginLeft: '50px',
-                  }}
-                >
+                {/* <br /> */}
+                <Col xs={12} className="recordYearCol">
                   <div className="recordYear">
                     <div className="recordYearTitle">올해의 기록 </div>
                     <div className="recordYearSubTitle">
@@ -174,7 +196,7 @@ function Home() {
                 </Col>
               </Row>
             </Col>
-          </Row>{' '}
+          </Row>
         </Col>
       </Row>
     </Container>
