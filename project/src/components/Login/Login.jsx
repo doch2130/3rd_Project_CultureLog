@@ -12,34 +12,42 @@ import moment from 'moment';
 const Div1 = styled.div`
   margin: auto;
   width: 500px;
-  padding: 300px;
+  /* padding: 300px; */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    width: 100% !important;
+  }
   h1 {
     font-weight: 700;
     font-size: 40px;
     color: #cecc7f;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 `;
 const Input = styled.input`
   width: 350px;
-  height: 70px;
+  height: 50px;
   border-top: none;
   border-left: none;
   border-right: none;
   border-bottom: 1.5px solid black;
   outline: none;
+  @media screen and (max-width: 350px) {
+    width: 300px !important;
+  }
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  height: 70vh;
 `;
 const Div2 = styled.div`
   text-align: center;
-  margin-top: -250px;
+  /* margin-top: -250px; */
+  margin-top: 30px;
   width: 100%;
   align-items: center;
   button {
@@ -103,19 +111,21 @@ function Login() {
       <Form onSubmit={onSubmitHandler}>
         <Div1>
           <h1>LOGIN</h1>
-          <label>ID</label>
+          <label style={{ fontSize: '1.3rem' }}>ID</label>
           <Input type="text" value={Email} onChange={onEmailHandler} />
-          <label>Password</label>
+          <label style={{ fontSize: '1.3rem', marginTop: '20px' }}>
+            Password
+          </label>
           <Input
             type="password"
             value={Password}
             onChange={onPasswordHandler}
           />
+          <Div2>
+            <button type="submit">로그인</button>
+            <button onClick={navigateToJoin}>회원가입</button>
+          </Div2>
         </Div1>
-        <Div2>
-          <button type="submit">로그인</button>
-          <button onClick={navigateToJoin}>회원가입</button>
-        </Div2>
       </Form>
     </>
   );

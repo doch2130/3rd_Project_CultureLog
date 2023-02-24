@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'recharts';
 
-export default function Chart({ movie, book, perfo }) {
+export default function Chart({ movie, book, perfo, innerWidth }) {
   const data = [
     {
       name: 'BOOK',
@@ -26,9 +26,15 @@ export default function Chart({ movie, book, perfo }) {
   ];
 
   return (
-    <div style={{ margin: '10px' }}>
+    <div
+      style={{
+        margin: '30px 10px 10px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <LineChart
-        width={1000}
+        width={innerWidth - 200}
         height={300}
         data={data}
         margin={{
