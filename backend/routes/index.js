@@ -21,4 +21,5 @@ router.delete('/DBdelete', controller3.DBdelete);
 
 // router.get('/chatMessageAlarm', controller4.socketMessageAlarmCheck);
 // router.patch('/chatMessageAlarm', controller4.socketMessageAlarmCheck);
+router.get('/alarmRoomListCall', controller4.alarmRoomListCall);
 module.exports = router;

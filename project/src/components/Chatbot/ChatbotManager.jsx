@@ -10,6 +10,8 @@ export default function ChatbotManager({
   myRoomId,
   userInfo,
   sortRoomList,
+  roomMessageCheck,
+  setRoomMessageCheck,
 }) {
   const roomList = useSelector((state) => state.socket.roomList);
   const message = useSelector((state) => state.socket.message);
@@ -88,63 +90,68 @@ export default function ChatbotManager({
     }
   };
 
-  // useEffect(() => {
-  //   // setTimeout(() => {
-  //   if (userInfo.permission === 'manager') {
-  //     if (roomList.length > 0) {
-  //       // const testRoomList = roomList;
-  //       // const testMessage = message[0];
-  //       // const testObjectMessage = Object.keys(testMessage);
-  //       // for(let i = 0; i < testObjectMessage.length; i++) {
-  //       //   const roomMessageLength = message[0][testObjectMessage[i]].length;
-  //       // }
-  //       console.log('roomList[0]', roomList[0]);
-  //       console.log('roomList[0] roomId', roomList[0].roomId);
-  //       console.log('message[0]', message[0]);
-  //       // console.log('message[0][roomList[0]]', message[0]);
-  //       let temp = [];
-  //       roomList.forEach((el) => {
-  //         console.log('myRoomId', myRoomId);
-  //         console.log('el.roomId', el.roomId);
-  //         if (myRoomId === el.roomId) {
-  //           return;
-  //         }
+  // 방 클릭 시 메시지 개수 업데이트
+  const roomMessageCheckUpdate = (el) => {
+    // console.log('roomMessageCheck', roomMessageCheck);
+    // console.log('roomMessageCheck el', el);
+    const updateRoomMessageCheck = [
+      roomMessageCheck.map((elUpdate) => {
+        if (el.roomId === elUpdate.roomId) {
+          return {
+            roomId: el.roomId,
+            checkCount: el.msgLength,
+          };
+        } else {
+          return elUpdate;
+        }
+      }),
+    ];
+    // console.log('updateRoomMessageCheck', updateRoomMessageCheck[0]);
+    setRoomMessageCheck(updateRoomMessageCheck[0]);
+  };
 
-  //         console.log('message[0][el.roomId]', message[0][el.roomId]);
-  //         console.log(
-  //           'Object.keys(message[0][el.roomId]).length',
-  //           Object.keys(message[0][el.roomId]).length
-  //         );
-  //         const roomMessageLength = {
-  //           roomId: el.roomId,
-  //           msgLength: Object.keys(message[0][el.roomId]).length,
-  //           msgLastTime:
-  //             message[0][el.roomId][
-  //               Object.keys(message[0][el.roomId]).length - 1
-  //             ].time,
-  //           clientUserId: el.clientUserId,
-  //         };
-  //         temp.push(roomMessageLength);
-  //       });
-  //       console.log('temp', temp);
-  //       // a-b로 하면 오름차순 정렬, 나중 시간이 뒤로 밀림
-  //       // b-a로 하면 내림차순 정렬, 나중 시간이 앞으로 옴
-  //       const sortDataTemp = temp.sort(
-  //         (a, b) => new Date(b.msgLastTime) - new Date(a.msgLastTime)
-  //       );
-  //       console.log('sortDataTemp', sortDataTemp);
-  //       setSortRoomList(sortDataTemp);
-  //     }
-  //   }
-  //   // }, 6000);
-  // }, [message, myRoomId, roomList, userInfo]);
+  // 방 나올 때 메시지 개수 업데이트
+  const closeRoomMessageCheckUpdate = (selectRoom, sortRoomList) => {
+    // console.log('close selectRoom', selectRoom);
+    // console.log('close sortRoomList', sortRoomList);
+
+    let tempCount = 0;
+    sortRoomList.forEach((el) => {
+      // console.log('elCount', el);
+      if (el.roomId === selectRoom.roomId) {
+        // console.log('forEach tempCount', tempCount);
+        // console.log('forEach elCount.checkCount', el.msgLength);
+        tempCount = el.msgLength;
+      }
+    });
+    // console.log('tempCount', tempCount);
+
+    const closeUpdateRoomMessageCheck = [
+      roomMessageCheck.map((elUpdate) => {
+        if (selectRoom.roomId === elUpdate.roomId) {
+          return {
+            roomId: selectRoom.roomId,
+            // checkCount: selectRoom.msgLength,
+            checkCount: tempCount,
+          };
+        } else {
+          return elUpdate;
+        }
+      }),
+    ];
+    // console.log('closeUpdateRoomMessageCheck', closeUpdateRoomMessageCheck[0]);
+    setRoomMessageCheck(closeUpdateRoomMessageCheck[0]);
+  };
 
   return (
     <>
       {/* 방 출력용 */}
       <Offcanvas
         show={selectRoom !== null}
-        onHide={handleClose}
+        onHide={() => {
+          handleClose();
+          closeRoomMessageCheckUpdate(selectRoom, sortRoomList);
+        }}
         scroll={true}
         backdrop={false}
       >
@@ -191,7 +198,7 @@ export default function ChatbotManager({
                 key={el.roomId}
                 onClick={() => {
                   setSelectRoom(el);
-                  // console.log('el', el);
+                  roomMessageCheckUpdate(el);
                 }}
                 onContextMenu={(e) => {
                   roomMouseRightClick(e, el);
@@ -285,26 +292,46 @@ export default function ChatbotManager({
                         padding: '0px',
                         textAlign: 'right',
                         backgroundColor: 'white',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
                       }}
                     >
-                      <span
+                      {/* <span
                         style={{
                           fontSize: '0.7rem',
                           backgroundColor: 'white',
                           fontWeight: '400',
                         }}
-                      >
-                        알람
-                        {/* {roomMessageCount.map((elCount) => {
-                        if (elCount.roomId === el.roomId) {
-                          // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
-                          const tempCount =
-                            Object.keys(message[0][el.roomId]).length -
-                            elCount.msgCount;
-                          return tempCount;
+                      > */}
+                      {/* 알람 */}
+                      {roomMessageCheck.map((elCheck, index) => {
+                        if (elCheck.roomId === el.roomId) {
+                          const count = el.msgLength - elCheck.checkCount;
+                          if (count > 0) {
+                            return (
+                              <div key={index} className="chatRoomMessageCount">
+                                {el.msgLength - elCheck.checkCount}
+                              </div>
+                            );
+                          } else {
+                            return (
+                              <div
+                                key={index}
+                                className="chatRoomMessageCount chatRoomMessageCountZero"
+                              >
+                                {el.msgLength - elCheck.checkCount}
+                              </div>
+                            );
+                          }
+                          // return (
+                          //   <span key={index}>
+                          //     {el.msgLength - elCheck.checkCount}
+                          //   </span>
+                          // );
                         }
-                      })} */}
-                      </span>
+                        return null;
+                      })}
+                      {/* </span> */}
                     </Col>
                   </Row>
                 </Col>

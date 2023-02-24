@@ -188,3 +188,20 @@ exports.managerRoomLeave = async (roomId) => {
     console.log('managerRoomLeave Delete Err', err);
   }
 };
+
+exports.alarmRoomListCall = async (req, res) => {
+  try {
+    console.log('req.query', req.query);
+    const resultRoomList = await ChatRoom.find(
+      // { roomId: { $ne: myRoomId } },
+      { roomId: { $ne: req.query.myRoomId } },
+      // 특정 컬럼 제외하는 방법 (0: 제외, 1: 선택)
+      { _id: 0, roomId: 1 }
+    );
+    console.log('resultRoomList', resultRoomList);
+    res.send(resultRoomList);
+    // return resultRoomList;
+  } catch (err) {
+    console.log('roomListCall err', err);
+  }
+};
