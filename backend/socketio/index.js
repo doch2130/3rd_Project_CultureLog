@@ -57,7 +57,8 @@ module.exports = (socketIO) => {
         roomId: response.roomId,
         socketId: response.clientSocketId,
         permission: 'server',
-        content: '문의 사항이 있으시면 메시지 남겨주세요.',
+        content:
+          '문의 사항이 있으시면 메시지 남겨주세요.\n이용시간: 오전 10시 ~ 오후 5시',
         time: date.toLocaleDateString() + ' ' + date.toString().slice(16, 24),
         userId: '사용자' + response.clientSocketId.slice(2, 7),
       };
