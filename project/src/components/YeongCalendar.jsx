@@ -253,9 +253,9 @@ export default function YeongCalendar(props) {
             그 날의 기록
           </h4>{' '}
           <Div7>
-            <p className="dot dotBook"> 　책 </p>
-            <p className="dot dotMovie"> 　영화 </p>
-            <p className="dot dotPerfo"> 　공연 </p>
+            <p className="dot dotBook dotResponsive"> 　책 </p>
+            <p className="dot dotMovie dotResponsive"> 　영화 </p>
+            <p className="dot dotPerfo dotResponsive"> 　공연 </p>
           </Div7>
           <h2
             style={{
