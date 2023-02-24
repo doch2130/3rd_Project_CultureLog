@@ -36,6 +36,12 @@ const SubTitleSpan = styled.span`
   }
 `;
 
+const ChartTitle = styled.div`
+  @media screen and (max-width: 750px) {
+    text-align: center;
+  }
+`;
+
 function LandingPage() {
   const navigate = useNavigate();
   const [movie, setMovie] = useState('');
@@ -99,7 +105,8 @@ function LandingPage() {
             justifyContent: 'center',
           }}
         >
-          <div>
+          {/* <div> */}
+          <ChartTitle>
             <SubTitleSpan>전체 사용자 문화 기록 현황</SubTitleSpan>
 
             <Chart
@@ -108,7 +115,8 @@ function LandingPage() {
               perfo={perfo}
               innerWidth={innerWidth}
             />
-          </div>
+          </ChartTitle>
+          {/* </div> */}
         </Col>
         <Col
           xs={12}
