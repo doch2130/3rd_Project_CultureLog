@@ -76,9 +76,6 @@ function LandingPage() {
           style={{ padding: '0px', display: 'flex', alignItems: 'center' }}
         >
           <TitleSpan>나만의 문화 기록, Culture Log</TitleSpan>
-          {/* <span style={{ color: '#545d42', fontSize: '4rem' }}>
-            나만의 문화 기록, Culture Log
-          </span> */}
         </Col>
         <Col
           xs={12}
