@@ -179,3 +179,12 @@
     border-color: rgb(230, 48, 114);
     background: rgb(230, 48, 114);
   }
+
+  @media (min-width: 768px) and (max-width: 815px) {
+    .react-calendar__tile {
+      font-size: 0.9rem;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+  
