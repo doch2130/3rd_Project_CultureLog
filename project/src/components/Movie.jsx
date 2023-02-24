@@ -19,7 +19,7 @@ function Movie(props) {
   const P = useSelector((state) => state.date.date);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  console.log('p', P);
+  // console.log('p', P);
   // console.log('mo', moment(P));
   const [searchClass, setSearchClass] = useState('searchBoard');
   const [Imgsrc, setImgsrc] = useState(examimg);
@@ -172,14 +172,27 @@ const Div6 = styled.div`
   background-color: #d0d6c3;
   border-radius: 50px;
   box-shadow: rgba(223, 231, 136, 0.56) 0px 22px 70px 4px;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 0px;
+    padding-top: 180px;
+    padding-bottom: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    height: 1250px;
+  }
+  /* @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 0px;
     margin-left: 30px;
     width: 500px;
     height: 1610px;
     display: flex;
-  }
+  } */
 `;
 const RegisterBtn = styled.button`
   width: 150px;
@@ -208,7 +221,16 @@ const RegisterBtn = styled.button`
   &:hover {
     box-shadow: 0 0 40px 40px white inset;
   }
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 0px;
+    align-items: center;
+    width: 200px;
+    display: flex;
+    padding: 11px 0px;
+  }
+  /* @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: 55px;
     margin-left: -10px;
@@ -216,7 +238,7 @@ const RegisterBtn = styled.button`
     width: 200px;
     display: flex;
     padding: 11px 0px;
-  }
+  } */
 `;
 const SearchBtn = styled.button`
   width: 100px;
@@ -245,7 +267,16 @@ const SearchBtn = styled.button`
   &:hover {
     box-shadow: 0 0 40px 40px white inset;
   }
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    margin-top: -61px;
+    margin-left: 300px;
+    align-items: center;
+    width: 80px;
+    display: flex;
+    padding-top: 16px;
+  }
+  /* @media screen and (max-width: 700px) {
     flex-direction: column;
     margin-top: -61px;
     margin-left: 150px;
@@ -253,12 +284,20 @@ const SearchBtn = styled.button`
     width: 80px;
     display: flex;
     padding-top: 16px;
-  }
+  } */
 `;
 const Div7 = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 50px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 0px;
+    margin-top: 30px;
+    align-items: center;
+    max-width: 400px;
+  }
+
   p {
     color: #090909;
     font-weight: 700;
@@ -276,14 +315,24 @@ const Div7 = styled.div`
     display: inline-block;
     height: 300px;
     scroll-behavior: smooth;
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 768px) {
+      margin-left: 0px;
+      margin-top: 30px;
+      align-items: center;
+      display: flex;
+      padding-top: 11px;
+      scroll-behavior: smooth;
+      width: 95%;
+      max-width: 410px;
+    }
+    /* @media screen and (max-width: 700px) {
       margin-left: -178px;
       align-items: center;
       width: 407px;
       display: flex;
       padding-top: 11px;
       scroll-behavior: smooth;
-    }
+    } */
   }
 `;
 
@@ -297,11 +346,17 @@ const Div8 = styled.div`
   width: 700px;
   box-shadow: 1px 1px 1px 1px gray;
   background-color: #e3a49f;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 400px;
+    margin-left: 0px;
+    top: 47rem;
+  }
+  /* @media screen and (max-width: 700px) {
     width: 400px;
     margin-left: -180px;
     top: 47rem;
-  }
+  } */
 `;
 
 const Input = styled.input`
@@ -318,11 +373,16 @@ const Input = styled.input`
   height: 36px;
   display: inline-block;
   flex-wrap: wrap;
-
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    width: 95%;
+    margin-left: 0px;
+    margin-top: 20px;
+    max-width: 100%;
+  }
+  /* @media screen and (max-width: 700px) {
     width: 400px;
     margin-left: -180px;
-  }
+  } */
 `;
 
 const SearchInput = styled.input`
@@ -336,12 +396,19 @@ const SearchInput = styled.input`
   height: 52px;
   display: inline-block;
   flex-wrap: wrap;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    width: 75%;
+    max-width: 300px;
+    margin-top: 0px;
+    margin-left: -90px;
+    margin-bottom: 10px;
+  }
+  /* @media screen and (max-width: 700px) {
     width: 300px;
     margin-top: 20px;
     margin-left: -170px;
     margin-bottom: 10px;
-  }
+  } */
 `;
 
 const Img = styled.img`
@@ -350,10 +417,17 @@ const Img = styled.img`
   width: 400px;
   height: 500px;
   border-radius: 20px;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
+    margin-top: -130px;
+    margin-left: 0px;
+    width: 95%;
+    max-width: 400px;
+    max-height: 450px;
+  }
+  /* @media screen and (max-width: 700px) {
     text-align: center;
     margin-top: -130px;
     margin-left: -126px;
-  }
+  } */
 `;
 export default Auth(Movie, true, true);

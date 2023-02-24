@@ -29,7 +29,7 @@ function Performance(props) {
   const mainroll = useRef();
   const review = useRef();
   const date = useSelector(dateData);
-  console.log(date);
+  // console.log(date);
   const navigate = useNavigate();
 
   useEffect(() => {
