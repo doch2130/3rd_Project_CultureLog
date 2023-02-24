@@ -64,9 +64,13 @@ export default function Chatbot() {
       // 따로 설정을 안해도 socketInitMessageAdd() 함수가 먼저 실행이 되지만,
       // 혹시 모를 안전을 위해서 1초 후 실행되도록 설정
       // console.log('roomsData', roomsData);
-      for (let i = 0; i < roomsData.length; i++) {
-        // console.log('roomsData[i].msg', roomsData[i].msg);
-        dispatch(socketRoomsRefreshUpdate(roomsData[i]));
+      if (roomsData.length > 0) {
+        for (let i = 0; i < roomsData.length; i++) {
+          // console.log('roomsData[i].msg', roomsData[i].msg);
+          dispatch(socketRoomsRefreshUpdate(roomsData[i]));
+        }
+      } else {
+        alert('현재 방 목록이 존재하지 않습니다.');
       }
 
       // 방 새로고침 후 다시 실행 (원본은 311줄)
