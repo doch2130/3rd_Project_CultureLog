@@ -97,9 +97,11 @@ hr {
   .recordYearCol {
     padding: 50px 0px 100px;
   }
-
   .recharts-wrapper {
-    left: -50px;
+    left: -20px;
+  }
+  .recharts-legend-wrapper {
+    left: 50px !important;
   }
   .recordYearTitle {
     font-size: 1.3rem;
