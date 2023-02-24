@@ -16,7 +16,6 @@ import axios from 'axios';
 import axiosurl from '../../axiosurl';
 
 export default function Chatbot() {
-  const date = new Date();
   const dispatch = useDispatch();
   const [isChatBotIcon, setIsChatBotIcon] = useState(true);
   const [isChatAlarm, setIsChatAlarm] = useState(false);
@@ -411,13 +410,14 @@ export default function Chatbot() {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myRoomId, roomList]);
 
   return (
     <div>
       {/* 챗봇 아이콘 */}
       {isChatBotIcon && (
-        <div className="chatBotIconWrap">
+        <div className="chatBotIconWrap appearChatBotIcon">
           <button
             type="button"
             className="newAlertBtn"
@@ -439,7 +439,7 @@ export default function Chatbot() {
       )}
       {/* 채팅창 시작 */}
       {!isChatBotIcon && (
-        <div className="chatWindowWrap">
+        <div className="chatWindowWrap openChatWindow">
           <Row>
             {/* 채팅창 닫기 버튼 */}
             <Col xs={12}>
