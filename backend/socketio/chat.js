@@ -1,4 +1,4 @@
-const { ChatRoom, Chat, ChatMessageCount } = require('../models/Chat');
+const { ChatRoom, Chat } = require('../models/Chat');
 
 // 처음 접속 시 방 정보 저장
 exports.roomSave = async (roomId, socketId) => {
@@ -138,44 +138,6 @@ exports.socketUserLogin = async (userData, roomData) => {
   }
 };
 
-// 특정 컬렉션의 데이터 전부 삭제
-// db.chatrooms.deleteMany({});
-// db.chats.deleteMany({});
-
-// 메시지 알람 개수를 위한 DB 정보 가져오기
-// exports.socketMessageAlarmCheck = async (req, res) => {
-//   try {
-//     // console.log('req', req.query);
-//     console.log('req', req.query);
-//     // console.log('req body 0', req.query[0]);
-//     if (!req.query) {
-//       return false;
-//     }
-//     let tempResult = [];
-//     for (let i = 0; i < req.query.length; i++) {
-//       const messageCount = await ChatMessageCount.find(
-//         {
-//           $and: [
-//             { roomId: req.query[i].roomId },
-//             { userId: req.query[i].userId },
-//           ],
-//         },
-//         //   // 특정 컬럼 제외하는 방법 (0: 제외, 1: 선택)
-//         { createdAt: 0 }
-//       );
-//       tempResult.push(messageCount);
-//     }
-//     console.log('tempResult', tempResult);
-//     return tempResult;
-//   } catch (err) {
-//     console.log('socketMessageAlarmCheck Err', err);
-//   }
-// };
-
-// 상대방이 메시지를 보냈을 때 해당 방의 메시지 총 카운트를 보내주기
-
-// 1번 관리자가 읽으면 1번 관리자 + 해당 방의 카운트를 업데이트 해주기
-
 exports.managerRoomLeave = async (roomId) => {
   try {
     // 관리자가 수동으로 방 나가기 클릭 시 실행
@@ -205,3 +167,7 @@ exports.alarmRoomListCall = async (req, res) => {
     console.log('roomListCall err', err);
   }
 };
+
+// 특정 컬렉션의 데이터 전부 삭제
+// db.chatrooms.deleteMany({});
+// db.chats.deleteMany({});
