@@ -28,9 +28,8 @@ export default function Chatbot() {
 
   const [mySocketId, setMySocketId] = useState('');
   const [myRoomId, setMyRoomId] = useState('');
-  const [roomMessageCount, setRoomMessageCount] = useState([]);
-  const [totalRoomMessageCount, setTotalRoomMessageCount] = useState([]);
   const [sortRoomList, setSortRoomList] = useState([]);
+  const [roomMessageCheck, setRoomMessageCheck] = useState([]);
 
   const messageRoomDefaultData = {
     0: {
@@ -335,7 +334,7 @@ export default function Chatbot() {
 
           // console.log('message[0][el.roomId]', message[0][el.roomId]);
           // console.log('Object.keys(message[0][el.roomId]).length',Object.keys(message[0][el.roomId]).length);
-          console.log('el.clientUserId', el.clientUserId);
+          // console.log('el.clientUserId', el.clientUserId);
           const roomMessageLength = {
             roomId: el.roomId,
             msgLength: Object.keys(message[0][el.roomId]).length,
@@ -347,17 +346,68 @@ export default function Chatbot() {
           };
           temp.push(roomMessageLength);
         });
-        console.log('temp', temp);
+        // console.log('temp', temp);
         // a-b로 하면 오름차순 정렬, 나중 시간이 뒤로 밀림
         // b-a로 하면 내림차순 정렬, 나중 시간이 앞으로 옴
         const sortDataTemp = temp.sort(
           (a, b) => new Date(b.msgLastTime) - new Date(a.msgLastTime)
         );
-        console.log('sortDataTemp', sortDataTemp);
+        // console.log('sortDataTemp', sortDataTemp);
         setSortRoomList(sortDataTemp);
       }
     }
   }, [message, myRoomId, roomList, userInfo]);
+
+  // 각 방 알람 체크
+  useEffect(() => {
+    // if (sortRoomList) {
+    //   let tempRoomMessageCheck = [];
+    //   sortRoomList.forEach((el) => {
+    //     const roomMessageCheckData = {
+    //       roomId: el.roomId,
+    //       totalMsgLength: el.msgLength,
+    //       checkMsgLength: 1,
+    //     };
+    //     tempRoomMessageCheck.push(roomMessageCheckData);
+    //   });
+    //   setRoomMessageCheck(tempRoomMessageCheck);
+    //   console.log('tempRoomMessageCheck', tempRoomMessageCheck);
+    // }
+
+    if (userInfo.permission === 'manager') {
+      if (myRoomId) {
+        if (roomList.length > 0) {
+          // console.log('myRoomId', myRoomId);
+          axios({
+            method: 'get',
+            url: axiosurl.alarmRoomListCall,
+            params: { myRoomId },
+          })
+            .then((response) => {
+              // console.log('response', response.data);
+              // console.log('roomList', roomList);
+              // Array.some() 메서드를 사용하여 response 배열에서 일치하는 요소가 있는지 확인하고,
+              // filter() 메서드를 사용하여 roomList 배열에서 일치하는 요소만 필터링합니다.
+              // 그 다음, map() 메서드를 사용하여 필터링된 각 요소에 대해 temp 배열의 새로운 요소를 생성합니다.
+              const temp = roomList
+                .filter((el) => {
+                  return response.data.some(
+                    (resEl) => el.roomId === resEl.roomId
+                  );
+                })
+                .map((el) => {
+                  return { roomId: el.roomId, checkCount: 0 };
+                });
+              // console.log('temp', temp);
+              setRoomMessageCheck(temp);
+            })
+            .catch((err) => {
+              console.log('axios alarmRoomListCall err', err);
+            });
+        }
+      }
+    }
+  }, [myRoomId, roomList]);
 
   return (
     <div>
@@ -425,6 +475,8 @@ export default function Chatbot() {
               myRoomId={myRoomId}
               userInfo={userInfo}
               sortRoomList={sortRoomList}
+              roomMessageCheck={roomMessageCheck}
+              setRoomMessageCheck={setRoomMessageCheck}
             />
           ) : (
             <ChatbotRoom

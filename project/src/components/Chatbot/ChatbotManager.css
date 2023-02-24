@@ -106,3 +106,17 @@
   color: white; 
   background-color: #6e6e6e;
 }
+
+.chatRoomMessageCount {
+  font-size: 0.7rem;
+  background-color: #e95f5f;
+  font-weight: 500;
+  color: white;
+  width: 20px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.chatRoomMessageCountZero {
+  visibility: hidden;
+}

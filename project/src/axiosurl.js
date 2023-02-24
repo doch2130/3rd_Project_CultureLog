@@ -10,5 +10,5 @@ module.exports = {
   DBAll: `${process.env.REACT_APP_BACK_AXIOS}/DBAll`,
   DBdelete: `${process.env.REACT_APP_BACK_AXIOS}/DBdelete`,
   logOfyear: `${process.env.REACT_APP_BACK_AXIOS}/logOfyear`,
-  chatMessageAlarm: `${process.env.REACT_APP_BACK_AXIOS}/chatMessageAlarm`,
+  alarmRoomListCall: `${process.env.REACT_APP_BACK_AXIOS}/alarmRoomListCall`,
 };

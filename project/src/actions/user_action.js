@@ -7,7 +7,7 @@ import {
   COOKIE_USER,
 } from './types';
 export function loginUser(dataTosubmit) {
-  console.log(process.env.REACT_APP_BACK);
+  // console.log(process.env.REACT_APP_BACK);
   const request = axios
     .post(`${process.env.REACT_APP_BACK}/api/users/login`, dataTosubmit)
     .then((response) => response.data);
