@@ -9,32 +9,31 @@ import Auth from '../../hoc/auth';
 const Div2 = styled.div`
   margin: auto;
   width: 500px;
-  /* 이거 원래 padding으로 설정 되어 있었는데
-  먼가 이상한거 같아서 일단 height로 변경하였습니다.
-  확인이 필요할 것 같습니다.
-  변경날짜: 2023-02-24 03:00 */
-  /* padding: 300px; */
-  height: 300px;
+  height: 570px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -200px;
+  margin-top: 0px;
+  @media screen and (max-width: 500px) {
+    width: 100% !important;
+  }
   input {
     width: 350px;
-    height: 60px;
-
+    height: 40px;
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: 1.5px solid black;
     outline: none;
+    margin-bottom: 10px;
+    padding-left: 5px;
   }
   h1 {
     font-weight: 700;
     font-size: 40px;
     color: #cecc7f;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
   }
   button {
     background-color: #cecc7f;
@@ -142,30 +141,40 @@ function Join() {
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: '100vh',
+        height: '80vh',
       }}
     >
       <form onSubmit={onSubmitHandler}>
         <Div2>
           <h1>JOIN</h1>
-          <label>ID</label>
+          <label style={{ fontSize: '1.5rem' }}>ID</label>
           <input type="text" value={Email} onChange={onEmailHandler} />
-          {Email.length > 0 && <span>{EmailMessage}</span>}
-          <label>Password</label>
+          {Email.length > 0 && (
+            <span style={{ fontSize: '0.9rem' }}>{EmailMessage}</span>
+          )}
+          <label style={{ marginTop: '15px', fontSize: '1.5rem' }}>
+            Password
+          </label>
           <input
             type="password"
             value={Password}
             onChange={onPasswordHandler}
           />
-          {Password.length > 0 && <span>{PasswordMessage}</span>}
-          <label>Confirm Password</label>
+          {Password.length > 0 && (
+            <span style={{ fontSize: '0.9rem' }}>{PasswordMessage}</span>
+          )}
+          <label style={{ marginTop: '20px', fontSize: '1.5rem' }}>
+            Confirm Password
+          </label>
           <input
             type="password"
             value={ConfirmPassword}
             onChange={onConfirmPasswordHandler}
           />
-          {ConfirmPassword.length > 0 && <span>{PasswordConfirmMessage}</span>}
-          <br />
+          {ConfirmPassword.length > 0 && (
+            <span style={{ fontSize: '0.9rem' }}>{PasswordConfirmMessage}</span>
+          )}
+          {/* <br /> */}
           <button type="submit">회원가입</button>
         </Div2>
       </form>

@@ -10,6 +10,23 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axiosurl from '../axiosurl';
 import Chart from './Chart';
+import { Row, Col } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const TitleSpan = styled.span`
+  color: #545d42;
+  font-size: 4rem;
+  font-weight: 700;
+  @media screen and (min-width: 820px) and (max-width: 1090px) {
+    font-size: 3rem !important;
+  }
+  @media screen and (min-width: 550px) and (max-width: 820px) {
+    font-size: 2rem !important;
+  }
+  @media screen and (max-width: 550px) {
+    font-size: 1.5rem !important;
+  }
+`;
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -32,78 +49,92 @@ function LandingPage() {
         setMovie(response.data[2].length);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const resizeListener = () => {
+      console.log('window.innerWidth', window.innerWidth);
+      if (window.innerWidth > 2000) {
+        setInnerWidth(2000);
+      } else if (window.innerWidth > 750) {
+        setInnerWidth(window.innerWidth);
+      } else {
+        setInnerWidth(window.innerWidth + 150);
+      }
+    };
+    window.addEventListener('resize', resizeListener);
+  }, []);
+  // console.log('innerWidth', innerWidth);
+
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          padding: '50px',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div
+    <>
+      <Row style={{ width: '90%', height: '60vh', margin: 'auto' }}>
+        <Col
+          xs={12}
+          style={{ padding: '0px', display: 'flex', alignItems: 'center' }}
+        >
+          <TitleSpan>나만의 문화 기록, Culture Log</TitleSpan>
+        </Col>
+        <Col
+          xs={12}
           style={{
-            width: '2000px',
-            margin: 'auto',
-            paddingLeft: '200px',
-            paddingRight: '200px',
+            padding: '0px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '-70px',
           }}
         >
-          <span style={{ color: '#545d42', fontSize: '4rem' }}>
-            나만의 문화 기록, Culture Log
-          </span>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <span
-            style={{ color: '#545d42', fontSize: '1rem', marginLeft: '60px' }}
-          >
-            전체 사용자 문화 기록 현황
-          </span>
-          <br />
-          <br />
-          <Chart movie={movie} book={book} perfo={perfo} />
-          <br />
-          <br />
-          <div
-            style={{
-              display: 'flex',
-              padding: '50px',
-              alignItems: 'center',
-              borderColor: '#545d42',
-              borderBlockStyle: 'dashed',
-              justifyContent: 'center',
-            }}
-          >
-            <span style={{ color: '#545d42', fontSize: '1rem', margin: '5px' }}>
-              github{' '}
-              <a href="https://github.com/CultureBox/3rd_Project">
-                <img
-                  src={githubLogo}
-                  style={{ width: '30px', margin: '5px' }}
-                  alt="github 주소"
-                />
-              </a>
+          <div>
+            <span style={{ color: '#545d42', marginLeft: '60px' }}>
+              전체 사용자 문화 기록 현황
             </span>
-            <span style={{ color: '#545d42', fontSize: '1rem', margin: '5px' }}>
-              Notion{' '}
-              <a href="https://burnt-bike-223.notion.site/Culture-Log-0416219a3d8d4b81925a4042e50e1716">
-                <img
-                  src={notionLogo}
-                  style={{ width: '30px', margin: '5px' }}
-                  alt="notion 주소"
-                />
-              </a>
-            </span>
+
+            <Chart
+              movie={movie}
+              book={book}
+              perfo={perfo}
+              innerWidth={innerWidth}
+            />
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col
+          xs={12}
+          style={{
+            padding: '0px',
+            borderColor: '#545d42',
+            borderBlockStyle: 'dashed',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            maxHeight: '150px',
+          }}
+        >
+          <span style={{ color: '#545d42', fontSize: '1rem', margin: '5px' }}>
+            github{' '}
+            <a href="https://github.com/CultureBox/3rd_Project">
+              <img
+                src={githubLogo}
+                style={{ width: '30px', margin: '5px' }}
+                alt="github 주소"
+              />
+            </a>
+          </span>
+          <span style={{ color: '#545d42', fontSize: '1rem', margin: '5px' }}>
+            Notion{' '}
+            <a href="https://burnt-bike-223.notion.site/Culture-Log-0416219a3d8d4b81925a4042e50e1716">
+              <img
+                src={notionLogo}
+                style={{ width: '30px', margin: '5px' }}
+                alt="notion 주소"
+              />
+            </a>
+          </span>
+        </Col>
+      </Row>
+    </>
   );
 }
 
