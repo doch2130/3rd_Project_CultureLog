@@ -142,6 +142,7 @@ function Join() {
         alignItems: 'center',
         width: '100%',
         height: '80vh',
+        minHeight: '570px',
       }}
     >
       <form onSubmit={onSubmitHandler}>

@@ -55,7 +55,7 @@ function LandingPage() {
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   useEffect(() => {
     const resizeListener = () => {
-      console.log('window.innerWidth', window.innerWidth);
+      // console.log('window.innerWidth', window.innerWidth);
       if (window.innerWidth > 2000) {
         setInnerWidth(2000);
       } else if (window.innerWidth > 750) {
@@ -84,7 +84,6 @@ function LandingPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: '-70px',
           }}
         >
           <div>
