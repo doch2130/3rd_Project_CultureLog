@@ -96,7 +96,7 @@ function Home() {
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   useEffect(() => {
     const resizeListener = () => {
-      console.log('window.innerWidth', window.innerWidth);
+      // console.log('window.innerWidth', window.innerWidth);
       if (window.innerWidth > 2000) {
         setInnerWidth(2000 / 2);
       } else if (window.innerWidth > 768) {
@@ -112,8 +112,9 @@ function Home() {
     } else {
       setInnerWidth(window.innerWidth / 2);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log('innerWidth', innerWidth);
+  // console.log('innerWidth', innerWidth);
 
   const typingText = '고스란히 기록하는 나의 문화생활';
 
