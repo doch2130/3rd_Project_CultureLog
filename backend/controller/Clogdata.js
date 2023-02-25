@@ -80,6 +80,8 @@ let eddate = new Date().toISOString().slice(0, 10).split('-').join('');
 //const kopisurl =
 
 exports.Kopis = (req, res) => {
+  console.log('req.header', req.headers.host);
+  console.log('req.header', req.headers);
   console.log(req.query);
   axios({
     method: 'get',
@@ -110,6 +112,12 @@ exports.Kopis = (req, res) => {
         ];
       } else {
         perfoClientTitle = xmlToJson.map((el) => {
+          if (el.poster._text === undefined) {
+            // 이미지가 없는 경우 기본 이미지 설정
+            el.poster._text = `/static/media/musical.befa04984f11659cda42.png`;
+            // el.poster._text = `/static/media/musical.png`;
+          }
+          console.log('el.poster._text', el.poster._text);
           return {
             title: el.prfnm._text,
             startDate: el.prfpdfrom._text,
