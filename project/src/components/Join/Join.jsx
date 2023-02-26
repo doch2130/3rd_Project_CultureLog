@@ -61,7 +61,7 @@ function Join() {
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
     if (e.target.value < 2 || e.target.value.length > 8) {
@@ -94,6 +94,9 @@ function Join() {
     if (Password === e.target.value) {
       setPasswordConfirmMessage('비밀번호를 똑같이 입력하셨어요');
       setIsPasswordConfirm(true);
+      if (Password === e.target.value && !isPassword) {
+        setPasswordConfirmMessage('비밀번호 형식에 맞게 입력해주세요');
+      }
     } else {
       setPasswordConfirmMessage('비밀번호와 비밀번호 확인은 같아야 합니다.');
       setIsPasswordConfirm(false);
@@ -108,6 +111,8 @@ function Join() {
     // 관리자 manager
     if (Password !== ConfirmPassword) {
       return alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
+    } else if (!isPassword) {
+      return alert('비밀번호 형식에 맞게 입력해주세요');
     }
 
     let body = {
