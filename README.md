@@ -58,4 +58,4 @@ CultureLog는 내가 보고 듣고 읽은 것들을 기록하는 공간입니다
 
 
 <h2>ErDiagram</h2>
-<img src="project/src/erd.png">
+<img style="width: 300px" src="project/src/erd.png">
