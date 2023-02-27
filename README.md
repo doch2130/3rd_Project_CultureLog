@@ -1,4 +1,4 @@
-<h1>  </h1>
+<h1> CultureLog </h1>
 
 <h1> 프로젝트 소개 </h1>
 <h3> 1. 기획 의도 </h3>
@@ -56,4 +56,4 @@ CultureLog는 내가 보고 듣고 읽은 것들을 기록하는 공간입니다
 
 
 <h2>ErDiagram</h2>
-<img  src="">
+<img src="project/src/logo.png">
