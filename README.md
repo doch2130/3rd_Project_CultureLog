@@ -52,7 +52,7 @@ CultureLog는 내가 보고 듣고 읽은 것들을 기록하는 공간입니다
   
 <img src="https://img.shields.io/badge/-jwt%20Token-blueviolet"/>
   
-<img src="https://img.shields.io/badge/-Bcrypt-Orange"/>
+<img src="https://img.shields.io/badge/-bcrypt-orange"/>
 
 </div>
 
