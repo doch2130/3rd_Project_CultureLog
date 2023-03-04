@@ -20,6 +20,13 @@ exports.Naver = (req, res) => {
     console.log(MovieServerTitle);
     let MovieClientTitle = [];
     for (let i = 0; i < MovieServerTitle.length; i++) {
+      if (MovieServerTitle[i].image === undefined) {
+        // 이미지가 없는 경우 기본 이미지 설정
+        MovieServerTitle[
+          i
+        ].image = `/static/media/movie.ac373a6f91cd9aa9c511.png`;
+      }
+
       MovieClientTitle.push({
         title: MovieServerTitle[i].title,
         pubDate: MovieServerTitle[i].pubDate,
@@ -52,6 +59,13 @@ exports.Aladin = (req, res) => {
     // console.log(BookServerTitle);
     let BookClientTitle = [];
     for (let i = 0; i < BookServerTitle.length; i++) {
+      if (BookServerTitle[i].cover === undefined) {
+        // 이미지가 없는 경우 기본 이미지 설정
+        BookServerTitle[
+          i
+        ].cover = `/static/media/book.930ff5b0e8446a2b8940.png`;
+      }
+
       BookClientTitle.push({
         title: BookServerTitle[i].title,
         pubDate: BookServerTitle[i].pubDate,
