@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import 'antd/dist/antd';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-import Reducer from './reducers';
 import { composeWithDevTools } from '@redux-devtools/extension';
-import { CookiesProvider } from 'react-cookie';
+import Reducer from './reducers';
+import App from './App';
+import 'antd/dist/antd';
+import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,

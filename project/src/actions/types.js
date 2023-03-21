@@ -16,7 +16,6 @@ export const BOOK = 'book';
 export const PERFORMANCE = 'performance';
 
 // socket
-// socket() 함수
 export const SOCKET_INIT = 'socket/init';
 // 처음 접속 메시지
 export const SOCKET_INIT_MESSAGE_ADD = 'socket/init/message/add';

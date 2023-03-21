@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { YEAR, MONTH, DATE } from './types';
 
 export function yearData(year) {

@@ -34,26 +34,15 @@ export default function (SpecificComponent, option, adminRoute = null) {
           }, 5000);
         }
 
-        /* console.log(response);
-        console.log(response.payload.isAuth); */
         if (!response.payload.isAuth) {
           //로그인 하지 않은 상태
           if (option) {
             navigate('/login');
           }
-        } /* else {
-          if (option === true) {
-            //admin 아닌데 adminpage에 들어가려고 할 때 막아주는 부분.
-            navigate('/home');
-          } else {
-            if (option === false) {
-              //그외 login 안한 유저는 처음 페이지로 보내준다.
-              navigate('/');
-            }
-          }
-        } */
+        }
       });
     }, []);
+
     return <SpecificComponent />;
   }
   return AuthenticationCheck;

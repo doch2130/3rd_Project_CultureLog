@@ -12,8 +12,8 @@ import axiosurl from '../axiosurl';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { dateData } from '../actions/date_action';
-import { Toast } from 'react-bootstrap';
+// import { dateData } from '../actions/date_action';
+// import { Toast } from 'react-bootstrap';
 
 const Div5 = styled.div`
   margin-left: 10px;
