@@ -5,6 +5,7 @@ import {
   AUTH_USER,
   COOKIE_USER,
 } from '../actions/types';
+
 const initState = {
   loginSuccess: {
     loginSuccess: false,
@@ -13,7 +14,7 @@ const initState = {
     permission: 'default',
   },
 };
-// export default function user_reducer(state = {}, action) {
+
 export default function user_reducer(state = initState, action) {
   switch (action.type) {
     case LOGIN_USER:
@@ -44,7 +45,6 @@ export default function user_reducer(state = initState, action) {
         returnState['loginSuccess'] = authLogin;
       }
       return returnState;
-    /*  break;/ */
     default:
       return state;
   }

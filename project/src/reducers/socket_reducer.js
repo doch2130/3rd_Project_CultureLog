@@ -23,18 +23,14 @@ export default function socket_reducer(state = initState, action) {
     case SOCKET_ROOM_REFRESH_UPATE:
       const payloadRoomId = action.payload.room.roomId;
       const payloadMsg = action.payload.roomMsg;
-      // console.log('payloadRoomId2', payloadRoomId2);
-      // console.log('payloadMsg2', payloadMsg2);
 
       const updatedMessage = state.message.map((el) => {
-        // console.log('el[payloadRoomId2]', el[payloadRoomId2]);
         if (el[payloadRoomId] != null) {
           // payloadMsg 개체의 데이터를 메시지 개체의 기존 데이터와 병합
           let baseData = Object.keys(payloadMsg);
           if (baseData.length >= Object.keys(el[payloadRoomId]).length) {
             for (let i = 0; i < baseData.length; i++) {
               if (el[payloadRoomId][i]) {
-                // console.log('data 있');
                 payloadMsg[i] = el[payloadRoomId][i];
               }
             }
@@ -54,17 +50,12 @@ export default function socket_reducer(state = initState, action) {
             },
           };
         } else {
-          // console.log('test Object.keys(payloadMsg2).length',Object.keys(payloadMsg2).length);
-          // console.log('Object.keys(payloadMsg2)[0]', Object.keys(payloadMsg2)[0]);
           let newRoomData = {};
           for (let i = 0; i < Object.keys(payloadMsg).length; i++) {
             newRoomData[i] = payloadMsg[i];
           }
-          // console.log('newRoomData', newRoomData);
-          // const newRoomId = Object.keys(payloadMsg2)[0];
           return {
             ...el,
-            // [payloadRoomId2]: {[newRoomId]: payloadMsg2[newRoomId],},
             [payloadRoomId]: newRoomData,
           };
         }
@@ -80,7 +71,6 @@ export default function socket_reducer(state = initState, action) {
         message: updatedMessage,
       };
     case SOCKET_INIT_MESSAGE_ADD:
-      // console.log('action.payload.initSocketData', action.payload.initSocketData);
       const initMessage = [
         {
           ...state.message,
@@ -109,7 +99,6 @@ export default function socket_reducer(state = initState, action) {
         }),
       };
     case SOCKET_MESSAGE_ADD:
-      // console.log('actionPayload', action.payload);
       const roomId = action.payload.roomId;
       const newMessage = action.payload.msg;
       const msgLength = action.payload.messageLength;
@@ -145,18 +134,13 @@ export default function socket_reducer(state = initState, action) {
       return {
         ...state,
         roomList: [],
-        // message: [],
       };
     // // 로그인 - 해당 RoomID의 userID 업데이트
     case SOCKET_LOGIN_UPDATE:
       const roomData = action.payload.roomData;
       const userData = action.payload.userData;
 
-      // console.log('action.payload.roomData', action.payload.roomData);
-      // console.log('action.payload.userData', action.payload.userData);
-
       if (userData.permission === 'manager') {
-        // console.log('manager');
         // 관리자인 경우 관리자 roomList 삭제
         const updateRoomList = state.roomList.filter(
           (el) => el.roomId !== roomData.roomId
@@ -183,8 +167,6 @@ export default function socket_reducer(state = initState, action) {
       }
     // 새로고침 후 auth 정보 불러올 때 사용 (관리자인 경우 본인 방 안가져오도록 설정)
     case SOCKET_PAGE_REFRESH:
-      // console.log('action.payload', action.payload);
-      // console.log('state.roomList', state.roomList);
       if (action.payload.userData.permission === 'manager') {
         // 관리자인 경우 관리자 roomList 삭제
         const updateRoomList = state.roomList.filter(
@@ -200,7 +182,6 @@ export default function socket_reducer(state = initState, action) {
       }
     // 관리자가 방 나가기를 수동으로 진행한 경우
     case SOCKET_ROOM_MANAGER_LEAVE:
-      // console.log('action.payload', action.payload);
       const updateRoomList = state.roomList.filter(
         (el) => el.roomId !== action.payload
       );

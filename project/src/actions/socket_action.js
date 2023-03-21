@@ -17,7 +17,6 @@ export function socketInit(socket) {
   };
 }
 
-// 테스트
 export function socketRoomsRefreshUpdate(roomData) {
   const tempMsg = [];
   for (let i = 0; i < roomData.msg.length; i++) {
@@ -57,8 +56,6 @@ export function socketRoomsRefresh() {
 }
 
 export function socketUserLogin(roomData, userData) {
-  // console.log('roomData action', roomData);
-  // console.log('userData action', userData);
   return {
     type: SOCKET_LOGIN_UPDATE,
     payload: { roomData, userData },
@@ -66,8 +63,6 @@ export function socketUserLogin(roomData, userData) {
 }
 
 export function socketPageRefresh(roomData, userData) {
-  // console.log('roomData', roomData);
-  // console.log('userData', userData);
   return {
     type: SOCKET_PAGE_REFRESH,
     payload: { roomData, userData },
@@ -75,7 +70,6 @@ export function socketPageRefresh(roomData, userData) {
 }
 
 export function socketManagerRoomLeave(roomId) {
-  // console.log('socketManagerRoomLeave', roomId);
   return {
     type: SOCKET_ROOM_MANAGER_LEAVE,
     payload: roomId,
