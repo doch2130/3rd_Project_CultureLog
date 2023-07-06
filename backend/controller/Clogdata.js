@@ -1,5 +1,5 @@
 const axios = require('axios');
-const apikeys = require('./apikeys');
+const apikeys = require('../config/apikeys');
 const parseXML = require('xml-js');
 
 exports.Naver = (req, res) => {
