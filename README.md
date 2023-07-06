@@ -33,27 +33,20 @@ CultureLog는 내가 보고 듣고 읽은 것들을 기록하는 공간입니다
 
 <h1> 기술 스택 </h1>
 <h2>  Front-end </h2>
+
 <div>
 <img src="https://img.shields.io/badge/-react-blue"/>
-
 <img src="https://img.shields.io/badge/-react--redux-blue"/>
-
 <img src="https://img.shields.io/badge/-socket.io-brightgreen"/>
-
 </div>
 
 <h2>  Back-end </h2>
 
 <div>
-
 <img src="https://img.shields.io/badge/Node.js-339933?style=plastic&logo=Node.js&logoColor=white"/>
-
 <img src="https://img.shields.io/badge/-mongoDB-brightgreen"/>
-  
 <img src="https://img.shields.io/badge/-jwt%20Token-blueviolet"/>
-  
 <img src="https://img.shields.io/badge/-bcrypt-orange"/>
-
 </div>
 
 
