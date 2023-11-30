@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
-const dotenv = require('dotenv').config();
+// const dotenv = require('dotenv').config();
 const io = require('socket.io')(http, {
   cors: {
-    // 개발 모드
-    origin: [process.env.NODE_ENV, process.env.LOCAL_ENV],
-    // 배포시 주석 처리 (로컬 Host 삭제)
-    // origin: [process.env.NODE_ENV],
+    origin:
+      process.env.NODE_ENV === 'production'
+        ? process.env.PRODUCTION_HOST
+        : process.env.LOCAL_HOST,
   },
 });
 const socket = require('./socketio/index');
@@ -21,13 +21,18 @@ const { Movie } = require('./models/Movie');
 const { Book } = require('./models/Book');
 const { Performance } = require('./models/Performance');
 
-let corsOption = {
-  origin: [process.env.NODE_ENV, process.env.LOCAL_ENV], // 허락하는 요청 주소 (개발 모드)
-  // origin: [process.env.NODE_ENV], // 허락하는 요청 주소 (배포 모드 로컬 Host 삭제)
+const corsOption = {
+  // 허락하는 요청 주소
+  origin:
+    process.env.NODE_ENV === 'production'
+      ? process.env.PRODUCTION_HOST
+      : process.env.LOCAL_HOST,
+  // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
   credentials: true,
-  optionsSuccessStatus: 200, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOption));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -45,7 +50,7 @@ app.post('/api/users/register', (req, res) => {
   //그 정보들을 데이터 베이스에 넣어준다.
   // const user = new User(req.body);
 
-  console.log(req.body);
+  // console.log(req.body);
   User.findOne({ email: req.body.email }, (err, user) => {
     if (user) {
       return res.json({
