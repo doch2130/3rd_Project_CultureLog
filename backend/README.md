@@ -1,17 +1,15 @@
 # START
 npm start
 
+# START Production
+npm run production
+
 # SETTING
 
 # backend/.env
-NODE_ENV=http://0.0.0.0:4500
-LOCAL_ENV=http://localhost:3000
-
-# config/.dev.js
-module.exports = {
-  mongoURI:
-    'mongodb+srv://-----',
-};
+PRODUCTION_HOST=http://0.0.0.0:4500
+LOCAL_HOST=http://localhost:3000
+MONGO_URI=mongodb+srv://-----.mongodb.net/dbName
 
 # NaverId, NaverSecret = 네이버 검색 API
 # TTBKey = 알라딘

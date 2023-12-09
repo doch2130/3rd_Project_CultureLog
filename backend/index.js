@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
-// const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config();
 const io = require('socket.io')(http, {
   cors: {
     origin:
@@ -14,7 +14,6 @@ const socket = require('./socketio/index');
 const port = 5000;
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
 const { Movie } = require('./models/Movie');
@@ -39,7 +38,7 @@ app.use(cookieParser());
 
 const mongoose = require('mongoose');
 mongoose
-  .connect(config.mongoURI, {})
+  .connect(process.env.MONGO_URI, {})
   .then(() => console.log('mongoDB Connected...'))
   .catch((err) => console.log(err));
 

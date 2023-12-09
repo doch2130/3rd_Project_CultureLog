@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const { Performance } = require('../models/Performance');
 const { Movie } = require('../models/Movie');
 const { Book } = require('../models/Book');
-const config = require('../config/key');
-
-// mongoose
-//   .connect(config.mongoURI, {})
-//   .then(() => console.log('mongoDB Connected...'))
-//   .catch((err) => console.log(err));
 
 exports.fromDB = async (req, res) => {
   console.log('fromperfo', req.query);
@@ -96,7 +90,6 @@ exports.DBAll = async (req, res) => {
 };
 
 exports.DBdelete = async (req, res) => {
-
   console.log('DBdelete', req.query);
   if (req.query.category === '공연') {
     Performance.deleteOne(req.query._id, function (err, result) {
@@ -111,5 +104,4 @@ exports.DBdelete = async (req, res) => {
       res.status(200).send('성공');
     });
   }
-
 };
